@@ -1,6 +1,6 @@
 languageCode = "en-us"
-title = "rww-science"
-baseURL = "https://rww-science.website/"
+title = "rww-science: the blog"
+baseURL = "https://rww-science-blog.netlify.app"
 theme = "hugo-theme-massively"
 googleanalytics = ""
 disqusShortname = ""
@@ -15,7 +15,7 @@ disableKinds = ["taxonomy", "taxonomyTerm", "section"]
 # Below parameters can be set to override default post settings
 # [params.posts]
      folderName = "post"
-     pageSize = "6"
+     pageSize = "10"
      featuredPost = "false"
      paginationPages = 2
      showFirstLast = false
