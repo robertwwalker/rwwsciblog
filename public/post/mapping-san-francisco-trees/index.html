@@ -1,0 +1,478 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Mapping San Francisco Trees &middot; rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">January 31, 2020</span>
+                                
+                                <h1>Mapping San Francisco Trees</h1>
+                                <p></p>
+                            </header>
+                            
+                            <div class="image main"><img src="" alt="" /></div>
+                            
+                            
+<script src="index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="trees-in-san-francisco" class="section level1">
+<h1>Trees in San Francisco</h1>
+<p>This week’s data cover trees in San Francisco.</p>
+<pre class="r"><code>sf_trees &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-28/sf_trees.csv&#39;)
+library(tidyverse); library(ggmap); library(skimr)
+skim(sf_trees)</code></pre>
+<table>
+<caption><span id="tab:unnamed-chunk-1">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">sf_trees</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">192987</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">12</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">character</td>
+<td align="left">6</td>
+</tr>
+<tr class="odd">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">numeric</td>
+<td align="left">5</td>
+</tr>
+<tr class="odd">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Group variables</td>
+<td align="left">None</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: character</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">min</th>
+<th align="right">max</th>
+<th align="right">empty</th>
+<th align="right">n_unique</th>
+<th align="right">whitespace</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">legal_status</td>
+<td align="right">54</td>
+<td align="right">1.00</td>
+<td align="right">7</td>
+<td align="right">28</td>
+<td align="right">0</td>
+<td align="right">9</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">species</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">2</td>
+<td align="right">81</td>
+<td align="right">0</td>
+<td align="right">571</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">address</td>
+<td align="right">1487</td>
+<td align="right">0.99</td>
+<td align="right">1</td>
+<td align="right">40</td>
+<td align="right">0</td>
+<td align="right">85909</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">site_info</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">1</td>
+<td align="right">33</td>
+<td align="right">0</td>
+<td align="right">31</td>
+<td align="right">0</td>
+</tr>
+<tr class="odd">
+<td align="left">caretaker</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">3</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">22</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">plot_size</td>
+<td align="right">50013</td>
+<td align="right">0.74</td>
+<td align="right">1</td>
+<td align="right">23</td>
+<td align="right">0</td>
+<td align="right">524</td>
+<td align="right">0</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">date</td>
+<td align="right">124610</td>
+<td align="right">0.35</td>
+<td align="left">1955-09-19</td>
+<td align="left">2020-01-25</td>
+<td align="left">2001-06-12</td>
+<td align="right">7404</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<colgroup>
+<col width="12%" />
+<col width="9%" />
+<col width="12%" />
+<col width="9%" />
+<col width="8%" />
+<col width="7%" />
+<col width="8%" />
+<col width="9%" />
+<col width="9%" />
+<col width="9%" />
+<col width="5%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">tree_id</td>
+<td align="right">0</td>
+<td align="right">1.00</td>
+<td align="right">126529.21</td>
+<td align="right">79317.04</td>
+<td align="right">1.00</td>
+<td align="right">52601.50</td>
+<td align="right">120862.00</td>
+<td align="right">202607.50</td>
+<td align="right">261546.00</td>
+<td align="left">▇▆▆▆▇</td>
+</tr>
+<tr class="even">
+<td align="left">site_order</td>
+<td align="right">1634</td>
+<td align="right">0.99</td>
+<td align="right">4.58</td>
+<td align="right">12.52</td>
+<td align="right">-50.00</td>
+<td align="right">1.00</td>
+<td align="right">2.00</td>
+<td align="right">4.00</td>
+<td align="right">501.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">dbh</td>
+<td align="right">41819</td>
+<td align="right">0.78</td>
+<td align="right">9.95</td>
+<td align="right">29.36</td>
+<td align="right">0.00</td>
+<td align="right">3.00</td>
+<td align="right">7.00</td>
+<td align="right">12.00</td>
+<td align="right">9999.00</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">latitude</td>
+<td align="right">2832</td>
+<td align="right">0.99</td>
+<td align="right">37.77</td>
+<td align="right">0.25</td>
+<td align="right">37.51</td>
+<td align="right">37.74</td>
+<td align="right">37.76</td>
+<td align="right">37.78</td>
+<td align="right">47.27</td>
+<td align="left">▇▁▁▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">longitude</td>
+<td align="right">2832</td>
+<td align="right">0.99</td>
+<td align="right">-122.45</td>
+<td align="right">0.42</td>
+<td align="right">-138.28</td>
+<td align="right">-122.45</td>
+<td align="right">-122.43</td>
+<td align="right">-122.41</td>
+<td align="right">-122.37</td>
+<td align="left">▁▁▁▁▇</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>( My.Map &lt;- ggmap(get_map(&quot;San Francisco, CA&quot;, zoom=12)) + geom_point(data=sf_trees, aes(x=longitude, y=latitude, color=legal_status, text=address), size=0.1, alpha=0.1) + theme_minimal() )</code></pre>
+<pre><code>## Source : https://maps.googleapis.com/maps/api/staticmap?center=San%20Francisco,%20CA&amp;zoom=12&amp;size=640x640&amp;scale=2&amp;maptype=terrain&amp;language=en-EN&amp;key=xxx-jAsYoenYRmMfzTFwXpVYE76s</code></pre>
+<pre><code>## Source : https://maps.googleapis.com/maps/api/geocode/json?address=San+Francisco,+CA&amp;key=xxx-jAsYoenYRmMfzTFwXpVYE76s</code></pre>
+<pre><code>## Warning: Ignoring unknown aesthetics: text</code></pre>
+<pre><code>## Warning: Removed 2963 rows containing missing values (geom_point).</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>library(plotly)
+library(widgetframe)
+MMGGP &lt;- ggplotly(My.Map)
+htmlwidgets::saveWidget(
+  widgetframe::frameableWidget(MMGGP), here:::here(&#39;static/img/widgets/mmmgp1map.html&#39;))</code></pre>
+<iframe width="800" height="800" src="https://rww.science/img/widgets/mmmgp1map.html" frameborder="0" allowfullscreen>
+</iframe>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

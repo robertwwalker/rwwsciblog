@@ -1,0 +1,706 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.80.0" />
+		<title>rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+
+		
+			
+		
+		
+
+		
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+				
+
+<div id="intro">
+    <h1>
+        
+             rww.science: the blog
+        
+    </h1>
+    <p>
+        
+             Robert W. Walker is Associate Professor of Quantitative Methods in the Atkinson Graduate School of Management at Willamette University.
+        
+             <br/>  He and his family live in Oregon; he is an Arsenal fan and an avid R user.  This is his blog: moved from rww.science.
+        
+    </p>
+    <ul class="actions">
+        <li><a href="#header" class="button icon solo fa-arrow-down scrolly">Continue</a></li>
+    </ul>
+</div>
+
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">November 30, 2020</span>
+        
+        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        
+        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
+The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        
+    </header>
+    
+    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
+    
+    <ul class="actions">
+        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">November 25, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/">Socrata is amazingly handy for open data</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>The Socrata package makes it easy to access API calls built around SODA for open data access. If you try to skip the Socrata part, you usually only get a fraction of the available data. Socrata is intended to make open access data easier to manage and many government entities in the US use it as the portal to public data access. The R package makes interfacing with it much easier.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">October 26, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/new-york-times-data-on-covid/">New York Times Data on COVID</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/new-york-times-data-on-covid/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>New York Times data for the US The New York Times has a wonderful compilation of United States on the novel coronavirus. The data update automatically so the following graphics were generated with data retrieved at 2020-11-30 16:51:46.
+ The Basic State of Things options(scipen=9) library(tidyverse); library(hrbrthemes); library(patchwork); library(plotly); library(ggdark); library(ggrepel); library(lubridate) CTP &lt;- read.csv(&quot;https://covidtracking.com/api/v1/states/daily.csv&quot;) state.data &lt;- read_csv(url(&quot;https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv&quot;)) Rect.NYT &lt;- complete(state.data, state,date) # Create new cases and new deaths Rect.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/new-york-times-data-on-covid/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">October 19, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/datasaurus-dozen/">Datasaurus Dozen</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/datasaurus-dozen/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>The datasaurus dozen The datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization. Let’s have a look.
+datasaurus &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-10-13/datasaurus.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## dataset = col_character(), ## x = col_double(), ## y = col_double() ## ) Two libraries to make our work easy.
+library(tidyverse) library(skimr) First, the summary statistics. Summary statistics are great but they are no substitute for basic data familiarity.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/datasaurus-dozen/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">October 19, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/beyonce-words/">tT: Beyoncé and Taylor Swift Lyrics</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/beyonce-words/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>tidyTuesday: Beyoncé and Taylor Swift Lyrics tidyTuesday for the final week of September 2020 is based on the music of Beyoncé and Taylor Swift. To be honest, I do not know either artist well so I will pick Beyoncé and look at her lyrics. First, I load the data.
+beyonce_lyrics &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/beyonce_lyrics.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## line = col_character(), ## song_id = col_double(), ## song_name = col_character(), ## artist_id = col_double(), ## artist_name = col_character(), ## song_line = col_double() ## ) taylor_swift_lyrics &lt;- readr::read_csv(&#39;https://raw.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/beyonce-words/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">September 15, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/spending-on-kids/">tT: Spending on Kids</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>Spending on Kids The Urban Institute has a collection of data on government spending on children. The tidyTuesday page links to some of their commentary and to an article from Governing on the subject. The data are rich and interesting and are conveniently packaged into the tidykids package for R. My goal is to combine geofacets with animation to produce an animation of education spending over time by US states and territories.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/spending-on-kids/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">May 28, 2020</span>
+            
+            <h2><a href="http://localhost:1313/post/spending-on-kids/">Cocktails</a></h2>
+        </header>
+        
+        <a href="http://localhost:1313/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>The Data cocktails &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/cocktails.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## row_id = col_double(), ## drink = col_character(), ## date_modified = col_datetime(format = &quot;&quot;), ## id_drink = col_double(), ## alcoholic = col_character(), ## category = col_character(), ## drink_thumb = col_character(), ## glass = col_character(), ## iba = col_character(), ## video = col_logical(), ## ingredient_number = col_double(), ## ingredient = col_character(), ## measure = col_character() ## ) boston_cocktails &lt;- readr::read_csv(&#39;https://raw.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/spending-on-kids/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+            
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/" class="page active">
+                        1 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/2/" class="page">
+                        2 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/3/" class="page">
+                        3 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/4/" class="page">
+                        4 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+                            
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/5/" class="page">
+                        5 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/2/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

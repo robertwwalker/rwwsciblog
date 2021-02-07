@@ -1,0 +1,240 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Correlation Function &middot; rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">February 22, 2018</span>
+                                
+                                <h1>Correlation Function</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="http://localhost:1313/post/correlation-function/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="correlations-and-the-impact-on-sums-and-differences" class="section level1">
+<h1>Correlations and the Impact on Sums and Differences</h1>
+<p>I will use a simple R function to illustrate the effect of correlation on sums and differences of random variables. In general, the variance [and standard deviation] of a sum of random variables is the variance of the individual variables plus twice the covariance; the variance [and standard deviation] of a difference in random variables is the variance of the individual variables minus twice the (signed) covariance.</p>
+<p><span class="math display">\[ Var (\sum_{i=1}^{n} X_{i}) = \sum_{i=1}^{n} Var(X_{i}) + 2 \sum_{1 \leq i \leq j \leq n} Cov(X_{i},X_{j}) \]</span></p>
+<p>Now for the function and two examples.</p>
+</div>
+<div id="correlation-is-0.8" class="section level1">
+<h1>Correlation is 0.8</h1>
+<pre class="r"><code>library(MASS)
+plot.cor &lt;- function(cor) {
+  if(-1 &lt; cor &amp; cor &lt; 1) {
+mean.vec &lt;- c(0,0)
+sig.mat &lt;- matrix(c(1,cor,cor,1), nrow=2)
+df &lt;- data.frame(mvrnorm(n=1000, mean.vec, sig.mat))
+df$sum &lt;- rowSums(df)
+df$diff &lt;- with(df, X1-X2)
+plot(x=df$X1, y=df$X2, xlab=&quot;x1&quot;, ylab=&quot;x2&quot;, main=paste(&quot;Correlation:&quot;,cor), sub=paste(&quot;Std. Dev: Sum&quot;,round(sd(df$sum), digits=3),&quot; Difference:&quot;,round(sd(df$diff), digits=3)))
+  }
+  else { cat(&quot;Correlation must be between -1 and 1&quot;) }
+}
+plot.cor(cor=0.8)</code></pre>
+<p><img src="http://localhost:1313/post/correlation-function/index_files/figure-html/CorF-1.png" width="672" /></p>
+<p>The correlation above is 0.8</p>
+</div>
+<div id="correlation-is--0.8" class="section level1">
+<h1>Correlation is -0.8</h1>
+<pre class="r"><code>plot.cor(cor=-0.8)</code></pre>
+<p><img src="http://localhost:1313/post/correlation-function/index_files/figure-html/CorF2-1.png" width="672" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

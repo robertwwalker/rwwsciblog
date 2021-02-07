@@ -1,0 +1,335 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Analyzing the Trump Campaign&#39;s Solicitations &middot; rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">November 30, 2020</span>
+                                
+                                <h1>Analyzing the Trump Campaign&#39;s Solicitations</h1>
+                                <p></p>
+                            </header>
+                            
+                            <div class="image main"><img src="" alt="" /></div>
+                            
+                            
+<link href="index_files/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="index_files/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="tldr" class="section level1">
+<h1>tl;dr</h1>
+<p>In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.</p>
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<p>I will use the wonderful <code>gmailr</code> package to access my gmail. You need a key and an id that the vignette gives guidance on. I invoke those elsewhere to keep the tokens safe. First, let me grab all the solicitations; I identify them by the domain in from <em>rnchq.com</em>.</p>
+<pre class="r"><code>my.messages &lt;- gm_messages(&quot;rnchq.com&quot;, 1500)
+get_emails &lt;- function(message_ids) {
+results &lt;- list()
+for (message_id in message_ids) {
+results[[message_id]] &lt;- gm_message(message_id)
+}
+return(results)
+}
+get_message_ids &lt;- function(gmailr_obj) {
+message_ids &lt;- character()
+for (elem in gmailr_obj) {
+messages &lt;- elem[[&#39;messages&#39;]]
+for (i in seq_along(messages)) {
+message_ids &lt;- append(message_ids, messages[[i]][[&#39;id&#39;]])
+}
+}
+return(message_ids)
+}
+message_ids &lt;- get_message_ids(my.messages)
+# message_ids
+my.Trump.mails &lt;- get_emails(message_ids)</code></pre>
+<p>I now have a list with identifiers for each of the messages that they have sent. Now I want to extract a few features from them to analyze: date sent and by whom. This was amazingly simple to do because I ran across <a href="https://embracingtherandom.com/r/web-scraping/email/apis/trying-to-get-to-the-top-of-r-bloggers-emails/">a blog entry that asked similar data questions on embracing the random</a>.</p>
+<div id="what-date" class="section level3">
+<h3>What Date?</h3>
+<pre class="r"><code>get_email_date &lt;- function(email_obj) {
+headers &lt;- as.data.table(do.call(rbind, email_obj$payload$headers))
+email_date &lt;- headers[name==&#39;Date&#39;, value][[1]]
+return(email_date)
+}
+library(data.table)
+library(stringr)
+create_date_features &lt;- function(email_date_dt) {
+  email_date_dt[, `:=`(
+    email_date = date(email_date_posix),
+    email_day = day(email_date_posix),
+    email_month = month(email_date_posix),
+    email_year = year(email_date_posix),
+    email_weekday = wday(email_date_posix),
+    email_hour = hour(email_date_posix),
+    email_minute = minute(email_date_posix),
+    email_second = second(email_date_posix)
+  )]
+  return(email_date_dt)
+}
+make_email_dates_dt &lt;- function(emails_list) {
+result &lt;- data.table()
+for (email in emails_list) {
+email_id &lt;- email$id
+# deal with our email header `Date`
+email_date &lt;- get_email_date(email)
+email_date_posix &lt;- convert_email_date(email_date)
+# create our intermediate results
+temp_result &lt;- data.table(email_id=email_id, email_date=email_date,
+email_date_posix=email_date_posix)
+result &lt;- rbind(result, temp_result)
+}
+result &lt;- create_date_features(result)
+return(result)
+}
+convert_email_date &lt;- function(email_date_str) {
+email_date_posix &lt;- as_datetime(email_date_str, format=&#39;%a, %d %b %Y %H:%M:%S %z&#39;)
+return(as.POSIXct(email_date_posix))
+}
+library(lubridate); library(hrbrthemes)
+Trump.dates &lt;- make_email_dates_dt(my.Trump.mails)
+# Trump.dates
+Trump.dates %&gt;% group_by(email_date) %&gt;% summarise(Count = n()) -&gt; Trump.dates.Counted
+Trump.dates.Counted %&gt;% filter(email_date &lt;= Sys.Date()) %&gt;% ggplot(., aes(x=email_date, y=Count)) + geom_line(color=&quot;red&quot;) + geom_vline(aes(xintercept=as.Date(&quot;2020-11-03&quot;)), color=&quot;blue&quot;, alpha=0.3) + labs(title=&quot;Trump Fundraising Emails&quot;, x=&quot;Date of Email&quot;, y=&quot;Solicitations&quot;) + theme_ipsum_rc() -&gt; p1
+p1 + geom_text(data = data.frame(x = as.Date(&quot;2020-11-02&quot;),
+y = 2.87691946455173,
+label = &quot;Election&quot;),
+mapping = aes(x = x,
+y = y,
+label = label),
+size = 3.86605783866058,
+angle = 0L,
+lineheight = 1L,
+hjust = 0.5,
+vjust = 0.5,
+colour = &quot;blue&quot;,
+family = &quot;sans&quot;,
+fontface = &quot;plain&quot;,
+inherit.aes = FALSE,
+show.legend = FALSE)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+</div>
+<div id="sent-by-whom" class="section level2">
+<h2>Sent by Whom?</h2>
+<p>I guess this answers the question of sibling rivalry. Eric and Lara are clearly the favorites. Poor Don Jr. is just ahead of the campaign store, Newt Gingrich, and Brad Parscale [fired yesterday].</p>
+<pre class="r"><code>get_email_from &lt;- function(email_obj) {
+headers &lt;- as.data.table(do.call(rbind, email_obj$payload$headers))
+email_date &lt;- headers[name==&#39;From&#39;, value][[1]]
+return(email_date)
+}
+make_email_from_dt &lt;- function(emails_list) {
+result &lt;- data.table()
+for (email in emails_list) {
+email_id &lt;- email$id
+# deal with our email header `Date`
+email_from &lt;- get_email_from(email)
+# create our intermediate results
+temp_result &lt;- data.table(email_id=email_id, email_from=email_from)
+result &lt;- rbind(result, temp_result)
+}
+return(result)
+}
+Trump.from &lt;- make_email_from_dt(my.Trump.mails)
+Trump.from %&gt;% mutate(email_From = str_remove(email_from, &quot;&lt;contact@victory.donaldtrump.com&gt;&quot;)) %&gt;% mutate(email_From = str_remove(email_From, &quot;&lt;contact@campaigns.rnchq.com&gt;&quot;)) %&gt;% mutate(email_From = str_remove(email_From, &quot;&lt;info@team.gop.com&gt;&quot;)) %&gt;% mutate(email_From = str_remove(email_From, &quot;&lt;contact@team.donaldtrump.com&gt;&quot;)) %&gt;% group_by(email_From) %&gt;% summarise(Count = n()) %&gt;% 
+  filter(Count &gt; 5) %&gt;%
+  ggplot(., aes(x=fct_reorder(email_From, Count), y=Count, fill=email_From)) + geom_col() + coord_flip() + guides(fill=FALSE) + labs(x=&quot;From Whom?&quot;) + theme_ipsum_rc(base_size = 10)</code></pre>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<p><img src="index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

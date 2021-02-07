@@ -1,0 +1,13 @@
+languageCode: en-us
+title: rww.science
+baseURL: http://localhost:1313/
+theme: hugo-theme-massively
+googleanalytics: ''
+disqusShortname: ''
+disableKinds:
+  - taxonomy
+  - taxonomyTerm
+  - section
+languages:
+  en:
+    languageName: English

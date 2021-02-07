@@ -1,0 +1,650 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+	<meta name="generator" content="Hugo 0.80.0" />
+		<title>rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+		
+
+		
+		
+		
+
+		
+
+		
+		
+		
+
+		
+
+		
+			
+		
+		
+
+		
+
+		
+			<div id="wrapper" class="fade-in" data-pfn="post" data-ps="6" data-pfp="true">
+
+				
+
+				
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+				
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+						
+
+
+<article class="post featured">
+    <header class="major">
+        
+        <span class="date">November 30, 2020</span>
+        
+        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        
+        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
+The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        
+    </header>
+    
+    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
+    
+    <ul class="actions">
+        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+    </ul>
+</article>
+
+
+						
+
+						
+							
+
+<section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">December 17, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/dog-movements-a-tidytuesday/">Dog Movements: a tidyTuesday</a></h2>
+        </header>
+        
+        
+        <p>Adoptable Dogs # devtools::install_github(&quot;thebioengineer/tidytuesdayR&quot;, force=TRUE) tuesdata51 &lt;- tidytuesdayR::tt_load(2019, week = 51) dog_moves &lt;- tuesdata51$dog_moves dog_des &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-17/dog_descriptions.csv&#39;) library(tidyverse); library(scatterpie) library(rgeos) library(maptools) library(rgdal); library(usmap); library(ggthemes)  The Base Map My.Map &lt;- us_map(regions = &quot;states&quot;) Base.Plot &lt;- ggplot() + geom_polygon(data=My.Map, aes(x=x, y=y, group=group), fill=&quot;white&quot;, color=&quot;black&quot;) + theme_map() Base.Plot A fifty state map to plot this information on.
+New.Dat &lt;- left_join(My.Map, dog_moves, by= c(&quot;full&quot; = &quot;location&quot;)) ggplot() + geom_polygon(data=New.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/dog-movements-a-tidytuesday/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 16, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/tidytuesday-measles/">tidyTuesday Measles</a></h2>
+        </header>
+        
+        
+        <p>tidyTuesday: December 10, 2019 Replicating plots from simplystatistics. One nice twist is the development of a tidytuesdayR package to grab the necessary data in an easy way. You can install the package via github. I will also use fiftystater and ggflags.
+devtools::install_github(&quot;thebioengineer/tidytuesdayR&quot;) devtools::install_github(&quot;ellisp/ggflags&quot;) devtools::install_github(&quot;wmurphyrd/fiftystater&quot;) tuesdata &lt;- tidytuesdayR::tt_load(2019, week = 50) ## --- Downloading #TidyTuesday Information for 2019-12-10 ---- ## --- Identified 4 files available for download ---- ## --- Downloading files --- ## Warning in identify_delim(temp_file): Not able to detect delimiter for the file.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/tidytuesday-measles/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 16, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/trying-out-leaflet/">Trying out Leaflet</a></h2>
+        </header>
+        
+        
+        <p>International Murders Are among the data for analysis in the tidyTuesday for December 10, 2019. These are made for a map.
+library(tidyverse) library(leaflet) library(stringr) library(sf) library(here) library(widgetframe) library(htmlwidgets) library(htmltools) options(digits = 3) set.seed(1234) theme_set(theme_minimal()) library(tidytuesdayR) tuesdata &lt;- tt_load(2019, week = 50) murders &lt;- tuesdata$gun_murders There isn’t much data so it should make this a bit easier. Now for some data. As it happens, the best way I currently know how to do this is going to involve acquiring a spatial frame.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/trying-out-leaflet/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 9, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/philadelphia-parking-tickets-a-tidytuesday/">Philadelphia Parking Tickets: a tidyTuesday</a></h2>
+        </header>
+        
+        
+        <p>Philadelphia Map Use ggmap for the base layer.
+library(ggmap); library(osmdata); library(tidyverse) PHI &lt;- get_map(getbb(&quot;Philadelphia, PA&quot;), maptype = &quot;stamen&quot;, zoom=12)  Get the Tickets Data TidyTuesday covers 1.26 million parking tickets in Philadelphia.
+tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-03/tickets.csv&quot;) ## Parsed with column specification: ## cols( ## violation_desc = col_character(), ## issue_datetime = col_datetime(format = &quot;&quot;), ## fine = col_double(), ## issuing_agency = col_character(), ## lat = col_double(), ## lon = col_double(), ## zip_code = col_double() ## )  Two Lines of Code Left library(lubridate); library(ggthemes) tickets &lt;- tickets %&gt;% mutate(Day = wday(issue_datetime, label=TRUE)) # use lubridate to extract the day of the month.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/philadelphia-parking-tickets-a-tidytuesday/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 9, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/uscensus-mapping/">US Census Mapping</a></h2>
+        </header>
+        
+        
+        <p>Searching and Mapping the Census  Searching for the Asian Population via the Census To use tidycensus, there are limitations imposed by the available tables. There is ACS – a survey of about 3 million people – and the two main decennial census files [SF1] and [SF2]. I will search SF1 for the Asian population.
+library(tidycensus); library(kableExtra) library(tidyverse); library(stringr) v10 &lt;- load_variables(2010, &quot;sf1&quot;, cache = TRUE) v10 %&gt;% filter(str_detect(concept, &quot;ASIAN&quot;)) %&gt;% filter(str_detect(label, &quot;Female&quot;)) %&gt;% kable() %&gt;% scroll_box(width = &quot;100%&quot;)    name  label  concept      P012D026  Total!</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/uscensus-mapping/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">November 16, 2019</span>
+            
+            <h2><a href="http://localhost:1313/post/the-generation-squeeze/">The Generation Squeeze</a></h2>
+        </header>
+        
+        
+        <p>Hashtag OKBoomer The generational banter that has followed the use of #OKBoomer reminded me of an interesting feature of US population data. I believe it to be true that Generation X has never and will never be the largest generation of Americans. There are tons of Millenials and Baby Boomers alike, though the rate of decline in the latter means that the former are about to surpass them. Or perhaps they have.</p>
+        
+        <ul class="actions">
+            <li><a href="http://localhost:1313/post/the-generation-squeeze/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+</section>
+
+						
+
+						
+						
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<footer>
+    <div class="pagination">
+        <ul class="pagination">
+
+            
+            
+            
+            
+            <li>
+                <a href="/page/4/" class="previous">
+                    Prev
+                </a>
+            </li>
+            
+
+            
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/3/" class="page">
+                        3 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/4/" class="page">
+                        4 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/5/" class="page active">
+                        5 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/6/" class="page">
+                        6 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                            
+                        
+
+                    
+
+                
+                
+
+                
+                
+                <li>
+                    <a href="/page/7/" class="page">
+                        7 
+                    </a>
+                </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+
+            
+            
+            <li>
+                <a href="/page/6/" class="next">
+                    Next
+                </a>
+            </li>
+            
+
+            
+            
+        </ul>
+    </div>
+</footer>
+
+
+					</div>
+
+					
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+					
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+					<a href="#navPanel" id="navPanelToggle">Menu</a>
+			</div>
+
+			
+			
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+
+	</body>
+</html>

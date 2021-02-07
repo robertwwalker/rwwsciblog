@@ -1,0 +1,553 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Stocks and gganimate &middot; rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">March 17, 2019</span>
+                                
+                                <h1>Stocks and gganimate</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="http://localhost:1313/post/stocks-and-gganimate/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="tidyquant" class="section level2">
+<h2>tidyquant</h2>
+<p>Automates a lot of equity research and calculation using <em>tidy</em> concepts. Here, I will first use it to get the components of the S and P 500 and pick out those with weights over 1.25 percent. In the next step, I download the data and finally calculate daily returns and a cumulative wealth index.</p>
+<pre class="r"><code>library(tidyquant)
+library(tidyverse)
+tq_index(&quot;SP500&quot;) %&gt;% filter(weight &gt; 0.0125) %&gt;% select(symbol,company) -&gt; Tickers
+Tickers &lt;- Tickers %&gt;% filter(symbol!=&quot;BRK.B&quot;) %&gt;% filter(symbol!=&quot;GOOGL&quot;)
+Eq.P &lt;- Tickers %&gt;%  tq_get(., from=&quot;2018/01/01&quot;, to=&quot;2019/03/14&quot;) 
+Returns &lt;- Eq.P %&gt;% group_by(symbol) %&gt;% tq_transmute(., adjusted, periodReturn, period=&quot;daily&quot;)
+C.Returns &lt;- Eq.P %&gt;% 
+  group_by(symbol) %&gt;% 
+  tq_transmute(., adjusted, periodReturn, period=&quot;daily&quot;, type = &quot;log&quot;, col_rename = &quot;returns&quot;) %&gt;% 
+  mutate(wealth.index = 100 * cumprod(1 + returns))
+library(skimr)
+Returns %&gt;% skim()</code></pre>
+<table>
+<caption><span id="tab:cars">Table 1: </span>Data summary</caption>
+<tbody>
+<tr class="odd">
+<td align="left">Name</td>
+<td align="left">Piped data</td>
+</tr>
+<tr class="even">
+<td align="left">Number of rows</td>
+<td align="left">2400</td>
+</tr>
+<tr class="odd">
+<td align="left">Number of columns</td>
+<td align="left">3</td>
+</tr>
+<tr class="even">
+<td align="left">_______________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Column type frequency:</td>
+<td align="left"></td>
+</tr>
+<tr class="even">
+<td align="left">Date</td>
+<td align="left">1</td>
+</tr>
+<tr class="odd">
+<td align="left">numeric</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">________________________</td>
+<td align="left"></td>
+</tr>
+<tr class="odd">
+<td align="left">Group variables</td>
+<td align="left">symbol</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: Date</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">symbol</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="left">min</th>
+<th align="left">max</th>
+<th align="left">median</th>
+<th align="right">n_unique</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">AAPL</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="even">
+<td align="left">date</td>
+<td align="left">AMZN</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">FB</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="even">
+<td align="left">date</td>
+<td align="left">GOOG</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">JNJ</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="even">
+<td align="left">date</td>
+<td align="left">JPM</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="odd">
+<td align="left">date</td>
+<td align="left">MSFT</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+<tr class="even">
+<td align="left">date</td>
+<td align="left">TSLA</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="left">2018-01-02</td>
+<td align="left">2019-03-13</td>
+<td align="left">2018-08-06</td>
+<td align="right">300</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Variable type: numeric</strong></p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">skim_variable</th>
+<th align="left">symbol</th>
+<th align="right">n_missing</th>
+<th align="right">complete_rate</th>
+<th align="right">mean</th>
+<th align="right">sd</th>
+<th align="right">p0</th>
+<th align="right">p25</th>
+<th align="right">p50</th>
+<th align="right">p75</th>
+<th align="right">p100</th>
+<th align="left">hist</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">daily.returns</td>
+<td align="left">AAPL</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">-0.10</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.07</td>
+<td align="left">▁▁▇▇▁</td>
+</tr>
+<tr class="even">
+<td align="left">daily.returns</td>
+<td align="left">AMZN</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">-0.08</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.09</td>
+<td align="left">▁▂▇▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">daily.returns</td>
+<td align="left">FB</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">-0.19</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.11</td>
+<td align="left">▁▁▂▇▁</td>
+</tr>
+<tr class="even">
+<td align="left">daily.returns</td>
+<td align="left">GOOG</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">-0.05</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.06</td>
+<td align="left">▁▃▇▁▁</td>
+</tr>
+<tr class="odd">
+<td align="left">daily.returns</td>
+<td align="left">JNJ</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">-0.10</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.04</td>
+<td align="left">▁▁▁▇▂</td>
+</tr>
+<tr class="even">
+<td align="left">daily.returns</td>
+<td align="left">JPM</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">-0.05</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.04</td>
+<td align="left">▁▂▇▃▁</td>
+</tr>
+<tr class="odd">
+<td align="left">daily.returns</td>
+<td align="left">MSFT</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">-0.05</td>
+<td align="right">-0.01</td>
+<td align="right">0</td>
+<td align="right">0.01</td>
+<td align="right">0.08</td>
+<td align="left">▁▅▇▁▁</td>
+</tr>
+<tr class="even">
+<td align="left">daily.returns</td>
+<td align="left">TSLA</td>
+<td align="right">0</td>
+<td align="right">1</td>
+<td align="right">0</td>
+<td align="right">0.04</td>
+<td align="right">-0.14</td>
+<td align="right">-0.02</td>
+<td align="right">0</td>
+<td align="right">0.02</td>
+<td align="right">0.17</td>
+<td align="left">▁▃▇▁▁</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="animating-a-plot" class="section level2">
+<h2>Animating a plot</h2>
+<p>The goal of this was to play with <code>gganimate</code>. I will take the big components and go through and plot them. It is a big animation because it involves over a year of data. The basic idea for the graphic was borrowed from a gganimate <a href="https://github.com/thomasp85/gganimate/wiki/Temperature-time-series">sample</a>.</p>
+<pre class="r"><code>library(gganimate)
+library(ggrepel)
+p &lt;- ggplot(C.Returns, aes(date, wealth.index, group = symbol, colour=symbol)) + 
+  geom_point(size = 2) + 
+  geom_line() + 
+  geom_segment(aes(xend = as.Date(&quot;2019-03-15&quot;), yend = wealth.index), linetype = 2) + 
+    geom_text_repel(aes(y = wealth.index, x = as.Date(&quot;2019-03-15&quot;), label = symbol), hjust = 1, nudge_x = 8) +
+  transition_reveal(date) + 
+  coord_cartesian(clip = &#39;off&#39;) + 
+  labs(title = &#39;Cumulative Wealth Index for S&amp;P Top 10&#39;, subtitle=&quot;Begins January 1, 2018: Base 100&quot;, y = &#39;Cumulative Change&#39;, x = &#39;Date&#39;) +
+  theme_minimal() + theme(legend.position = &quot;none&quot;)
+animate(p, nframes=300)</code></pre>
+<pre><code>## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 8 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 7 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 6 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 6 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 6 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 6 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 7 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 5 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 4 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 2 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<p><img src="http://localhost:1313/post/stocks-and-gganimate/index_files/figure-html/AnimPlot-1.gif" /><!-- --></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

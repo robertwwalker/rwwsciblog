@@ -1,0 +1,258 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Philadelphia Parking Tickets: a tidyTuesday &middot; rww.science</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww.science</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww.science</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">December 9, 2019</span>
+                                
+                                <h1>Philadelphia Parking Tickets: a tidyTuesday</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+
+
+<div id="philadelphia-map" class="section level2">
+<h2>Philadelphia Map</h2>
+<p>Use <code>ggmap</code> for the base layer.</p>
+<pre class="r"><code>library(ggmap); library(osmdata); library(tidyverse)
+PHI &lt;- get_map(getbb(&quot;Philadelphia, PA&quot;), maptype = &quot;stamen&quot;, zoom=12)</code></pre>
+</div>
+<div id="get-the-tickets-data" class="section level2">
+<h2>Get the Tickets Data</h2>
+<p>TidyTuesday covers 1.26 million parking tickets in Philadelphia.</p>
+<pre class="r"><code>tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-03/tickets.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   violation_desc = col_character(),
+##   issue_datetime = col_datetime(format = &quot;&quot;),
+##   fine = col_double(),
+##   issuing_agency = col_character(),
+##   lat = col_double(),
+##   lon = col_double(),
+##   zip_code = col_double()
+## )</code></pre>
+</div>
+<div id="two-lines-of-code-left" class="section level2">
+<h2>Two Lines of Code Left</h2>
+<pre class="r"><code>library(lubridate); library(ggthemes)
+tickets &lt;- tickets %&gt;% mutate(Day = wday(issue_datetime, label=TRUE)) # use lubridate to extract the day of the month.
+Philly.Tix &lt;- ggmap(PHI) + stat_density2d(data=tickets, aes(x=lon, y=lat, fill=..level.., alpha=..level..), bins=30, size=0.01, geom=&quot;polygon&quot;, contour=TRUE) + scale_fill_viridis_c() + guides(alpha=FALSE) + labs(title=&quot;Philly Tickets&quot;, fill=&quot;Ticket Frequency&quot;) + theme_map() + theme(legend.position = &quot;right&quot;)
+Philly.Tix</code></pre>
+<p><img src="/post/2019-12-09-philadelphia-parking-tickets-a-tidytuesday/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="an-animation" class="section level2">
+<h2>An Animation</h2>
+<pre class="r"><code>library(gganimate) 
+Philly.Tix &lt;- ggmap(PHI) + stat_density2d(data=tickets, aes(x=lon, y=lat, fill=stat(level), alpha=stat(level)), bins=30, size=0.01, geom=&quot;polygon&quot;, contour=TRUE) + geom_point(y=39.8942978,x=-75.1945002, col=&quot;pink&quot;, size=4) + scale_fill_viridis_c() + guides(alpha=FALSE) + labs(title=&quot;Philly Tickets&quot;, fill=&quot;Ticket Frequency&quot;) + theme_map() + theme(legend.position = &quot;right&quot;) 
+Philly.Tix + labs(subtitle = &quot;{closest_state}&quot;) + transition_states(Day, transition_length = 3, state_length = 5, wrap = TRUE)</code></pre>
+</div>
+<div id="facets" class="section level2">
+<h2>Facets</h2>
+<pre class="r"><code>Philly.Tix &lt;- ggmap(PHI) + stat_density2d(data=tickets, aes(x=lon, y=lat, fill=stat(nlevel), alpha=stat(nlevel), group=issuing_agency), bins=30, size=0.01, geom=&quot;polygon&quot;, contour=TRUE) + scale_fill_viridis_c() + geom_point(y=39.8942978,x=-75.1945002, col=&quot;pink&quot;) + guides(alpha=FALSE) + labs(title=&quot;Philly Tickets&quot;, fill=&quot;Ticket Frequency&quot;) + theme_map() + theme(legend.position = &quot;right&quot;) + facet_wrap(vars(issuing_agency))
+Philly.Tix + labs(subtitle = &quot;{closest_state}&quot;) + transition_states(Day, transition_length = 3, state_length = 5, wrap = TRUE)</code></pre>
+</div>
+<div id="a-dot-plot" class="section level2">
+<h2>A Dot Plot</h2>
+<pre class="r"><code>Philly.Tix.Dots &lt;- ggmap(PHI) + geom_point(data=tickets, aes(x=lon, y=lat, color=issuing_agency, size=fine/100000), alpha=0.02) + scale_fill_viridis_d() + guides(alpha=FALSE) + guides(colour = guide_legend(override.aes = list(alpha = 1))) + labs(title=&quot;Philly Tickets&quot;, color=&quot;Issuer&quot;, size=&quot;Fine Amount&quot;) + theme_map() + theme(legend.position = &quot;right&quot;) 
+# + labs(title = &quot;{closest_state}&quot;) + transition_states(Day, transition_length = 3, state_length = 1, wrap = TRUE)
+Philly.Tix.Dots + facet_wrap(vars(Day))</code></pre>
+<pre><code>## Warning: Removed 1161 rows containing missing values (geom_point).</code></pre>
+<p><img src="/post/2019-12-09-philadelphia-parking-tickets-a-tidytuesday/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

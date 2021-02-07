@@ -1,0 +1,9 @@
+contactformaction: 'post-action'
+
+address:
+- line: '900 State St'
+- line: 'Salem, OR 97301'
+
+phone: '(503) 375-6475'
+
+email: 'rwalker@willamette.edu'
