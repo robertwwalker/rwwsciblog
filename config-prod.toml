@@ -1,6 +1,6 @@
 languageCode = "en-us"
 title = "rww-science: the blog"
-baseURL = "https://rww-science-blog.netlify.app"
+baseURL = "https://rww-science.website"
 theme = "hugo-theme-massively"
 googleanalytics = ""
 disqusShortname = ""
