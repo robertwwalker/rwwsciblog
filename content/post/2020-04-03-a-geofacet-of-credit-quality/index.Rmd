@@ -23,7 +23,9 @@ image:
 projects: []
 ---
 
-In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness.  I had always had it on my list to do something like this and recently ran across a package called `geofacet` that makes it simply to easy to do.  So here goes.  The code is below the post.
+In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness.  I had always had it on my list to do something like this and recently ran across a package called `geofacet` that makes it simply to easy to do.  The end result should parse out state level credit risk and showcase the time series of credit risk for each of the states.
+
+So here goes.  The code is below the post.
 
 ```{r, message=FALSE, echo=FALSE, warning=FALSE}
 library(haven)
