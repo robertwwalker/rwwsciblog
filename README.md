@@ -2,4 +2,4 @@
 
 # rww-science.website
 
-My netlify website at [rww.science](https://rww-science.website)
+My netlify website at [rww-science.website](https://rww-science.website)
