@@ -1,8 +1,8 @@
 ---
 title: "Cocktails"
-author: "Robert W. Walker"
+authors: ["RWW"]
 date: '2020-05-28'
-slug: spending-on-kids
+slug: tidytuesday-cocktails
 categories:
   - R
   - tidyTuesday
@@ -11,7 +11,6 @@ tags:
   - tidyverse
 subtitle: ''
 summary: ''
-authors: []
 lastmod: '2020-05-15T27:22:16-07:00'
 featured: no
 image:
@@ -21,14 +20,11 @@ image:
 projects: []
 ---
 
+This week's tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources.  Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin.  That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients.  With that in mind, let turn to the data.
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(tidyverse)
-```
-
-
-```{r, include=FALSE}
 library(tidyverse)
 library(ggthemes)
 ```

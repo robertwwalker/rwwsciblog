@@ -1,6 +1,6 @@
 ---
-title: Datasaurus Dozen
-author: Robert W. Walker
+title: "Datasaurus Dozen"
+authors: ["RWW"]
 date: '2020-10-19'
 slug: datasaurus-dozen
 categories:
@@ -11,7 +11,6 @@ tags:
   - tidyverse
 subtitle: ''
 summary: ''
-authors: []
 lastmod: '2020-10-19T12:46:43-07:00'
 featured: no
 image:
@@ -30,7 +29,7 @@ library(kableExtra)
 # The `datasaurus dozen`
 
 
-The datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization.  Let's have a look.
+The datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization.  Let's have a look.  The basic idea is that all thirteen (datasaurus plus 12) contain nearly identical means and standard deviations though they do vary if the five number summaries are deployed.  The scatterplots that are derived from data with similar x-y summaries is a useful reminder that data science is about patterns, not just statistics.
 
 ```{r}
 datasaurus <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-10-13/datasaurus.csv')
