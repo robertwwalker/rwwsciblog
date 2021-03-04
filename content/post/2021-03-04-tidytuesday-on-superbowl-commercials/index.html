@@ -1,0 +1,36 @@
+---
+title: tidyTuesday on Superbowl Commercials
+author: RWW
+date: '2021-03-04'
+slug: []
+categories:
+  - tidyTuesday
+tags:
+  - tidyTuesday
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>The tidyTuesday data for the week of March 4, 2021 represent Superbowl advertisements.</p>
+<div class="figure">
+<img src="images/tt342021.jpeg" alt="" />
+<p class="caption">screenshot of tidyTuesday description of superbowl commercials</p>
+</div>
+<p>The data look like this…</p>
+<pre class="r"><code>youtube &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv&#39;)
+head(youtube)</code></pre>
+<pre><code>## # A tibble: 6 x 25
+##    year brand  superbowl_ads_dot_… youtube_url  funny show_product_qu… patriotic
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;chr&gt;        &lt;lgl&gt; &lt;lgl&gt;            &lt;lgl&gt;    
+## 1  2018 Toyota https://superbowl-… https://www… FALSE FALSE            FALSE    
+## 2  2020 Bud L… https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## 3  2006 Bud L… https://superbowl-… https://www… TRUE  FALSE            FALSE    
+## 4  2018 Hynud… https://superbowl-… https://www… FALSE TRUE             FALSE    
+## 5  2003 Bud L… https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## 6  2020 Toyota https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## # … with 18 more variables: celebrity &lt;lgl&gt;, danger &lt;lgl&gt;, animals &lt;lgl&gt;,
+## #   use_sex &lt;lgl&gt;, id &lt;chr&gt;, kind &lt;chr&gt;, etag &lt;chr&gt;, view_count &lt;dbl&gt;,
+## #   like_count &lt;dbl&gt;, dislike_count &lt;dbl&gt;, favorite_count &lt;dbl&gt;,
+## #   comment_count &lt;dbl&gt;, published_at &lt;dttm&gt;, title &lt;chr&gt;, description &lt;chr&gt;,
+## #   thumbnail &lt;chr&gt;, channel_title &lt;chr&gt;, category_id &lt;dbl&gt;</code></pre>

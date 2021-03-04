@@ -1,0 +1,35 @@
+---
+title: tidyTuesday on Superbowl Commercials
+author: RWW
+date: '2021-03-04'
+slug: []
+categories:
+  - tidyTuesday
+tags:
+  - tidyTuesday
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+library(tidyverse)
+```
+
+
+The tidyTuesday data for the week of March 4, 2021 represent Superbowl advertisements.  
+
+![screenshot of tidyTuesday description of superbowl commercials](images/tt342021.jpeg)
+
+The data look like this...
+
+```{r}
+youtube <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv')
+head(youtube)
+```
+
+A basic visualization
+
+```{r}
+library(hrbrthemes)
+youtube %>% top_n(75, like_count) %>% group_by(brand) %>% summarise(Count = n()) %>% mutate(legendV = paste(brand, sep="-")) %>% ggplot() + aes(x=fct_reorder(legendV, Count), y=Count, fill=legendV) + geom_col() + coord_flip() + labs(x="Brand", title="Top 75 Ads in Likes by brand") + theme_ipsum() + guides(fill=FALSE)
+```
+

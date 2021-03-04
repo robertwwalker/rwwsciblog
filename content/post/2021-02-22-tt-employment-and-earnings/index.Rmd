@@ -13,6 +13,11 @@ tags:
   - R Markdown
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+
 As a continuation of the #DuBoisChallenge, this week's tidyTuesday presents employment by industry, sex, race, and occupation.  There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS.  Let's see what we have.
 
 ```{r}
@@ -23,6 +28,8 @@ employed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/t
 earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv')
 employed %<>% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))
 ```
+
+Let me try to plot something.
 
 ```{r}
 employed %>% filter(race_gender=="TOTAL") %>% autoplot(employ_n) + guides(color=FALSE)

@@ -1169,15 +1169,15 @@ button,
   text-decoration: none;
   text-transform: uppercase;
   white-space: nowrap; }
-  input.icon[type="submit"]:before,
-  input.icon[type="reset"]:before,
-  input.icon[type="button"]:before,
+  input[type="submit"].icon:before,
+  input[type="reset"].icon:before,
+  input[type="button"].icon:before,
   button.icon:before,
   .button.icon:before {
     margin-right: 0.5rem; }
-  input.icon.solo[type="submit"],
-  input.icon.solo[type="reset"],
-  input.icon.solo[type="button"],
+  input[type="submit"].icon.solo,
+  input[type="reset"].icon.solo,
+  input[type="button"].icon.solo,
   button.icon.solo,
   .button.icon.solo {
     position: relative;
@@ -1189,9 +1189,9 @@ button,
     overflow: hidden;
     padding: 0;
     white-space: nowrap; }
-    input.icon.solo[type="submit"]:before,
-    input.icon.solo[type="reset"]:before,
-    input.icon.solo[type="button"]:before,
+    input[type="submit"].icon.solo:before,
+    input[type="reset"].icon.solo:before,
+    input[type="button"].icon.solo:before,
     button.icon.solo:before,
     .button.icon.solo:before {
       position: absolute;
@@ -1205,24 +1205,24 @@ button,
       margin-right: 0;
       text-align: center;
       text-indent: 0; }
-  input.fit[type="submit"],
-  input.fit[type="reset"],
-  input.fit[type="button"],
+  input[type="submit"].fit,
+  input[type="reset"].fit,
+  input[type="button"].fit,
   button.fit,
   .button.fit {
     width: 100%; }
-  input.small[type="submit"],
-  input.small[type="reset"],
-  input.small[type="button"],
+  input[type="submit"].small,
+  input[type="reset"].small,
+  input[type="button"].small,
   button.small,
   .button.small {
     font-size: 0.7rem;
     height: 2.5rem;
     line-height: 2.5rem;
     padding: 0 1.5rem; }
-  input.large[type="submit"],
-  input.large[type="reset"],
-  input.large[type="button"],
+  input[type="submit"].large,
+  input[type="reset"].large,
+  input[type="button"].large,
   button.large,
   .button.large {
     font-size: 0.9rem;
@@ -1238,18 +1238,18 @@ button,
       font-size: 0.9rem;
       height: 3.25rem;
       line-height: 3.25rem; }
-      input.large[type="submit"],
-      input.large[type="reset"],
-      input.large[type="button"],
+      input[type="submit"].large,
+      input[type="reset"].large,
+      input[type="button"].large,
       button.large,
       .button.large {
         font-size: 1rem;
         height: 3.75rem;
         line-height: 3.75rem; } }
-  input.disabled[type="submit"], input[type="submit"]:disabled,
-  input.disabled[type="reset"],
+  input[type="submit"].disabled, input[type="submit"]:disabled,
+  input[type="reset"].disabled,
   input[type="reset"]:disabled,
-  input.disabled[type="button"],
+  input[type="button"].disabled,
   input[type="button"]:disabled,
   button.disabled,
   button:disabled,
@@ -1273,17 +1273,17 @@ button,
   .button:hover {
     box-shadow: inset 0 0 0 2px #18bfef;
     color: #18bfef !important; }
-  input.primary[type="submit"],
-  input.primary[type="reset"],
-  input.primary[type="button"],
+  input[type="submit"].primary,
+  input[type="reset"].primary,
+  input[type="button"].primary,
   button.primary,
   .button.primary {
     background-color: #212931;
     box-shadow: none;
     color: #ffffff !important; }
-    input.primary[type="submit"]:hover,
-    input.primary[type="reset"]:hover,
-    input.primary[type="button"]:hover,
+    input[type="submit"].primary:hover,
+    input[type="reset"].primary:hover,
+    input[type="button"].primary:hover,
     button.primary:hover,
     .button.primary:hover {
       background-color: #18bfef; }
@@ -1663,9 +1663,9 @@ ul.actions {
         ul.actions:not(.fixed) li button,
         ul.actions:not(.fixed) li .button {
           width: 100%; }
-          ul.actions:not(.fixed) li input.icon[type="submit"]:before,
-          ul.actions:not(.fixed) li input.icon[type="reset"]:before,
-          ul.actions:not(.fixed) li input.icon[type="button"]:before,
+          ul.actions:not(.fixed) li input[type="submit"].icon:before,
+          ul.actions:not(.fixed) li input[type="reset"].icon:before,
+          ul.actions:not(.fixed) li input[type="button"].icon:before,
           ul.actions:not(.fixed) li button.icon:before,
           ul.actions:not(.fixed) li .button.icon:before {
             margin-left: -0.5rem; } }
@@ -2049,17 +2049,17 @@ table.alt tbody tr td {
     #intro .button:hover {
       box-shadow: inset 0 0 0 2px #18bfef;
       color: #18bfef !important; }
-    #intro input.primary[type="submit"],
-    #intro input.primary[type="reset"],
-    #intro input.primary[type="button"],
+    #intro input[type="submit"].primary,
+    #intro input[type="reset"].primary,
+    #intro input[type="button"].primary,
     #intro button.primary,
     #intro .button.primary {
       background-color: #ffffff;
       box-shadow: none;
       color: #1e252d !important; }
-      #intro input.primary[type="submit"]:hover,
-      #intro input.primary[type="reset"]:hover,
-      #intro input.primary[type="button"]:hover,
+      #intro input[type="submit"].primary:hover,
+      #intro input[type="reset"].primary:hover,
+      #intro input[type="button"].primary:hover,
       #intro button.primary:hover,
       #intro .button.primary:hover {
         background-color: #18bfef; }
@@ -2474,17 +2474,17 @@ table.alt tbody tr td {
     #footer .button:hover {
       box-shadow: inset 0 0 0 2px #18bfef;
       color: #18bfef !important; }
-    #footer input.primary[type="submit"],
-    #footer input.primary[type="reset"],
-    #footer input.primary[type="button"],
+    #footer input[type="submit"].primary,
+    #footer input[type="reset"].primary,
+    #footer input[type="button"].primary,
     #footer button.primary,
     #footer .button.primary {
       background-color: #717981;
       box-shadow: none;
       color: #f5f5f5 !important; }
-      #footer input.primary[type="submit"]:hover,
-      #footer input.primary[type="reset"]:hover,
-      #footer input.primary[type="button"]:hover,
+      #footer input[type="submit"].primary:hover,
+      #footer input[type="reset"].primary:hover,
+      #footer input[type="button"].primary:hover,
       #footer button.primary:hover,
       #footer .button.primary:hover {
         background-color: #18bfef; }
