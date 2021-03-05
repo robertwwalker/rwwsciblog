@@ -12,9 +12,9 @@ tags:
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>The tidyTuesday data for the week of March 4, 2021 represent Superbowl advertisements.</p>
+<p>The tidyTuesday data for the week of March 4, 2021 represent 247 rows of Superbowl advertisements coded on a few dimensions by <code>fivethirtyeight</code>. The original article uses 233 and there are a few with at least some missing features in the dataset. The idea was to use binary evaluations of patriotic, funny, uses sex, and a host of other characteristics to describe the universe of Super Bowl ads. One thing that stands out is the difference between Budweiser and Bud Light. Here is a brief look at the data that we have.</p>
 <div class="figure">
-<img src="images/tt342021.jpeg" alt="" />
+<img src="images/tt342021.jpeg" style="width:80.0%" alt="" />
 <p class="caption">screenshot of tidyTuesday description of superbowl commercials</p>
 </div>
 <p>The data look like this…</p>
@@ -34,3 +34,63 @@ head(youtube)</code></pre>
 ## #   like_count &lt;dbl&gt;, dislike_count &lt;dbl&gt;, favorite_count &lt;dbl&gt;,
 ## #   comment_count &lt;dbl&gt;, published_at &lt;dttm&gt;, title &lt;chr&gt;, description &lt;chr&gt;,
 ## #   thumbnail &lt;chr&gt;, channel_title &lt;chr&gt;, category_id &lt;dbl&gt;</code></pre>
+<p>A basic visualization</p>
+<pre class="r"><code>library(hrbrthemes); library(magrittr)
+# Fix the spelling of Hyundai
+youtube %&lt;&gt;% mutate(brand = recode(brand, Hynudai = &quot;Hyundai&quot;))
+# Grab the top 75 most likes and plot them
+youtube %&gt;% top_n(75, like_count) %&gt;% group_by(brand) %&gt;% summarise(Count = n()) %&gt;% mutate(legendV = paste(brand, sep=&quot;-&quot;)) %&gt;% ggplot() + aes(x=fct_reorder(legendV, Count), y=Count, fill=legendV) + geom_col() + coord_flip() + labs(x=&quot;Brand&quot;, title=&quot;Top 75 Ads in Likes by brand&quot;) + theme_ipsum() + guides(fill=FALSE)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="1152" /></p>
+<p>Doritos seems to have the most popular commercials followed by Budweiser and Bud Light, Pepsi and Coca-Cola. Were we to combine Budweiser and Bud Light, they would clearly come out on top.</p>
+<p>Now to slice it up a little bit. There are only ten brands in the dataset of 247 ads.</p>
+<pre class="r"><code>youtube %&gt;% janitor::tabyl(brand) %&gt;% arrange(n)</code></pre>
+<pre><code>##      brand  n    percent
+##        NFL 11 0.04453441
+##     Toyota 11 0.04453441
+##    E-Trade 13 0.05263158
+##        Kia 13 0.05263158
+##  Coca-Cola 21 0.08502024
+##    Hyundai 22 0.08906883
+##    Doritos 25 0.10121457
+##      Pepsi 25 0.10121457
+##  Budweiser 43 0.17408907
+##  Bud Light 63 0.25506073</code></pre>
+<div id="sex-themed-ads" class="section level2">
+<h2>Sex-Themed Ads?</h2>
+<p>One category that I did not expect was sex-themed ads. How often do those occur and what brand chose this form?</p>
+<pre class="r"><code>youtube %&gt;% group_by(brand, use_sex) %&gt;% summarise(Count = n()) %&gt;% ungroup() %&gt;% pivot_wider(names_from=use_sex, values_from = Count) %&gt;% data.frame() %&gt;% mutate(TRUE. = replace_na(TRUE., 0), Total = FALSE. + TRUE., prop = TRUE./Total) -&gt; Brand.Prop
+youtube %&gt;% group_by(brand, use_sex) %&gt;% summarise(Count = n()) %&gt;% left_join(., Brand.Prop) %&gt;% ggplot() + aes(x=fct_reorder(brand, prop), y=Count, fill=use_sex) + geom_col() + coord_flip() + scale_fill_ipsum() + theme_ipsum() + labs(fill=&quot;Sexually Themed?&quot;, title=&quot;Super Bowl Ads by Brand and Sex-Themed&quot;, x=&quot;Brand&quot;, caption=&quot;Sorted by Proportion of Sex-Themed Ads&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="1152" /></p>
+<p>I think I like that basic method of visualization. For this tidyTuesday, I will build it into a function so that I can repeat it for the various characteristics.</p>
+</div>
+<div id="a-function" class="section level2">
+<h2>A Function</h2>
+<p>Now I want to build a basic function that will take the data and whatever variable I wish to fill on and render the data wrangling and plotting automagically. I will need <code>rlang</code> to handle the passing of the variable name along with the companion <code>!!</code> method of address and <code>as_name</code> to build the caption and title elements. When I began writing it, I was only going to pull the data together but then I remembered as_name and could complete it; it bears the unfortunate name <code>DataMaker</code> for this reason.</p>
+<pre class="r"><code>DataMaker &lt;- function(data, var) {
+var &lt;- enquo(var)
+data %&gt;% 
+  group_by(brand, !! var ) %&gt;% 
+  summarise(Count = n()) %&gt;% 
+  ungroup() %&gt;% 
+  pivot_wider(names_from=!! var, values_from = Count) %&gt;%
+  data.frame() %&gt;% 
+  mutate(TRUE. = replace_na(TRUE., 0), 
+         Total = FALSE. + TRUE., 
+         prop = TRUE./Total) %&gt;% 
+  select(brand, Total, prop) -&gt; Brand.Prop
+data %&gt;% 
+  group_by(brand, !! var) %&gt;% 
+  summarise(Count = n()) %&gt;% 
+  left_join(., Brand.Prop) %&gt;% ggplot() + aes(x=fct_reorder(brand, prop), y=Count, fill=!! var) + geom_col() + coord_flip() + scale_fill_ipsum() + theme_ipsum() + labs(fill=as_name(var), title=paste0(&quot;Super Bowl Ads by Brand and &quot;,as_name(var)), caption=paste0(&quot;Sorted by Proportion &quot;, as_name(var)), x=&quot;Brand&quot;)
+}
+DataMaker(youtube, patriotic)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, danger)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, animals)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, funny)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, celebrity)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="1152" /></p>
+</div>
