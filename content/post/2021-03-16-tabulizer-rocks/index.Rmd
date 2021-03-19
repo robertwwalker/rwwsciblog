@@ -1,0 +1,60 @@
+---
+title: tabulizer Rocks
+author: RWW
+date: '2021-03-16'
+slug: []
+categories:
+  - tidyverse
+  - ggplot
+tags:
+  - tidyverse
+  - time series
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE, fig.retina = 2, fig.width=8, fig.height=6)
+```
+
+## Voter Turnout in Oregon
+
+Oregon's voter turnout data is published by the Oregon Secretary of State's office.  You can find a [direct link to the .pdf here](https://sos.oregon.gov/elections/Documents/Voter_Turnout_History_General_Election.pdf).  How hard is to recover a .pdf table?  Let's see.  I am going to work with `tabulizer`.
+
+```{r}
+library(tabulizer)
+library(dplyr)
+```
+
+The key function for this will be `extract_tables`; with knowledge of that let's see if it just automagically works.
+
+```{r}
+library(kableExtra)
+location <- 'https://sos.oregon.gov/elections/Documents/Voter_Turnout_History_General_Election.pdf'
+out <- extract_tables(location)
+head(out) %>% kable() %>% scroll_box(height="300px")
+```
+
+So far so good.  Now a bit of wrangling in two steps.  First, I need to get rid of the first row.  Second, I need to get rid of the percent signs and commas.
+
+```{r}
+library(stringr)
+Cleaned <- out %>% data.frame() %>% 
+  filter(X1!="Year") %>% 
+  transmute(year = as.numeric(X1), 
+            RegVoters = as.numeric(str_remove_all(X2, ",")), 
+            Votes = as.numeric(str_remove_all(X3, ",")), 
+            Vote.Percent = as.numeric(str_remove(X4, "%")))
+Cleaned %>% head() %>% kable() %>% scroll_box(height="300px")
+```
+
+One more relevant feature is that midterms and presidential years are a bit different so let me denote this with an indicator.  The method I will use is does the integer division of year minus 1960 divided by four have no remainder [TRUE] or have a remainder [FALSE].  
+
+```{r}
+library(fpp3); library(magrittr); library(hrbrthemes)
+Cleaned %<>% mutate(President = as.factor(((year - 1960) %% 4) == 0))
+```
+
+Now I have exactly the dataset that I want.  What does the plot look like?
+
+```{r}
+Cleaned %>% ggplot(.) + aes(x=year, y=Vote.Percent, color=President, group=President) + geom_point() + geom_line() + scale_color_ipsum() + labs(title="Voter Turnout in Oregon since 1960", x="Year", y="Turnout (%)", color="Presidential Election?") + theme_ipsum_rc()
+```
