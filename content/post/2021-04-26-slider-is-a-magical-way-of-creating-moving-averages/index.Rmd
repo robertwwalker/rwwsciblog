@@ -55,16 +55,28 @@ Now let me try another mutation.  Let me keep the last closing price of the mont
 
 ```{r}
 Nike.Last <- Nike.Stocks %>% 
-  tq_transmute(select = adjusted, mutate_fun = to.monthly) %>%
+  tq_transmute(select = adjusted, mutate_fun = to.monthly)
+Nike.Last
+```
+
+That is not quite right.  This is a `yearmon` type.  I need to change that.
+
+```{r}
+Nike.Last <- Nike.Last%>%
   mutate(date = yearmonth(date))
 Nike.Last
 ```
 
-The dates match up, so they should join up nicely.  Let's try that.
+The dates match up in type now, so they should join up nicely.  Let's try that.
 
 ```{r}
 Nike.Data <- Nike.Returns %>% left_join(., Nike.Last, by = c("date" = "date"))
-# Turn it into a tsibble.  That means defining the yearmonth as the data and indexing a tsibble by that.
+Nike.Data
+```
+
+The next step is to  turn it into a tsibble.  That means defining the yearmonth as the data and indexing a tsibble by that.
+
+```{r}
 Nike.Data <- Nike.Data  %>% mutate(date = yearmonth(date)) %>% as_tsibble(index=date)
 ```
 
@@ -81,6 +93,23 @@ Nike.Data.Train %>% tail()
 Nike.Data.Test <- anti_join(Nike.Data,Nike.Data.Train) %>% as_tsibble(index=date)
 Nike.Data.Test
 ```
+
+## The Forecasting Workflow
+
+```{r}
+Nike.Mods <- Nike.Data.Train %>%
+  model(
+    ARIMA(monthly.returns),
+    ETS(monthly.returns))
+Nike.Mods %>% forecast(h=12) %>% accuracy(Nike.Data.Test)
+```
+
+A plot.
+
+```{r}
+Nike.Mods %>% forecast(h=12) %>% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model))
+```
+
 
 ## Three-month trailing averages
 

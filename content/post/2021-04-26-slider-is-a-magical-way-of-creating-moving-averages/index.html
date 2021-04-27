@@ -62,7 +62,24 @@ Nike.Returns</code></pre>
 ## # … with 66 more rows</code></pre>
 <p>Now let me try another mutation. Let me keep the last closing price of the month. The last step here makes sure the dates are the same type. All of this remains <code>tibble</code> as the type; not <code>tsibble</code>. That is convenient for joining data.</p>
 <pre class="r"><code>Nike.Last &lt;- Nike.Stocks %&gt;% 
-  tq_transmute(select = adjusted, mutate_fun = to.monthly) %&gt;%
+  tq_transmute(select = adjusted, mutate_fun = to.monthly)
+Nike.Last</code></pre>
+<pre><code>## # A tibble: 76 x 2
+##    date      adjusted
+##    &lt;yearmon&gt;    &lt;dbl&gt;
+##  1 Jan 2015      43.0
+##  2 Feb 2015      45.5
+##  3 Mar 2015      47.0
+##  4 Apr 2015      46.3
+##  5 May 2015      47.7
+##  6 Jun 2015      50.7
+##  7 Jul 2015      54.1
+##  8 Aug 2015      52.4
+##  9 Sep 2015      57.9
+## 10 Oct 2015      61.6
+## # … with 66 more rows</code></pre>
+<p>That is not quite right. This is a <code>yearmon</code> type. I need to change that.</p>
+<pre class="r"><code>Nike.Last &lt;- Nike.Last%&gt;%
   mutate(date = yearmonth(date))
 Nike.Last</code></pre>
 <pre><code>## # A tibble: 76 x 2
@@ -79,10 +96,25 @@ Nike.Last</code></pre>
 ##  9 2015 Sep     57.9
 ## 10 2015 Oct     61.6
 ## # … with 66 more rows</code></pre>
-<p>The dates match up, so they should join up nicely. Let’s try that.</p>
+<p>The dates match up in type now, so they should join up nicely. Let’s try that.</p>
 <pre class="r"><code>Nike.Data &lt;- Nike.Returns %&gt;% left_join(., Nike.Last, by = c(&quot;date&quot; = &quot;date&quot;))
-# Turn it into a tsibble.  That means defining the yearmonth as the data and indexing a tsibble by that.
-Nike.Data &lt;- Nike.Data  %&gt;% mutate(date = yearmonth(date)) %&gt;% as_tsibble(index=date)</code></pre>
+Nike.Data</code></pre>
+<pre><code>## # A tibble: 76 x 3
+##        date monthly.returns adjusted
+##       &lt;mth&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+##  1 2015 Jan         -0.0293     43.0
+##  2 2015 Feb          0.0558     45.5
+##  3 2015 Mar          0.0331     47.0
+##  4 2015 Apr         -0.0149     46.3
+##  5 2015 May          0.0314     47.7
+##  6 2015 Jun          0.0625     50.7
+##  7 2015 Jul          0.0667     54.1
+##  8 2015 Aug         -0.0301     52.4
+##  9 2015 Sep          0.103      57.9
+## 10 2015 Oct          0.0655     61.6
+## # … with 66 more rows</code></pre>
+<p>The next step is to turn it into a tsibble. That means defining the yearmonth as the data and indexing a tsibble by that.</p>
+<pre class="r"><code>Nike.Data &lt;- Nike.Data  %&gt;% mutate(date = yearmonth(date)) %&gt;% as_tsibble(index=date)</code></pre>
 <p>Now it is a <code>tsibble</code> to work with in the <code>fpp3</code> workflow. Finally, let’s set up training and test sets. Working with the Nike data; use filter_index to grab all the data up to and including January 2020</p>
 <pre class="r"><code>Nike.Data.Train &lt;- Nike.Data  %&gt;% filter_index(. ~ &quot;2020-01&quot;)
 # Look at it.
@@ -118,9 +150,25 @@ Nike.Data.Test</code></pre>
 ## 14 2021 Mar        -0.0140     133. 
 ## 15 2021 Apr        -0.0203     130.</code></pre>
 </div>
+<div id="the-forecasting-workflow" class="section level2">
+<h2>The Forecasting Workflow</h2>
+<pre class="r"><code>Nike.Mods &lt;- Nike.Data.Train %&gt;%
+  model(
+    ARIMA(monthly.returns),
+    ETS(monthly.returns))
+Nike.Mods %&gt;% forecast(h=12) %&gt;% accuracy(Nike.Data.Test)</code></pre>
+<pre><code>## # A tibble: 2 x 10
+##   .model               .type     ME   RMSE    MAE   MPE  MAPE  MASE RMSSE   ACF1
+##   &lt;chr&gt;                &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 ARIMA(monthly.retur… Test  0.0174 0.0828 0.0737  148.  148.   NaN   NaN 0.0130
+## 2 ETS(monthly.returns) Test  0.0174 0.0828 0.0737  148.  148.   NaN   NaN 0.0130</code></pre>
+<p>A plot.</p>
+<pre class="r"><code>Nike.Mods %&gt;% forecast(h=12) %&gt;% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model))</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
 <div id="three-month-trailing-averages" class="section level2">
 <h2>Three-month trailing averages</h2>
 <pre class="r"><code>NMA &lt;- Nike.Data %&gt;% mutate(MMR3 = slider::slide_dbl(monthly.returns, mean, .before=3, .after=0), MMR6 = slider::slide_dbl(monthly.returns, mean, .before=6, .after=0)) 
 NMA %&gt;% autoplot(MMR3) + autolayer(NMA %&gt;% select(MMR6), color=&quot;red&quot;) + labs(x=&quot;Month&quot;, y=&quot;Monthly Returns of Nike&quot;, title=&quot;Monthly Returns of Nike&quot;, subtitle=&quot;3 and 6 month trailing averages [red]&quot;)</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
