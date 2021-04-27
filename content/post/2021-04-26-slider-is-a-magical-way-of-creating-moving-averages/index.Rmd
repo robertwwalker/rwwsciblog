@@ -13,9 +13,16 @@ tags:
   - tidyverse
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE, fig.retina = 2)
+library(tidyquant)
+library(tidyverse)
+library(fpp3)
+```
+
 ## Nike's Stock
 
-```{r}
+```
 # Load libraries
 library(tidyquant)
 library(tidyverse)
@@ -72,7 +79,9 @@ Nike.Data.Train %>% tail()
 ```{r}
 # Create a test set as everything that is not in the training set, e.g. the last 15 months
 Nike.Data.Test <- anti_join(Nike.Data,Nike.Data.Train) %>% as_tsibble(index=date)
+Nike.Data.Test
 ```
+
 ## Three-month trailing averages
 
 ```{r}
