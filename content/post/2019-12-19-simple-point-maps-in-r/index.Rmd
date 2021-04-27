@@ -98,4 +98,3 @@ htmlwidgets::saveWidget(
 ```
 
 <iframe width="600" height="600" src="https://rww.science/img/widgets/mmmap.html" frameborder="0" allowfullscreen></iframe>
-

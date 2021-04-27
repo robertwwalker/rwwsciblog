@@ -86,10 +86,13 @@ MyDat <- beyonce_lyrics %>%
   summarise(freq = n()) %>%      # How common is the word?
   arrange(desc(freq))
 MyWC <- wordcloud2::letterCloud(MyDat, word="Most Popular \n Words in \n Beyonce \n Lyrics", wordSize = 1.75, backgroundColor="lightblue", color='random-dark', size=0.8)
-# htmlwidgets::saveWidget(widgetframe::frameWidget(MyWC), file='widgets/beyonce.html')
+# htmlwidgets::saveWidget(widgetframe::frameWidget(MyWC), file='widgets/beyonce.html', selfcontained = TRUE)
 # MyWC
-# widgetframe::frameWidget(MyWC)
+widgetframe::frameWidget(MyWC)
 ```
+
+<iframe width="600" height="600" src="widgets/beyonce.html" frameborder="0" allowfullscreen></iframe>
+
 
 Something about this does not seem to work now as I redesign the website.  It did at one time.
 
