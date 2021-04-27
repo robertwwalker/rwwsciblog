@@ -107,7 +107,7 @@ Nike.Mods %>% forecast(h=12) %>% accuracy(Nike.Data.Test)
 A plot.
 
 ```{r}
-Nike.Mods %>% forecast(h=12) %>% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model))
+Nike.Mods %>% forecast(h=12) %>% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model)) + guides(level=FALSE, color=FALSE, fill=FALSE) + theme_minimal()
 ```
 
 
