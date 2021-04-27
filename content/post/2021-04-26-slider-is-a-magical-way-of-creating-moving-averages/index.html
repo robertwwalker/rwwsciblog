@@ -24,7 +24,9 @@ library(tidyverse)
 library(fpp3)</code></pre>
 <p>With those libraries, I should have what I need. Let me get Nike’s stock from 2015.</p>
 <pre class="r"><code># Get Nike stock data
-Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;)</code></pre>
+Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;)
+Nike.Stocks %&gt;% as_tsibble(index=date) %&gt;% autoplot(adjusted) + labs(y=&quot;Adjusted Closing Price&quot;, title=&quot;NKE since 2015&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <p>Now I want to create monthly data. I will the <code>yearmonth</code> type from lubridate. By default, <code>tidyquant</code> uses <code>yearmon</code> which is different.</p>
 <pre class="r"><code># Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.
 Nike.Returns &lt;- Nike.Stocks %&gt;% tq_transmute(adjusted, mutate_fun=periodReturn, period=&quot;monthly&quot;) 
@@ -148,7 +150,7 @@ Nike.Data.Test</code></pre>
 ## 12 2021 Jan        -0.0557     133. 
 ## 13 2021 Feb         0.0110     135. 
 ## 14 2021 Mar        -0.0140     133. 
-## 15 2021 Apr        -0.0203     130.</code></pre>
+## 15 2021 Apr        -0.00971    132.</code></pre>
 </div>
 <div id="the-forecasting-workflow" class="section level2">
 <h2>The Forecasting Workflow</h2>

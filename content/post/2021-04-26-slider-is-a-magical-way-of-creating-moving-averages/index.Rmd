@@ -34,6 +34,7 @@ With those libraries, I should have what I need.  Let me get Nike's stock from 2
 ```{r}
 # Get Nike stock data
 Nike.Stocks <- tq_get("NKE", from="2015-01-01")
+Nike.Stocks %>% as_tsibble(index=date) %>% autoplot(adjusted) + labs(y="Adjusted Closing Price", title="NKE since 2015")
 ```
 
 Now I want to create monthly data.  I will the `yearmonth` type from lubridate.  By default, `tidyquant` uses `yearmon` which is different.
