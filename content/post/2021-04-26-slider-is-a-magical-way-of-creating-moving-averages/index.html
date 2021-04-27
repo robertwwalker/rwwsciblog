@@ -18,72 +18,10 @@ tags:
 
 <div id="nikes-stock" class="section level2">
 <h2>Nike’s Stock</h2>
-<pre class="r"><code># Load libraries
-library(tidyquant)</code></pre>
-<pre><code>## Loading required package: lubridate</code></pre>
-<pre><code>## 
-## Attaching package: &#39;lubridate&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     date, intersect, setdiff, union</code></pre>
-<pre><code>## Loading required package: PerformanceAnalytics</code></pre>
-<pre><code>## Loading required package: xts</code></pre>
-<pre><code>## Loading required package: zoo</code></pre>
-<pre><code>## 
-## Attaching package: &#39;zoo&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     as.Date, as.Date.numeric</code></pre>
-<pre><code>## 
-## Attaching package: &#39;PerformanceAnalytics&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:graphics&#39;:
-## 
-##     legend</code></pre>
-<pre><code>## Loading required package: quantmod</code></pre>
-<pre><code>## Loading required package: TTR</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;quantmod&#39;:
-##   method            from
-##   as.zoo.data.frame zoo</code></pre>
-<pre><code>## ══ Need to Learn tidyquant? ════════════════════════════════════════════════════
-## Business Science offers a 1-hour course - Learning Lab #9: Performance Analysis &amp; Portfolio Optimization with tidyquant!
-## &lt;/&gt; Learn more at: https://university.business-science.io/p/learning-labs-pro &lt;/&gt;</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-<pre><code>## ✓ ggplot2 3.3.3     ✓ purrr   0.3.4
-## ✓ tibble  3.1.1     ✓ dplyr   1.0.5
-## ✓ tidyr   1.1.3     ✓ stringr 1.4.0
-## ✓ readr   1.4.0     ✓ forcats 0.5.1</code></pre>
-<pre><code>## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## x lubridate::as.difftime() masks base::as.difftime()
-## x lubridate::date()        masks base::date()
-## x dplyr::filter()          masks stats::filter()
-## x dplyr::first()           masks xts::first()
-## x lubridate::intersect()   masks base::intersect()
-## x dplyr::lag()             masks stats::lag()
-## x dplyr::last()            masks xts::last()
-## x lubridate::setdiff()     masks base::setdiff()
-## x lubridate::union()       masks base::union()</code></pre>
-<pre class="r"><code>library(fpp3)</code></pre>
-<pre><code>## ── Attaching packages ──────────────────────────────────────────── fpp3 0.4.0 ──</code></pre>
-<pre><code>## ✓ tsibble     1.0.1     ✓ feasts      0.2.1
-## ✓ tsibbledata 0.3.0     ✓ fable       0.3.0</code></pre>
-<pre><code>## ── Conflicts ───────────────────────────────────────────────── fpp3_conflicts ──
-## x lubridate::date()    masks base::date()
-## x dplyr::filter()      masks stats::filter()
-## x dplyr::first()       masks xts::first()
-## x tsibble::index()     masks zoo::index()
-## x tsibble::intersect() masks base::intersect()
-## x tsibble::interval()  masks lubridate::interval()
-## x dplyr::lag()         masks stats::lag()
-## x dplyr::last()        masks xts::last()
-## x tsibble::setdiff()   masks base::setdiff()
-## x tsibble::union()     masks base::union()
-## x fable::VAR()         masks tidyquant::VAR()</code></pre>
-<pre><code>## 
-## Attaching package: &#39;fpp3&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:PerformanceAnalytics&#39;:
-## 
-##     prices</code></pre>
+<pre><code># Load libraries
+library(tidyquant)
+library(tidyverse)
+library(fpp3)</code></pre>
 <p>With those libraries, I should have what I need. Let me get Nike’s stock from 2015.</p>
 <pre class="r"><code># Get Nike stock data
 Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;)</code></pre>
@@ -160,12 +98,10 @@ Nike.Data.Train %&gt;% tail()</code></pre>
 ## 6 2020 Jan         -0.0495     95.2</code></pre>
 <pre class="r"><code># Create a test set as everything that is not in the training set, e.g. the last 15 months
 Nike.Data.Test &lt;- anti_join(Nike.Data,Nike.Data.Train) %&gt;% as_tsibble(index=date)</code></pre>
-<pre><code>## Joining, by = c(&quot;date&quot;, &quot;monthly.returns&quot;, &quot;adjusted&quot;)</code></pre>
 </div>
 <div id="three-month-trailing-averages" class="section level2">
 <h2>Three-month trailing averages</h2>
 <pre class="r"><code>NMA &lt;- Nike.Data %&gt;% mutate(MMR3 = slider::slide_dbl(monthly.returns, mean, .before=3, .after=0), MMR6 = slider::slide_dbl(monthly.returns, mean, .before=6, .after=0)) 
 NMA %&gt;% autoplot(MMR3) + autolayer(NMA %&gt;% select(MMR6), color=&quot;red&quot;) + labs(x=&quot;Month&quot;, y=&quot;Monthly Returns of Nike&quot;, title=&quot;Monthly Returns of Nike&quot;, subtitle=&quot;3 and 6 month trailing averages [red]&quot;)</code></pre>
-<pre><code>## Plot variable not specified, automatically selected `.vars = MMR6`</code></pre>
-<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
