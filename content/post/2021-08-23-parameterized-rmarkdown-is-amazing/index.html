@@ -1,0 +1,61 @@
+---
+title: Parameterized RMarkdown is Amazing
+author: RWW
+date: '2021-08-23'
+slug: []
+categories: []
+tags:
+  - R Markdown
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="parameterized-r-markdown" class="section level1">
+<h1>Parameterized R Markdown</h1>
+<p>A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.</p>
+<p>First, I want to build an RMarkdown file. In <em>RStudio</em>, that is <code>File &gt; New file &gt; R Markdown</code>.</p>
+<p>We will need to add a bit of metadata to the top. The key component is the <code>params:</code> argument. I want to pass a <code>ticker</code> with a default option.</p>
+<p><img src="pic/yaml.png" /></p>
+<p>Now, let’s build up an example.</p>
+<p>I want to load a few libraries.</p>
+<pre><code>library(tidyquant)
+library(ggplot2)
+library(fpp3)</code></pre>
+<p>Without loading anything else, this markdown is aware of what I passed it in <code>params$ticker</code>. But <code>tidyquant</code> can make use of tickers and retrieve market OHLC data. So let me proxy that behavior with Goldman Sachs as the example.</p>
+<pre class="r"><code>params &lt;- NULL
+params$ticker &lt;- &quot;GS&quot;</code></pre>
+<p>Now my environment looks the same. Let me use <code>tq_get</code> to get the data.</p>
+<pre class="r"><code>dat &lt;- tq_get(params$ticker)</code></pre>
+<p>Now I want to use a special <em>geometry</em> for OHLC data. I will also give it a title that deploys the ticker and use the special theme.</p>
+<pre class="r"><code>dat %&gt;% ggplot(aes(x = date, y = close)) +
+    geom_barchart(aes(open = open, high = high, low = low, close = close)) +
+    labs(title = paste(params$ticker,&quot;Bar Chart&quot;), y = &quot;Closing Price&quot;, x = &quot;&quot;) + 
+    theme_tq()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Let’s look at a smooth with a simple 50 day moving average.</p>
+<pre class="r"><code>dat %&gt;%
+    ggplot(aes(x = date, y = close)) +
+    geom_line() +           # Plot stock price
+    geom_bbands(aes(high = high, low = low, close = close), ma_fun = SMA, n = 50)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>We can also invoke <code>tidyquant</code> functions of the data, like returns or more complicated financial quantities.</p>
+<pre class="r"><code>dat %&gt;% tq_transmute(select= adjusted, 
+                 mutate_fun = periodReturn, 
+                 period     = &quot;daily&quot;, 
+                 col_rename = &quot;Ra&quot;) %&gt;% 
+  as_tsibble(index=date) %&gt;% 
+  autoplot()</code></pre>
+<pre><code>## Warning: `type_convert()` only converts columns of type &#39;character&#39;.
+## - `df` has no columns of type &#39;character&#39;</code></pre>
+<pre><code>## Plot variable not specified, automatically selected `.vars = Ra`</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/PlotRet-1.png" width="672" /></p>
+<p>After I have the model report written, I can save the file and stop. The key is to note the file name and the full path. I will store mine in whatever my current working directory is. I want two more libraries; I need the <code>rmarkdown</code> library to <em>render</em> the file and I need the <code>purrr</code> library to <em>map</em> my tickers into render. I created a little function for this called <code>Equity.Analyser</code> to simplify my use of map. <code>tidyquant</code> has a function for acquiring all of the basic data on members of an index or exchange. I want to choose the S and P 400 and then generate a report for each one. The one trick is that I need a simple vector to pass to map so I unlist the column. This produced nearly 370 little reports in about 10 minutes.</p>
+<pre><code>library(rmarkdown)
+library(purrr)
+Equity.Analyser &lt;- function(x) {
+  render(&quot;TQ-Parameters.Rmd&quot;, params = list(ticker = x), output_file = paste0(x,&quot;-TQ-Parameters.html&quot;))
+}
+SP400 &lt;- tq_index(&quot;SP400&quot;) 
+SP400 %&gt;% select(symbol) %&gt;% unlist() %&gt;% map(., Equity.Analyser)</code></pre>
+</div>

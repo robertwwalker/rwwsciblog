@@ -1,0 +1,20 @@
+---
+title: torch and tidymodels for equities
+author: ["RWW"]
+date: '2021-05-01'
+slug: []
+categories: []
+tags: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE, fig.retina = 2)
+library(xgboost)
+library(tidymodels)
+library(modeltime)
+library(tidyverse)
+library(lubridate)
+library(timetk)
+interactive <- FALSE
+```
+
