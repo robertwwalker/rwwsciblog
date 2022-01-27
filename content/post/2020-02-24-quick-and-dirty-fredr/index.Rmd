@@ -29,7 +29,7 @@ library(tidyverse)
 
 Downloading the FRED data on national debt as a percentage of GDP.  I first want to examine the US data and will then turn to some comparisons.  `fredr` makes it markable asy to do!  I will use two core tools from `fredr`.  First, `fredr_series_search` allows one to enter search text and retrieve the responsive series given that search text.  They can be sorted in particular ways, two such options are shown below.  In the first chunk, I will download the "national debt" data and show the top 6 responsive series.
 
-```{r cars}
+```{r}
 library(fredr);library(ggthemes)
 Debt.Search <- fredr_series_search_text(
   search_text = "national debt",
@@ -58,7 +58,7 @@ And because I ended up with a bunch of them; multiple time series plots.  To aut
 library(stringr)
 Ctry.DD <- Debt.Data %>% filter(!grepl('Liabilities: Deposits', title))
 Ctry.DD <- Ctry.DD %>% mutate(Country = str_remove(title, str_remove(US.Debt$title[1], "United States")))
-plot1 <- ggplot(Ctry.DD, aes(x=date, y=value, color=Country)) + geom_line(size=1) + scale_color_viridis_d() + labs(title="Public Debt to GDP", y="Public Debt to GDP")
+plot1 <- Ctry.DD %>% filter(!str_starts(Country, "Factors")) %>% ggplot(., aes(x=date, y=value, color=Country)) + geom_line(size=1) + scale_color_viridis_d() + labs(title="Public Debt to GDP", y="Public Debt to GDP") + guides(color="none")
 library(widgetframe)
-frameWidget(plotly::ggplotly(plot1))
+plotly::ggplotly(plot1)
 ```
