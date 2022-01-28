@@ -46,7 +46,7 @@ Plot.Money.Table <- function(value) {
     aes(x=fct_reorder(squad, Team.Value), y=Team.Value) + 
     geom_col() + 
     coord_flip() + 
-    labs(x="Team", y="Total Value of Players in 100M Euros") 
+    labs(x="Team", y="Total Value of Players in 100M Euros", title=paste0(value, " Money Table", sep=""), caption="Data from transfermarkt") 
 }
 ```
 

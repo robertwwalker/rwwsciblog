@@ -36,7 +36,7 @@ Big_5_player_values &lt;- get_player_market_values(country_name = c(&quot;Englan
     aes(x=fct_reorder(squad, Team.Value), y=Team.Value) + 
     geom_col() + 
     coord_flip() + 
-    labs(x=&quot;Team&quot;, y=&quot;Total Value of Players in 100M Euros&quot;) 
+    labs(x=&quot;Team&quot;, y=&quot;Total Value of Players in 100M Euros&quot;, title=paste0(value, &quot; Money Table&quot;, sep=&quot;&quot;), caption=&quot;Data from transfermarkt&quot;) 
 }</code></pre>
 </div>
 <div id="the-english-money-table" class="section level2">
