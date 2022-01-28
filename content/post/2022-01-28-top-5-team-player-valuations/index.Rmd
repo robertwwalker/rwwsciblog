@@ -15,19 +15,19 @@ tags:
 
 There is a ton of data in the `worldfootballR` package; the github for the package is [linked here](https://github.com/JaseZiv/worldfootballR).  This particular analysis uses data from `transfermarkt`.  I am going to grab player market values for the top five European leagues.
 
-```{r, message=FALSE, eval=FALSE}
-library(tidyverse)
+```{r, message=FALSE, eval=TRUE, cache=TRUE}
+library(tidyverse); library(here)
 library(worldfootballR)
 options(scipen=9)
 Big_5_player_values <- get_player_market_values(country_name = c("England", "Spain", "France", "Italy", "Germany"), start_year = 2021)
-# save(Big_5_player_values, file="data/Big5.RData")
+save(Big_5_player_values, file=here("content/post/2022-01-28-top-5-team-player-valuations/data","Big5.RData"))
 ```
 
-```{r, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
-library(tidyverse)
+```{r, echo=FALSE, eval=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse); library(here)
 library(worldfootballR)
 options(scipen=9)
-load("data/Big5.RData")
+load(here("content/post/2022-01-28-top-5-team-player-valuations/data","Big5.RData"))
 ```
 
 

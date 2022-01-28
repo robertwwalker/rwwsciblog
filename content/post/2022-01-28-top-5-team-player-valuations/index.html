@@ -17,11 +17,15 @@ tags:
 <div id="data" class="section level2">
 <h2>Data</h2>
 <p>There is a ton of data in the <code>worldfootballR</code> package; the github for the package is <a href="https://github.com/JaseZiv/worldfootballR">linked here</a>. This particular analysis uses data from <code>transfermarkt</code>. I am going to grab player market values for the top five European leagues.</p>
-<pre class="r"><code>library(tidyverse)
+<pre class="r"><code>library(tidyverse); library(here)
 library(worldfootballR)
 options(scipen=9)
-Big_5_player_values &lt;- get_player_market_values(country_name = c(&quot;England&quot;, &quot;Spain&quot;, &quot;France&quot;, &quot;Italy&quot;, &quot;Germany&quot;), start_year = 2021)
-# save(Big_5_player_values, file=&quot;data/Big5.RData&quot;)</code></pre>
+Big_5_player_values &lt;- get_player_market_values(country_name = c(&quot;England&quot;, &quot;Spain&quot;, &quot;France&quot;, &quot;Italy&quot;, &quot;Germany&quot;), start_year = 2021)</code></pre>
+<pre><code>## Warning: Expected 4 pieces. Missing pieces filled with `NA` in 2660 rows [1, 2,
+## 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, ...].</code></pre>
+<pre><code>## Warning in mask$eval_all_mutate(quo): NAs introduced by coercion</code></pre>
+<pre><code>## Warning: All formats failed to parse. No formats found.</code></pre>
+<pre class="r"><code>save(Big_5_player_values, file=here(&quot;content/post/2022-01-28-top-5-team-player-valuations/data&quot;,&quot;Big5.RData&quot;))</code></pre>
 </div>
 <div id="a-money-table-function" class="section level2">
 <h2>A Money Table Function</h2>
