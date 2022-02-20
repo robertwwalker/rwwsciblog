@@ -1,0 +1,57 @@
+---
+title: Trademarks from the Oregon Secretary of State
+author: RWW
+date: '2022-01-26'
+slug: []
+categories:
+  - ggplot
+  - GSM622
+tags: []
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(RSocrata)
+```
+
+# Oregon's Open Data Portal
+
+The Oregon Open Data Portal has a bunch of easily accessible public use data.  One of the first listings today was trademarks issued by the Oregon Secretary of State.  Let's grab that data.
+
+```{r}
+OTM <- read.socrata('https://data.oregon.gov/resource/ny3n-dx3v.json')
+head(OTM)
+```
+
+I want to plot the copyrights by state of holder.  Let's look at that variable.
+
+```{r}
+library(janitor) # for tabyl
+OTM %>% tabyl(state)
+```
+
+There are a few to clean up.  I will use recode to do that for many of them and split out the junk text from those that have some.
+
+```{r}
+( OTM %>% 
+  mutate(state = recode(state, 
+                        `0R` = "OR", 
+                        `O` = "OR", 
+                        `OROR` = "OR", 
+                        `ORQ` = "OR")) %>% 
+  mutate(state2 = str_split(state, " ", simplify=TRUE)) %>% 
+  filter(state2!="NA") %>% 
+  janitor::tabyl(state2) -> ORTM.Data )
+```
+
+That should get me what I need.  Now to plot it, sorted from most to least.
+
+```{r}
+ORTM.Data %>% ggplot() + 
+  aes(x=fct_reorder(state2, n), y=n, fill=state2) + 
+  geom_col() + 
+  guides(fill="none") +
+  coord_flip() + 
+  labs(title="Trademarks Issued by OR SOS", x="State", y='Trademarks', caption="https://data.oregon.gov/resource/ny3n-dx3v.json")
+```
+
