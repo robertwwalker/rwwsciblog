@@ -1,6 +1,6 @@
 ---
 title: "tidytext is neat! White House Communications"
-author: "RWW"
+authors: ["RWW"]
 date: '2018-02-21'
 slug: tidytext-is-neat
 tags:

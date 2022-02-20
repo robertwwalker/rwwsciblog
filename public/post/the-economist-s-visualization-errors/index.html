@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>The Economist&#39;s Visualization Errors &middot; rww.science</title>
+		<title>The Economist&#39;s Visualization Errors &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,13 +83,13 @@
                             </header>
                             
                             
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/header-attrs/header-attrs.js"></script>
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/htmlwidgets/htmlwidgets.js"></script>
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/d3/d3.min.js"></script>
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/d3-lasso/d3-lasso.min.js"></script>
-<link href="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/ggiraphjs/ggiraphjs.min.css" rel="stylesheet" />
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/ggiraphjs/ggiraphjs.min.js"></script>
-<script src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/girafe-binding/girafe.js"></script>
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/d3/d3.min.js"></script>
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/d3-lasso/d3-lasso.min.js"></script>
+<link href="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/ggiraphjs/ggiraphjs.min.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/ggiraphjs/ggiraphjs.min.js"></script>
+<script src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/girafe-binding/girafe.js"></script>
 
 
 <div id="the-economists-errors-and-credit-where-credit-is-due" class="section level1">
@@ -124,7 +124,7 @@ ggplot(corbyn, aes(x=reorder(political_group,avg_facebook_likes), y=avg_facebook
   labs(x=&quot;Associate of the Labour Party&quot;, y=&quot;Average Facebook Likes&quot;) +
   theme_economist() +
   coord_flip()</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/Corbyn-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/Corbyn-1.png" width="672" /></p>
 <div id="your-turn" class="section level2">
 <h2>Your Turn</h2>
 <p>In the next code chunk, you will need to cut and paste the code for grabbing your particular choice of data.</p>
@@ -176,7 +176,7 @@ My.Brexit</code></pre>
 ## 10 2016-08-31 Wrong        44
 ## # … with 160 more rows</code></pre>
 <pre class="r"><code>brexit %&gt;% ggplot(aes(x=Date, y=Right)) + geom_smooth(color=&quot;green&quot;, size=1) + geom_point(color = &quot;green&quot;) + geom_point(aes(x=Date, y=Wrong), color=&quot;red&quot;) + geom_smooth(aes(x=Date, y=Wrong), color=&quot;red&quot;) + labs(y=&quot;% Saying Right [Green] or Wrong [Red] to UK Leaving EU&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 </div>
 <div id="your-graphic" class="section level2">
 <h2>Your Graphic</h2>
@@ -190,7 +190,7 @@ ggp &lt;- My.Brexit %&gt;% ggplot(aes(x = Date, y = value, color=direction, fill
   annotate(&quot;text&quot; , x=as.Date(&quot;2018-01-01&quot;), y=47, label=&quot;Wrong&quot;, size=6, color = &quot;#fde725ff&quot;) + 
   annotate(&quot;text&quot; , x=as.Date(&quot;2018-01-01&quot;), y=41, label=&quot;Right&quot;, size=6, color = &quot;#440154ff&quot;)
 ggp</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>That’s pretty cool.</p>
 </div>
 <div id="pensions" class="section level2">
@@ -213,7 +213,7 @@ pensions %&gt;%
   theme_economist_white() + 
   labs(title=&quot;Population over 65 and Pension Spending per GDP&quot;, caption = &quot;Coloring by Scaled Covariance&quot;) +  
   scale_color_viridis_c(guide=FALSE)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>**ggrepel* allows labels that arrow to plot locations and keeps the labels from overlapping. I called the library earlier, now I will use it’s geom called <em>geom_label_repel</em>.</p>
 <pre class="r"><code>ggplot(pensions) + 
   aes(x=pop_65_percent, y=gov_spend_percent_gdp, label=country, color=prod.scaled)  +
@@ -225,7 +225,7 @@ pensions %&gt;%
   theme_economist_white() + 
   labs(title=&quot;Population over 65 and Pension Spending per GDP&quot;, caption = &quot;Coloring by Scaled Covariance&quot;) + 
   scale_color_viridis_c(guide=FALSE)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>That seems to get it. What’s up with Brazil?</p>
 </div>
 <div id="dogs" class="section level2">
@@ -236,15 +236,15 @@ pensions %&gt;%
 <h2>esquisse</h2>
 <pre class="r"><code>p &lt;- ggplot(dogs) + aes(x=avg_neck, y=avg_weight, size=year) + geom_point() + theme_economist_white() + labs(x=&quot;Neck Size&quot;, y=&quot;Weight&quot;, title=&quot;The Incredible Shrinking Dog?&quot;)
 p</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>This is a perfect case for a text label. If they are decent sized, they overlap. I used <code>geom_text</code> which requires a label [label = year] in the aesthetic mapping.</p>
 <pre class="r"><code>p &lt;- ggplot(dogs) + aes(x=avg_neck, y=avg_weight, label=year) + geom_text(size=3, color=&quot;white&quot;) + theme_dark() + labs(x=&quot;Neck Size&quot;, y=&quot;Weight&quot;, title=&quot;The Incredible Shrinking Dog?&quot;) 
 p</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <pre class="r"><code>library(emojifont)
 p &lt;- ggplot(dogs) + aes(x=avg_neck, y=avg_weight, size=-year, label = emoji(&#39;dog&#39;)) + geom_text() + theme_minimal() + labs(x=&quot;Neck Size&quot;, y=&quot;Weight&quot;, title=&quot;The Incredible Shrinking Dog?&quot;, caption = &quot;Sized by Year -- decreasing...  Shrinking Dogs?&quot;) + guides(size=FALSE)
 p</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
 </div>
 <div id="eu-balances" class="section level1">
@@ -395,7 +395,7 @@ skimr::skim(eu_balance)</code></pre>
  scale_fill_hue() +
  theme_minimal() +
  facet_wrap(vars(country), scales = &quot;free_y&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <div id="trade" class="section level2">
 <h2>trade</h2>
 <p><em>gridExtra</em> allows us to combine multiple plots into one. I build two plots and grid them together in the last line.</p>
@@ -419,7 +419,7 @@ trade</code></pre>
 <pre class="r"><code>p1 &lt;- ggplot(trade, aes(x=year, y=trade_deficit/1000000000)) + geom_area(fill=&quot;red&quot;) + theme_economist() + labs(y = &quot;US Trade Deficit in Billions of US $&quot;)
 p2 &lt;- ggplot(trade, aes(x=year, y=manufacture_employment/1000000)) + geom_line() + theme_economist() + labs(y = &quot;US Manufacturing Employment in millions&quot;)
 grid.arrange(p1,p2)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <p>That is fairly simple and it works. The trick here was to use a grid to create two plots and stack them.</p>
 </div>
 </div>
@@ -571,7 +571,7 @@ women_research %&gt;% spread(field, percent_women) %&gt;% knitr::kable()</code><
  labs(x = &quot;Field or Occupation&quot;, y = &quot;Country&quot;, title = &quot;Publication and Invention by Women Around the World&quot;, subtitle = &quot;Percent of Publications or Patents by Women&quot;, caption = &quot;source: Economist Visualization Errors&quot;, fill = &quot;Percent Women&quot;) +
  theme_minimal(base_size = 10)
 ggp1 + theme(plot.background = element_rect(colour = &quot;whitesmoke&quot;))</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>We can also use equisse to build a faceted barplot by dragging the field to facet. X is country, y is percent women, fill is country with facets determined by fields.</p>
 <pre class="r"><code>women_research %&gt;% ggplot(.) +
  aes(x = country, fill = country, weight = percent_women) +
@@ -582,7 +582,7 @@ ggp1 + theme(plot.background = element_rect(colour = &quot;whitesmoke&quot;))</c
  theme(legend.position = &quot;none&quot;) +
   labs(y = &quot;Percent of Publications/Patents&quot;, x = &quot;Country&quot;, title = &quot;Publication and Invention by Women Around the World&quot;, subtitle = &quot;Percent of Publications or Patents by Women&quot;, caption = &quot;source: Economist Visualization Errors&quot;) +
  facet_wrap(vars(field))</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <p>Or reverse the above use of field and country where field is the X and the fill, y is still percent_women and facets are now countries. This works quite well if only because there are 12 entities which grid into a 3 x 4 nicely.</p>
 <pre class="r"><code>women_research %&gt;% ggplot(.) +
  aes(x = field, fill = field, weight = percent_women) +
@@ -593,7 +593,7 @@ ggp1 + theme(plot.background = element_rect(colour = &quot;whitesmoke&quot;))</c
  theme(legend.position = &quot;none&quot;) +
   labs(y = &quot;Percent of Publications/Patents&quot;, x = &quot;Field&quot;, title = &quot;Publication and Invention by Women Around the World&quot;, subtitle = &quot;Percent of Publications or Patents by Women&quot;, caption = &quot;source: Economist Visualization Errors&quot;) +
  facet_wrap(~country)</code></pre>
-<p><img src="http://localhost:1313/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/the-economist-s-visualization-errors/index_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
 <p>To show something very cool that R can do, I have added one more bit that is turned off. In the following code chunk, I use <code>eval=FALSE</code> to avoid evaluating the chunk in R. If the FALSE is changed to TRUE, R will need <code>ggiraph</code> via <code>install.packages("ggiraph")</code>.</p>
 <pre class="r"><code>library(ggiraph)
 women_research &lt;- women_research %&gt;% group_by(country) %&gt;% mutate(Avg.Women.Percent = mean(percent_women)) %&gt;% ungroup()
@@ -711,7 +711,7 @@ girafe(code = print(p1))</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

@@ -19,7 +19,7 @@ tags:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE)
 library(reticulate)
-use_python("/usr/bin/python")
+# use_python("/usr/bin/python")
 options(scipen=8)
 ```
 

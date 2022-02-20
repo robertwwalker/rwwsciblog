@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>Scraping the NFL Salary Cap Data with Python and R &middot; rww.science</title>
+		<title>Scraping the NFL Salary Cap Data with Python and R &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,6 +83,7 @@
                             </header>
                             
                             
+<script src="https://rww-science.website/post/scraping-the-nfl-salary-cap-data-with-python-and-r/index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="the-nfl-data" class="section level1">
@@ -94,38 +95,38 @@ base_url &lt;- &quot;http://www.spotrac.com/nfl/&quot;
 read.base &lt;- read_html(base_url)
 team.URL &lt;- read.base %&gt;% html_nodes(&quot;.team-name&quot;) %&gt;% html_attr(&#39;href&#39;)
 team.URL</code></pre>
-<pre><code>##  [1] &quot;https://www.spotrac.com/nfl/arizona-cardinals/cap/&quot;   
-##  [2] &quot;https://www.spotrac.com/nfl/atlanta-falcons/cap/&quot;     
-##  [3] &quot;https://www.spotrac.com/nfl/baltimore-ravens/cap/&quot;    
-##  [4] &quot;https://www.spotrac.com/nfl/buffalo-bills/cap/&quot;       
-##  [5] &quot;https://www.spotrac.com/nfl/carolina-panthers/cap/&quot;   
-##  [6] &quot;https://www.spotrac.com/nfl/chicago-bears/cap/&quot;       
-##  [7] &quot;https://www.spotrac.com/nfl/cincinnati-bengals/cap/&quot;  
-##  [8] &quot;https://www.spotrac.com/nfl/cleveland-browns/cap/&quot;    
-##  [9] &quot;https://www.spotrac.com/nfl/dallas-cowboys/cap/&quot;      
-## [10] &quot;https://www.spotrac.com/nfl/denver-broncos/cap/&quot;      
-## [11] &quot;https://www.spotrac.com/nfl/detroit-lions/cap/&quot;       
-## [12] &quot;https://www.spotrac.com/nfl/green-bay-packers/cap/&quot;   
-## [13] &quot;https://www.spotrac.com/nfl/houston-texans/cap/&quot;      
-## [14] &quot;https://www.spotrac.com/nfl/indianapolis-colts/cap/&quot;  
-## [15] &quot;https://www.spotrac.com/nfl/jacksonville-jaguars/cap/&quot;
-## [16] &quot;https://www.spotrac.com/nfl/kansas-city-chiefs/cap/&quot;  
-## [17] &quot;https://www.spotrac.com/nfl/las-vegas-raiders/cap/&quot;   
-## [18] &quot;https://www.spotrac.com/nfl/los-angeles-chargers/cap/&quot;
-## [19] &quot;https://www.spotrac.com/nfl/los-angeles-rams/cap/&quot;    
-## [20] &quot;https://www.spotrac.com/nfl/miami-dolphins/cap/&quot;      
-## [21] &quot;https://www.spotrac.com/nfl/minnesota-vikings/cap/&quot;   
-## [22] &quot;https://www.spotrac.com/nfl/new-england-patriots/cap/&quot;
-## [23] &quot;https://www.spotrac.com/nfl/new-orleans-saints/cap/&quot;  
-## [24] &quot;https://www.spotrac.com/nfl/new-york-giants/cap/&quot;     
-## [25] &quot;https://www.spotrac.com/nfl/new-york-jets/cap/&quot;       
-## [26] &quot;https://www.spotrac.com/nfl/philadelphia-eagles/cap/&quot; 
-## [27] &quot;https://www.spotrac.com/nfl/pittsburgh-steelers/cap/&quot; 
-## [28] &quot;https://www.spotrac.com/nfl/san-francisco-49ers/cap/&quot; 
-## [29] &quot;https://www.spotrac.com/nfl/seattle-seahawks/cap/&quot;    
-## [30] &quot;https://www.spotrac.com/nfl/tampa-bay-buccaneers/cap/&quot;
-## [31] &quot;https://www.spotrac.com/nfl/tennessee-titans/cap/&quot;    
-## [32] &quot;https://www.spotrac.com/nfl/washington-redskins/cap/&quot;</code></pre>
+<pre><code>##  [1] &quot;https://www.spotrac.com/nfl/arizona-cardinals/cap/&quot;       
+##  [2] &quot;https://www.spotrac.com/nfl/atlanta-falcons/cap/&quot;         
+##  [3] &quot;https://www.spotrac.com/nfl/baltimore-ravens/cap/&quot;        
+##  [4] &quot;https://www.spotrac.com/nfl/buffalo-bills/cap/&quot;           
+##  [5] &quot;https://www.spotrac.com/nfl/carolina-panthers/cap/&quot;       
+##  [6] &quot;https://www.spotrac.com/nfl/chicago-bears/cap/&quot;           
+##  [7] &quot;https://www.spotrac.com/nfl/cincinnati-bengals/cap/&quot;      
+##  [8] &quot;https://www.spotrac.com/nfl/cleveland-browns/cap/&quot;        
+##  [9] &quot;https://www.spotrac.com/nfl/dallas-cowboys/cap/&quot;          
+## [10] &quot;https://www.spotrac.com/nfl/denver-broncos/cap/&quot;          
+## [11] &quot;https://www.spotrac.com/nfl/detroit-lions/cap/&quot;           
+## [12] &quot;https://www.spotrac.com/nfl/green-bay-packers/cap/&quot;       
+## [13] &quot;https://www.spotrac.com/nfl/houston-texans/cap/&quot;          
+## [14] &quot;https://www.spotrac.com/nfl/indianapolis-colts/cap/&quot;      
+## [15] &quot;https://www.spotrac.com/nfl/jacksonville-jaguars/cap/&quot;    
+## [16] &quot;https://www.spotrac.com/nfl/kansas-city-chiefs/cap/&quot;      
+## [17] &quot;https://www.spotrac.com/nfl/las-vegas-raiders/cap/&quot;       
+## [18] &quot;https://www.spotrac.com/nfl/los-angeles-chargers/cap/&quot;    
+## [19] &quot;https://www.spotrac.com/nfl/los-angeles-rams/cap/&quot;        
+## [20] &quot;https://www.spotrac.com/nfl/miami-dolphins/cap/&quot;          
+## [21] &quot;https://www.spotrac.com/nfl/minnesota-vikings/cap/&quot;       
+## [22] &quot;https://www.spotrac.com/nfl/new-england-patriots/cap/&quot;    
+## [23] &quot;https://www.spotrac.com/nfl/new-orleans-saints/cap/&quot;      
+## [24] &quot;https://www.spotrac.com/nfl/new-york-giants/cap/&quot;         
+## [25] &quot;https://www.spotrac.com/nfl/new-york-jets/cap/&quot;           
+## [26] &quot;https://www.spotrac.com/nfl/philadelphia-eagles/cap/&quot;     
+## [27] &quot;https://www.spotrac.com/nfl/pittsburgh-steelers/cap/&quot;     
+## [28] &quot;https://www.spotrac.com/nfl/san-francisco-49ers/cap/&quot;     
+## [29] &quot;https://www.spotrac.com/nfl/seattle-seahawks/cap/&quot;        
+## [30] &quot;https://www.spotrac.com/nfl/tampa-bay-buccaneers/cap/&quot;    
+## [31] &quot;https://www.spotrac.com/nfl/tennessee-titans/cap/&quot;        
+## [32] &quot;https://www.spotrac.com/nfl/washington-football-team/cap/&quot;</code></pre>
 <pre class="r"><code># Clean up the URLs to get the team names by themselves.
 team.names &lt;- gsub(&quot;/cap/&quot;,&quot;&quot;, gsub(base_url, &quot;&quot;, team.URL))</code></pre>
 <p>With 32 team links to scrape, I can now scrape them.</p>
@@ -425,6 +426,19 @@ skim(NFL.Salary.Data)</code></pre>
 </table>
 <p><strong>Variable type: numeric</strong></p>
 <table>
+<colgroup>
+<col width="12%" />
+<col width="8%" />
+<col width="12%" />
+<col width="9%" />
+<col width="9%" />
+<col width="2%" />
+<col width="8%" />
+<col width="8%" />
+<col width="9%" />
+<col width="10%" />
+<col width="5%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
@@ -563,7 +577,7 @@ skim(NFL.Salary.Data)</code></pre>
 <pre class="r"><code>NFL.Salary.Data %&gt;% group_by(Team) %&gt;% summarise(Total.Base.Salary=sum(Base.Salary))</code></pre>
 <pre><code>## # A tibble: 32 x 2
 ##    Team               Total.Base.Salary
-##    &lt;fct&gt;                          &lt;dbl&gt;
+##  * &lt;fct&gt;                          &lt;dbl&gt;
 ##  1 Arizona Cardinals          105629569
 ##  2 Atlanta Falcons            132367353
 ##  3 Baltimore Ravens           111906351
@@ -615,6 +629,20 @@ skim(NFL.Salary.Data)</code></pre>
 </table>
 <p><strong>Variable type: numeric</strong></p>
 <table>
+<colgroup>
+<col width="12%" />
+<col width="7%" />
+<col width="8%" />
+<col width="12%" />
+<col width="8%" />
+<col width="8%" />
+<col width="6%" />
+<col width="7%" />
+<col width="8%" />
+<col width="6%" />
+<col width="7%" />
+<col width="5%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">skim_variable</th>
@@ -944,9 +972,9 @@ skim(NFL.Salary.Data)</code></pre>
 </table>
 <p>Now I have my salary data.</p>
 <pre class="r"><code>gplots::plotmeans(Base.Salary~Position, data=NFL.Salary.Data, n.label=FALSE, cex=0.6)</code></pre>
-<p><img src="/post/2018-04-04-scraping-the-nfl-salary-cap-data-with-python-and-r/index_files/figure-html/Plot-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/scraping-the-nfl-salary-cap-data-with-python-and-r/index_files/figure-html/Plot-1.png" width="672" /></p>
 <pre class="r"><code>boxplot(Base.Salary~Position, data=NFL.Salary.Data)</code></pre>
-<p><img src="/post/2018-04-04-scraping-the-nfl-salary-cap-data-with-python-and-r/index_files/figure-html/Plot2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/scraping-the-nfl-salary-cap-data-with-python-and-r/index_files/figure-html/Plot2-1.png" width="672" /></p>
 </div>
 <div id="combining-and-categorizing-data" class="section level2">
 <h2>Combining and Categorizing Data</h2>
@@ -1080,7 +1108,7 @@ NFL.Salary.Data$SubTeam[NFL.Salary.Data$Pos.Char %in% Safeties] &lt;- &quot;Safe
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -69,14 +69,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -126,19 +126,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -153,112 +152,104 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">November 25, 2020</span>
+            <span class="date">August 21, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/">Socrata is amazingly handy for open data</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/">ARCH and GARCH Models</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The Socrata package makes it easy to access API calls built around SODA for open data access. If you try to skip the Socrata part, you usually only get a fraction of the available data. Socrata is intended to make open access data easier to manage and many government entities in the US use it as the portal to public data access. The R package makes interfacing with it much easier.</p>
+        <p>NKE First, let me use tidyquant to acquire the data.
+library(tidyquant); library(tidyverse) NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;) NKE ## # A tibble: 666 × 8 ## symbol date open high low close volume adjusted ## &lt;chr&gt; &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 72.3 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 71.0 ## 3 NKE 2019-01-04 73.4 75.1 73.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 26, 2020</span>
+            <span class="date">April 26, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/new-york-times-data-on-covid/">New York Times Data on COVID</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/">slider is a magical way of creating moving averages</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/new-york-times-data-on-covid/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>New York Times data for the US The New York Times has a wonderful compilation of United States on the novel coronavirus. The data update automatically so the following graphics were generated with data retrieved at 2020-11-30 16:51:46.
- The Basic State of Things options(scipen=9) library(tidyverse); library(hrbrthemes); library(patchwork); library(plotly); library(ggdark); library(ggrepel); library(lubridate) CTP &lt;- read.csv(&quot;https://covidtracking.com/api/v1/states/daily.csv&quot;) state.data &lt;- read_csv(url(&quot;https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-states.csv&quot;)) Rect.NYT &lt;- complete(state.data, state,date) # Create new cases and new deaths Rect.</p>
+        <p>Nike’s Stock # Load libraries library(tidyquant) library(tidyverse) library(fpp3) With those libraries, I should have what I need. Let me get Nike’s stock from 2015.
+# Get Nike stock data Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;) Nike.Stocks %&gt;% as_tsibble(index=date) %&gt;% autoplot(adjusted) + labs(y=&quot;Adjusted Closing Price&quot;, title=&quot;NKE since 2015&quot;) Now I want to create monthly data. I will the yearmonth type from lubridate. By default, tidyquant uses yearmon which is different.
+# Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/new-york-times-data-on-covid/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 19, 2020</span>
+            <span class="date">March 16, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/datasaurus-dozen/">Datasaurus Dozen</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/">tabulizer Rocks</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/datasaurus-dozen/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The datasaurus dozen The datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization. Let’s have a look.
-datasaurus &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-10-13/datasaurus.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## dataset = col_character(), ## x = col_double(), ## y = col_double() ## ) Two libraries to make our work easy.
-library(tidyverse) library(skimr) First, the summary statistics. Summary statistics are great but they are no substitute for basic data familiarity.</p>
+        <p>Voter Turnout in OregonOregon’s voter turnout data is published by the Oregon Secretary of State’s office. You can find a direct link to the .pdf here. How hard is to recover a .pdf table? Let’s see. I am going to work with tabulizer.
+library(tabulizer)library(dplyr)The key function for this will be extract_tables; with knowledge of that let’s see if it just automagically works.
+library(kableExtra)location &lt;- &#39;https://sos.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/datasaurus-dozen/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 19, 2020</span>
+            <span class="date">March 4, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/beyonce-words/">tT: Beyoncé and Taylor Swift Lyrics</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/">tidyTuesday on Superbowl Commercials</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/beyonce-words/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>tidyTuesday: Beyoncé and Taylor Swift Lyrics tidyTuesday for the final week of September 2020 is based on the music of Beyoncé and Taylor Swift. To be honest, I do not know either artist well so I will pick Beyoncé and look at her lyrics. First, I load the data.
-beyonce_lyrics &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-09-29/beyonce_lyrics.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## line = col_character(), ## song_id = col_double(), ## song_name = col_character(), ## artist_id = col_double(), ## artist_name = col_character(), ## song_line = col_double() ## ) taylor_swift_lyrics &lt;- readr::read_csv(&#39;https://raw.</p>
+        <p>The tidyTuesday data for the week of March 4, 2021 represent 247 rows of Superbowl advertisements coded on a few dimensions by fivethirtyeight. The original article uses 233 and there are a few with at least some missing features in the dataset. The idea was to use binary evaluations of patriotic, funny, uses sex, and a host of other characteristics to describe the universe of Super Bowl ads. One thing that stands out is the difference between Budweiser and Bud Light.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/beyonce-words/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">September 15, 2020</span>
+            <span class="date">February 22, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/spending-on-kids/">tT: Spending on Kids</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/">tt: Employment and Earnings</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>Spending on Kids The Urban Institute has a collection of data on government spending on children. The tidyTuesday page links to some of their commentary and to an article from Governing on the subject. The data are rich and interesting and are conveniently packaged into the tidykids package for R. My goal is to combine geofacets with animation to produce an animation of education spending over time by US states and territories.</p>
+        <p>As a continuation of the #DuBoisChallenge, this week’s tidyTuesday presents employment by industry, sex, race, and occupation. There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS. Let’s see what we have.
+library(tidyverse)library(fpp3)library(magrittr)employed &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv&#39;)earn &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv&#39;)employed %&lt;&gt;% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))Let me try to plot something.
+employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n) + guides(color=FALSE)To be continued….</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/spending-on-kids/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">May 28, 2020</span>
+            <span class="date">February 8, 2021</span>
             
-            <h2><a href="http://localhost:1313/post/spending-on-kids/">Cocktails</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/">TT: Wealth and Income</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The Data cocktails &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/cocktails.csv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## row_id = col_double(), ## drink = col_character(), ## date_modified = col_datetime(format = &quot;&quot;), ## id_drink = col_double(), ## alcoholic = col_character(), ## category = col_character(), ## drink_thumb = col_character(), ## glass = col_character(), ## iba = col_character(), ## video = col_logical(), ## ingredient_number = col_double(), ## ingredient = col_character(), ## measure = col_character() ## ) boston_cocktails &lt;- readr::read_csv(&#39;https://raw.</p>
+        <p>tidyTuesday-Screenshot
+tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported here. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the ten datasets.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/spending-on-kids/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -570,6 +561,29 @@ beyonce_lyrics &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfor
                 
 
             
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
 
             
             
@@ -679,7 +693,7 @@ beyonce_lyrics &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfor
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

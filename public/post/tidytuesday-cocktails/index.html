@@ -1,0 +1,267 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Cocktails &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">May 28, 2020</span>
+                                
+                                <h1>Cocktails</h1>
+                                <p></p>
+                            </header>
+                            
+                            <div class="image main"><img src="" alt="" /></div>
+                            
+                            
+<script src="https://rww-science.website/post/tidytuesday-cocktails/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>This week’s tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources. Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin. That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients. With that in mind, let turn to the data.</p>
+<div id="the-data" class="section level2">
+<h2>The Data</h2>
+<pre class="r"><code>cocktails &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/cocktails.csv&#39;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   row_id = col_double(),
+##   drink = col_character(),
+##   date_modified = col_datetime(format = &quot;&quot;),
+##   id_drink = col_double(),
+##   alcoholic = col_character(),
+##   category = col_character(),
+##   drink_thumb = col_character(),
+##   glass = col_character(),
+##   iba = col_character(),
+##   video = col_logical(),
+##   ingredient_number = col_double(),
+##   ingredient = col_character(),
+##   measure = col_character()
+## )</code></pre>
+<pre class="r"><code>boston_cocktails &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-05-26/boston_cocktails.csv&#39;)</code></pre>
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
+## cols(
+##   name = col_character(),
+##   category = col_character(),
+##   row_id = col_double(),
+##   ingredient_number = col_double(),
+##   ingredient = col_character(),
+##   measure = col_character()
+## )</code></pre>
+<pre class="r"><code>boston_cocktails %&gt;% 
+  group_by(name) %&gt;% 
+  summarise(Ingredients = n()) %&gt;% 
+  ggplot(., aes(x=Ingredients)) + 
+  geom_histogram(bins = 24, fill=&quot;blue&quot;) + 
+  theme_economist_white() + 
+  labs(title=&quot;How Many Ingredients in a Mr. Boston Drink Recipe?&quot;, 
+       caption=&quot;#tidyTuesday by @PieRatio&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/tidytuesday-cocktails/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code>boston_cocktails %&gt;% 
+  group_by(ingredient) %&gt;% 
+  summarise(Drinks = n()) %&gt;% 
+  top_n(30) %&gt;% 
+  ggplot(., aes(x=forcats::fct_reorder(ingredient, Drinks), y=Drinks, fill=ingredient)) + geom_col() + 
+  coord_flip() + 
+  labs(title=&quot;How Many Drinks by Ingredient for Mr. Boston?&quot;, 
+       caption=&quot;#tidyTuesday by @PieRatio&quot;, x=&quot;&quot;) + 
+  scale_fill_viridis_d() + 
+  guides(fill=FALSE)</code></pre>
+<pre><code>## Selecting by Drinks</code></pre>
+<p><img src="https://rww-science.website/post/tidytuesday-cocktails/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -47,14 +47,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -104,19 +104,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -131,117 +130,109 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">May 1, 2020</span>
+            <span class="date">November 30, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/non-profits-in-oregon-socrata-is-cool/">Non-Profits in Oregon: Socrata is Cool</a></h2>
+            <h2><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/non-profits-in-oregon-socrata-is-cool/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Socrata: The Open Data Portal I did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. Here is the data.
-library(RSocrata) Oregon.Nonprofits &lt;- read.socrata(&quot;https://data.oregon.gov/resource/8kyv-b2kw.csv&quot;) glimpse(Oregon.Nonprofits) ## Rows: 163,489 ## Columns: 18 ## $ registry_number &lt;int&gt; 299818, 299818, 299818, 299818, 299818, 5… ## $ business_name &lt;chr&gt; &quot;UNITED METHODIST CHURCH, OREGON CITY, OR… ## $ entity_type &lt;chr&gt; &quot;DOMESTIC NONPROFIT CORPORATION&quot;, &quot;DOMEST… ## $ registry_date &lt;chr&gt; &quot;1850-05-17 00:00:00&quot;, &quot;1850-05-17 00:00:… ## $ nonprofit_type &lt;chr&gt; &quot;RELIGIOUS WITH MEMBERS&quot;, &quot;RELIGIOUS WITH… ## $ associated_name_type &lt;chr&gt; &quot;MAILING ADDRESS&quot;, &quot;PRESIDENT&quot;, &quot;PRINCIPA… ## $ first_name &lt;chr&gt; &quot;&quot;, &quot;MIKE&quot;, &quot;&quot;, &quot;MIKE&quot;, &quot;CHRISTA&quot;, &quot;&quot;, &quot;S… ## $ middle_name &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;E&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, … ## $ last_name &lt;chr&gt; &quot;&quot;, &quot;BENISCHEK&quot;, &quot;&quot;, &quot;BENISCHEK&quot;, &quot;PALMER… ## $ suffix &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;… ## $ not_of_record_entity &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;… ## $ entity_of_record_reg_number &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N… ## $ entity_of_record_name &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;… ## $ address &lt;chr&gt; &quot;18955 S SOUTH END RD&quot;, &quot;18955 S SOUTH EN… ## $ address_continued &lt;chr&gt; &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;&quot;, &quot;… ## $ city &lt;chr&gt; &quot;OREGON CITY&quot;, &quot;OREGON CITY&quot;, &quot;OREGON CIT… ## $ state &lt;chr&gt; &quot;OR&quot;, &quot;OR&quot;, &quot;OR&quot;, &quot;OR&quot;, &quot;OR&quot;, &quot;OR&quot;, &quot;OR&quot;,… ## $ zip_code &lt;chr&gt; &quot;97045&quot;, &quot;97045&quot;, &quot;97045&quot;, &quot;97045&quot;, &quot;9704… A basic zip code map or_zips &lt;- zctas(cb = TRUE, starts_with = &quot;97&quot;, class=&quot;sf&quot;) or_zips %&gt;% ggplot(.</p>
+        <p>tl;drIn September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
+The DataI will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/non-profits-in-oregon-socrata-is-cool/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 25, 2020</span>
+            <span class="date">November 25, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/gdpr-violations/">GDPR Violations</a></h2>
+            <h2><a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/">Socrata is amazingly handy for open data</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/gdpr-violations/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>R Markdown I love this intro photo from the tidyTuesday page.
-This week’s tidyTuesday data cover violations of the GDPR.
-gdpr_violations &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-21/gdpr_violations.tsv&#39;) ## ## ── Column specification ──────────────────────────────────────────────────────── ## cols( ## id = col_double(), ## picture = col_character(), ## name = col_character(), ## price = col_double(), ## authority = col_character(), ## date = col_character(), ## controller = col_character(), ## article_violated = col_character(), ## type = col_character(), ## source = col_character(), ## summary = col_character() ## ) gdpr_text &lt;- readr::read_tsv(&#39;https://raw.</p>
+        <p>The Socrata package makes it easy to access API calls built around SODA for open data access. If you try to skip the Socrata part, you usually only get a fraction of the available data. Socrata is intended to make open access data easier to manage and many government entities in the US use it as the portal to public data access. The R package makes interfacing with it much easier.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/gdpr-violations/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 3, 2020</span>
+            <span class="date">October 19, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/a-geofacet-of-credit-quality/">A GeoFacet of Credit Quality</a></h2>
+            <h2><a href="https://rww-science.website/post/datasaurus-dozen/">Datasaurus Dozen</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/a-geofacet-of-credit-quality/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/datasaurus-dozen/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness. I had always had it on my list to do something like this and recently ran across a package called geofacet that makes it simply to easy to do. So here goes. The code is below the post.
-library(haven) library(dplyr) Pew.Data &lt;- read_dta(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/Pew/modeledforprediction.dta&quot;)) library(tidyverse) load(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/Pew/Scaled-BR-Pew.RData&quot;)) state.ratings &lt;- data.</p>
+        <p>The datasaurus dozenThe datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization. Let’s have a look. The basic idea is that all thirteen (datasaurus plus 12) contain nearly identical means and standard deviations though they do vary if the five number summaries are deployed. The scatterplots that are derived from data with similar x-y summaries is a useful reminder that data science is about patterns, not just statistics.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/a-geofacet-of-credit-quality/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/datasaurus-dozen/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 1, 2020</span>
+            <span class="date">October 19, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/">A Quick tidyTuesday on Beer, Breweries, and Ingredients</a></h2>
+            <h2><a href="https://rww-science.website/post/beyonce-words/">TT: Beyoncé and Taylor Swift Lyrics</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/beyonce-words/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Beer Distribution The #tidyTuesday for March 31, 2020 is on beer. The essential elements and a method for pulling the data are shown:
-Imgur
- A Comment on Scraping .pdf The Tweet
- The details on how the data were obtained are a nice overview of scraping .pdf files. The code for doing it is at the bottom of the page. @thomasmock has done a great job commenting his way through it.</p>
+        <p>tidyTuesday: Beyoncé and Taylor Swift LyricstidyTuesday for the final week of September 2020 is based on the music of Beyoncé and Taylor Swift. To be honest, I do not know either artist well so I will pick Beyoncé and look at her lyrics. The raw data are organized as a rather typical text file though there is some underlying tidyness to the rows and songs as embedded data to work with.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/beyonce-words/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 25, 2020</span>
+            <span class="date">September 15, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/covid-in-the-us-and-the-world/">COVID in the US and the World</a></h2>
+            <h2><a href="https://rww-science.website/post/spending-on-kids/">tT: Spending on Kids</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/covid-in-the-us-and-the-world/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>The Johns Hopkins dashboard This is what Johns Hopkins has provided as a dashboard using ARCGIS. They have essentially layered out the data into national and subnational data and then used the arcgis dashboard to cycle through them.
-  The data There are a few different types of data available. I am relying on the same sources that Johns Hopkins is using for the county level incident data.</p>
+        <p>Spending on KidsThe Urban Institute has a collection of data on government spending on children. The tidyTuesday page links to some of their commentary and to an article from Governing on the subject. The data are rich and interesting and are conveniently packaged into the tidykids package for R. My goal is to combine geofacets with animation to produce an animation of education spending over time by US states and territories.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/covid-in-the-us-and-the-world/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/spending-on-kids/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 24, 2020</span>
+            <span class="date">May 28, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/covid-19-county-maps-for-oregon/">Visualising COVID-19 in Oregon</a></h2>
+            <h2><a href="https://rww-science.website/post/tidytuesday-cocktails/">Cocktails</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/covid-19-county-maps-for-oregon/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/tidytuesday-cocktails/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Oregon COVID data I now have a few days of data. These data are current as of March 24, 2020. I will present the first version of these visualizations here and then move the auto-update to a different location. A messy first version of the scraping exercise is at the bottom of this post.
-paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;) ## [1] &quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID2020-03-24.RData&quot; load(url(paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;)))  A base map Load the tigris library then grab the map as an sf object; there is a geom_sf that makes them easy to work with.</p>
+        <p>This week’s tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources. Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin. That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients. With that in mind, let turn to the data.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/covid-19-county-maps-for-oregon/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tidytuesday-cocktails/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -559,6 +550,29 @@ paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/C
                 
 
             
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
 
             
             
@@ -668,7 +682,7 @@ paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/C
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

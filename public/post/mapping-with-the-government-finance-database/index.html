@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>Mapping with the Government Finance Database &middot; rww.science</title>
+		<title>Mapping with the Government Finance Database &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,7 +83,7 @@
                             </header>
                             
                             
-<script src="http://localhost:1313/post/mapping-with-the-government-finance-database/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/mapping-with-the-government-finance-database/index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="the-government-finance-database" class="section level1">
@@ -183,7 +183,7 @@ my.GFD.2015</code></pre>
 <pre class="r"><code>state_choropleth(my.GFD.2015, title=&quot;Total Taxes per capita&quot;, num_colors=1)</code></pre>
 <pre><code>## Warning in self$bind(): The following regions were missing and are being set to
 ## NA: district of columbia</code></pre>
-<p><img src="http://localhost:1313/post/mapping-with-the-government-finance-database/index_files/figure-html/MapTheData-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/mapping-with-the-government-finance-database/index_files/figure-html/MapTheData-1.png" width="672" /></p>
 <p>That’s far too easy. Total taxes, which I have not bothered to look up, appear to contain some unexpected details. What else can be done with it? The final code chunk does it all. To calculate a new map, just change the name of the thing per capitized. What data are available? See below….</p>
 <pre class="r"><code>names(State.Data)</code></pre>
 <pre><code>##   [1] &quot;SurveyYr&quot;                     &quot;Year4&quot;                       
@@ -494,7 +494,7 @@ my.GFD.2015</code></pre>
 state_choropleth(my.GFD.2015, title=&quot;Total Revenues per capita&quot;, num_colors=1)</code></pre>
 <pre><code>## Warning in self$bind(): The following regions were missing and are being set to
 ## NA: district of columbia</code></pre>
-<p><img src="http://localhost:1313/post/mapping-with-the-government-finance-database/index_files/figure-html/Finished2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/mapping-with-the-government-finance-database/index_files/figure-html/Finished2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="putting-them-together-counties" class="section level1">
@@ -506,13 +506,13 @@ state_choropleth(my.GFD.2015, title=&quot;Total Revenues per capita&quot;, num_c
 #  filter(Year4==2012) %&gt;% mutate(value = General_Revenue / Population) %&gt;%
 #  select(region, value)
 county_choropleth(my.County.GFD.2015, title=&quot;General Revenue per capita&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/mapping-with-the-government-finance-database/index_files/figure-html/County1-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/mapping-with-the-government-finance-database/index_files/figure-html/County1-1.png" width="672" /></p>
 <p>The zoom feature is pretty cool: there are two defined forms for the county and states. The naming conventions follow the <code>county.regions</code> format and are lower case. Let me grab <em>oregon</em>.</p>
 <pre class="r"><code>#my.County.GFD.2015 &lt;- County.Data.2 %&gt;% 
 #  filter(Year4==2012) %&gt;% mutate(value = General_Revenue / Population) %&gt;%
 #  select(region, value)
 county_choropleth(my.County.GFD.2015, title=&quot;General Revenue per capita&quot;, state_zoom=&quot;oregon&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/mapping-with-the-government-finance-database/index_files/figure-html/CountyMZ-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/mapping-with-the-government-finance-database/index_files/figure-html/CountyMZ-1.png" width="672" /></p>
 </div>
 
 
@@ -615,7 +615,7 @@ county_choropleth(my.County.GFD.2015, title=&quot;General Revenue per capita&quo
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

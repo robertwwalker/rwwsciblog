@@ -1,6 +1,6 @@
 ---
-title: Some Basic Text on the Mueller Report
-author: RWW
+title: 'Some Basic Text Analysis on the Mueller Report'
+authors: ["RWW"]
 date: '2019-05-22'
 slug: some-basic-text-on-the-mueller-report
 categories:
@@ -18,9 +18,9 @@ header:
 
 # So this Robert Mueller guy wrote a report
 
-I may as well analyse it a bit.
+I may as well analyse it a bit.  There are tons of things that we might wish to discover about the report; my goal is not at that.
 
-First, let me see if I can get a hold of the data.  I grabbed the report directly from the Department of Justice website.  You can follow this [link](https://www.justice.gov/storage/report.pdf).
+First, let me see if I can get a hold of the data.  I grabbed the report directly from the Department of Justice website.  You can follow this [link](https://www.justice.gov/storage/report.pdf).  The report is really long and making sense of it could be done in an absolute ton of ways.  I want to do it pretty simply with an eye toward notes on visualizing long collections of pdf information.
 
 ```{r, echo=TRUE, eval=FALSE}
 library(tidyverse)

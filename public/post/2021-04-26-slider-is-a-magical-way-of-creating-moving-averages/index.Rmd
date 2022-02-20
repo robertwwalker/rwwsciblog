@@ -1,0 +1,121 @@
+---
+title: slider is a magical way of creating moving averages
+author: RWW
+date: '2021-04-26'
+slug: []
+categories:
+  - R
+  - tidyverse
+  - time series
+tags:
+  - time series
+  - R
+  - tidyverse
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE, fig.retina = 2)
+library(tidyquant)
+library(tidyverse)
+library(fpp3)
+```
+
+## Nike's Stock
+
+```
+# Load libraries
+library(tidyquant)
+library(tidyverse)
+library(fpp3)
+```
+
+With those libraries, I should have what I need.  Let me get Nike's stock from 2015.
+
+```{r}
+# Get Nike stock data
+Nike.Stocks <- tq_get("NKE", from="2015-01-01")
+Nike.Stocks %>% as_tsibble(index=date) %>% autoplot(adjusted) + labs(y="Adjusted Closing Price", title="NKE since 2015")
+```
+
+Now I want to create monthly data.  I will the `yearmonth` type from lubridate.  By default, `tidyquant` uses `yearmon` which is different.
+
+```{r}
+# Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.
+Nike.Returns <- Nike.Stocks %>% tq_transmute(adjusted, mutate_fun=periodReturn, period="monthly") 
+Nike.Returns # It is monthly but the date is a date.  To make them match, I need a yearmonth
+```
+
+I want to mutate the `date` to be a `yearmonth`.  Getting the time measure right is the crucial part of this.
+
+```{r}
+Nike.Returns <- Nike.Returns %>% mutate(date = yearmonth(date))
+Nike.Returns
+```
+
+Now let me try another mutation.  Let me keep the last closing price of the month.  The last step here makes sure the dates are the same type.  All of this remains `tibble` as the type; not `tsibble`.  That is convenient for joining data.
+
+```{r}
+Nike.Last <- Nike.Stocks %>% 
+  tq_transmute(select = adjusted, mutate_fun = to.monthly)
+Nike.Last
+```
+
+That is not quite right.  This is a `yearmon` type.  I need to change that.
+
+```{r}
+Nike.Last <- Nike.Last%>%
+  mutate(date = yearmonth(date))
+Nike.Last
+```
+
+The dates match up in type now, so they should join up nicely.  Let's try that.
+
+```{r}
+Nike.Data <- Nike.Returns %>% left_join(., Nike.Last, by = c("date" = "date"))
+Nike.Data
+```
+
+The next step is to  turn it into a tsibble.  That means defining the yearmonth as the data and indexing a tsibble by that.
+
+```{r}
+Nike.Data <- Nike.Data  %>% mutate(date = yearmonth(date)) %>% as_tsibble(index=date)
+```
+
+Now it is a `tsibble` to work with in the `fpp3` workflow.  Finally, let's set up training and test sets.  Working with the Nike data; use filter_index to grab all the data up to and including January 2020
+
+```{r}
+Nike.Data.Train <- Nike.Data  %>% filter_index(. ~ "2020-01")
+# Look at it.
+Nike.Data.Train %>% tail()
+```
+
+```{r}
+# Create a test set as everything that is not in the training set, e.g. the last 15 months
+Nike.Data.Test <- anti_join(Nike.Data,Nike.Data.Train) %>% as_tsibble(index=date)
+Nike.Data.Test
+```
+
+## The Forecasting Workflow
+
+```{r}
+Nike.Mods <- Nike.Data.Train %>%
+  model(
+    ARIMA(monthly.returns),
+    ETS(monthly.returns))
+Nike.Mods %>% forecast(h=12) %>% accuracy(Nike.Data.Test)
+```
+
+A plot.
+
+```{r}
+Nike.Mods %>% forecast(h=12) %>% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model)) + guides(level=FALSE, color=FALSE, fill=FALSE) + theme_minimal()
+```
+
+
+## Three-month trailing averages
+
+```{r}
+NMA <- Nike.Data %>% mutate(MMR3 = slider::slide_dbl(monthly.returns, mean, .before=3, .after=0), MMR6 = slider::slide_dbl(monthly.returns, mean, .before=6, .after=0)) 
+NMA %>% autoplot(MMR3) + autolayer(NMA %>% select(MMR6), color="red") + labs(x="Month", y="Monthly Returns of Nike", title="Monthly Returns of Nike", subtitle="3 and 6 month trailing averages [red]")
+```
+

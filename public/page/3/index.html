@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -47,14 +47,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -104,19 +104,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -131,114 +130,114 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">March 21, 2020</span>
+            <span class="date">May 1, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/covid-19-in-oregon/">Mapping COVID-19 in Oregon</a></h2>
+            <h2><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/">Non-Profits in Oregon: Socrata is Cool</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/covid-19-in-oregon/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Oregon COVID data The Oregon data are available from OHA here. I cut and pasted the first two days because it was easy with datapasta. As it goes on, it was easier to write a script that I detail elsewhere that I can self-update.
- urbnmapr The Urban Institute has an excellent state and county mapping package. I want to make use of the county-level data and plot the starter map.</p>
+        <p>Socrata: The Open Data PortalI did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals. The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/covid-19-in-oregon/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 19, 2020</span>
+            <span class="date">April 25, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/tidytuesday-on-the-office/">tidyTuesday on the Office</a></h2>
+            <h2><a href="https://rww-science.website/post/gdpr-violations/">GDPR Violations</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/tidytuesday-on-the-office/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/gdpr-violations/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>The Office library(tidyverse) office_ratings &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv&#39;)  A First Plot The number of episodes for the Office by season.
-library(janitor) TableS &lt;- office_ratings %&gt;% tabyl(season) p1 &lt;- TableS %&gt;% ggplot(., aes(x=as.factor(season), y=n, fill=as.factor(season))) + geom_col() + labs(x=&quot;Season&quot;, y=&quot;Episodes&quot;, title=&quot;The Office: Episodes&quot;) + guides(fill=FALSE) p1  Ratings How are the various seasons and episodes rated?
-p2 &lt;- office_ratings %&gt;% ggplot(., aes(x=as.factor(season), y=imdb_rating, fill=as.factor(season), color=as.factor(season))) + geom_violin(alpha=0.3) + guides(fill=FALSE, color=FALSE) + labs(x=&quot;Season&quot;, y=&quot;IMDB Rating&quot;) + geom_point() p2  Patchwork Using patchwork, we can combine multiple plots.</p>
+        <p>R MarkdownI love this intro photo from the tidyTuesday page.
+This week’s tidyTuesday data cover violations of the GDPR (General Data Protection Regulations) regulatory regime for data privacy in the European Union. The Wikipedia entry on GDPR is fairly extensive. The dataset is large and suggests some interesting regulatory arbitrage. Let’s have a look at the data. First, let’s load them.
+gdpr_violations &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-21/gdpr_violations.tsv&#39;)## ## ── Column specification ────────────────────────────────────────────────────────## cols(## id = col_double(),## picture = col_character(),## name = col_character(),## price = col_double(),## authority = col_character(),## date = col_character(),## controller = col_character(),## article_violated = col_character(),## type = col_character(),## source = col_character(),## summary = col_character()## )gdpr_text &lt;- readr::read_tsv(&#39;https://raw.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tidytuesday-on-the-office/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/gdpr-violations/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 19, 2020</span>
+            <span class="date">April 3, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/tracking-covid-19/">Tracking COVID-19 2020-03-24</a></h2>
+            <h2><a href="https://rww-science.website/post/a-geofacet-of-credit-quality/">A GeoFacet of Credit Quality</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/tracking-covid-19/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/a-geofacet-of-credit-quality/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>R to Import COVID Data library(tidyverse) library(gganimate) COVID.states &lt;- read.csv(url(&quot;http://covidtracking.com/api/states/daily.csv&quot;)) COVID.states &lt;- COVID.states %&gt;% mutate(Date = as.Date(as.character(date), format = &quot;%Y%m%d&quot;))  The Raw Testing Incidence I want to use patchwork to show the testing rate by state in the United States. Then I want to show where things currently stand. In both cases, a base-10 log is used on the number of tests.</p>
+        <p>In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness. I had always had it on my list to do something like this and recently ran across a package called geofacet that makes it simply to easy to do. The end result should parse out state level credit risk and showcase the time series of credit risk for each of the states.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tracking-covid-19/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/a-geofacet-of-credit-quality/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 27, 2020</span>
+            <span class="date">April 1, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/a-look-at-vix/">A Look at VIX :2020-10-19</a></h2>
+            <h2><a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/">A Quick tidyTuesday on Beer, Breweries, and Ingredients</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/a-look-at-vix/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Get Some VIX data NB: I originally wrote this on February 27, 2020 so there is commentary surrounding that date. It was done on the quick for curiosity. I will update it by recompiling it with new data and will update the commentary noting when it took place.
-Chicago Board Of Exchange (CBOE) makes data available regularly. To judge the currency of the data, I have tailed it below after converting the dates to a valid date format.</p>
+        <p>Beer DistributionThe #tidyTuesday for March 31, 2020 is on beer. The essential elements and a method for pulling the data are shown:
+Imgur
+A Comment on Scraping .pdfThe Tweet
+The details on how the data were obtained are a nice overview of scraping .pdf files. The code for doing it is at the bottom of the page. @thomasmock has done a great job commenting his way through it.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/a-look-at-vix/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 24, 2020</span>
+            <span class="date">March 30, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/quick-and-dirty-fredr/">Quick and Dirty Fredr</a></h2>
+            <h2><a href="https://rww-science.website/post/new-york-times-data-on-covid/">New York Times Data on COVID</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/quick-and-dirty-fredr/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/new-york-times-data-on-covid/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Some Data from FREDr Downloading the FRED data on national debt as a percentage of GDP. I first want to examine the US data and will then turn to some comparisons. fredr makes it markable asy to do! I will use two core tools from fredr. First, fredr_series_search allows one to enter search text and retrieve the responsive series given that search text. They can be sorted in particular ways, two such options are shown below.</p>
+        <p>The New York Times has a wonderful compilation of United States on the novel coronavirus. The data are organized as a panel for US counties and have been continuously collected and updated since March of 2020. For US data, it is as authoritative a source as I am aware of and it provides a nice basis for visualizing various aspects of the pandemic. This commentary was originally provided in late March of 2020.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/quick-and-dirty-fredr/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/new-york-times-data-on-covid/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 19, 2020</span>
+            <span class="date">March 25, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/trying-to-figure-out-the-new-xbrl/">Trying to Figure Out the New XBRL</a></h2>
+            <h2><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/">COVID in the US and the World</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/trying-to-figure-out-the-new-xbrl/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>XBRL Changed XBRL has undergone and is undergoing some changes. Some filers have already needed to change their filings and others will have to soon. Here is the excerpt.
-XBRL Change
- This has broken many of the existing parsers for new filings. It is time to find a way around this. I have seen links for scraping them from Yahoo! Finance but that is not really what I want.</p>
+        <p>The Johns Hopkins dashboardThis is what Johns Hopkins has provided as a dashboard using ARCGIS. They have essentially layered out the data into national and subnational data and then used the arcgis dashboard to cycle through them.
+The dataThere are a few different types of data available. I am relying on the same sources that Johns Hopkins is using for the county level incident data.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/trying-to-figure-out-the-new-xbrl/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -556,6 +555,29 @@ XBRL Change
                 
 
             
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
 
             
             
@@ -665,7 +687,7 @@ XBRL Change
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

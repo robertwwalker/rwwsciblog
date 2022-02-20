@@ -1,6 +1,6 @@
 ---
-title: Quick and Dirty Fredr
-author: Robert W. Walker
+title: 'Quick and Dirty fredr'
+authors: ["RWW"]
 date: '2020-02-24'
 slug: quick-and-dirty-fredr
 categories:
@@ -11,7 +11,6 @@ tags:
   - plot
 subtitle: ''
 summary: ''
-authors: []
 lastmod: '2020-02-24T00:08:03-08:00'
 featured: no
 image:

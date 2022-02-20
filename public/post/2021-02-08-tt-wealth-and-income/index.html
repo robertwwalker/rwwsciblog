@@ -1,0 +1,288 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>TT: Wealth and Income &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">February 8, 2021</span>
+                                
+                                <h1>TT: Wealth and Income</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div class="figure">
+<img src="img/TTScreen.png" alt="" />
+<p class="caption">tidyTuesday-Screenshot</p>
+</div>
+<p>tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported <a href="https://apps.urban.org/features/wealth-inequality-charts/">here</a>. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the <em>ten</em> datasets.</p>
+<pre class="r"><code>lifetime_earn &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv&#39;)
+student_debt &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv&#39;)
+retirement &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/retirement.csv&#39;)
+home_owner &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/home_owner.csv&#39;)
+race_wealth &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/race_wealth.csv&#39;)
+income_time &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_time.csv&#39;)
+income_limits &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_limits.csv&#39;)
+income_aggregate &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_aggregate.csv&#39;)
+income_distribution &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv&#39;)
+income_mean &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv&#39;)</code></pre>
+<div id="lifetime-earnings" class="section level2">
+<h2>Lifetime Earnings</h2>
+<p>There is not all that much data here. Six values for the cross-tabulation of race and gender.</p>
+<pre class="r"><code>lifetime_earn %&gt;% 
+  ggplot() + 
+  aes(x=race, y=lifetime_earn/1000000, fill=race) + 
+  geom_col() + coord_flip() + 
+  facet_wrap(vars(gender)) + 
+  scale_fill_viridis_d() + theme_ipsum_tw() + 
+  labs(y=&quot;Lifetime Earnings [in millions]&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-2-1.png" width="768" /></p>
+<p>Combining the categories offers a considerably improved visual in my view.</p>
+<pre class="r"><code>lifetime_earn %&gt;% 
+  mutate(Categ = paste(race,gender,sep=&quot;:&quot;)) %&gt;% 
+  ggplot() + 
+  aes(x=Categ, y=lifetime_earn/1000000, fill=race, color=race, label=lifetime_earn/1000000, alpha=0.2) + 
+  geom_col() + geom_text(size=3, color=&quot;white&quot;, alpha=1) + 
+  coord_flip() + scale_color_ipsum() + scale_fill_ipsum() + 
+  theme_modern_rc() + 
+  labs(y=&quot;Lifetime Earnings [in millions]&quot;, x=&quot;Race:Gender&quot;) + 
+  guides(fill=FALSE, color=FALSE, alpha=FALSE)</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-3-1.png" width="768" /></p>
+<pre class="r"><code>lifetime_earn %&gt;% 
+  mutate(Categ = paste(gender,race,sep=&quot;:&quot;)) %&gt;% 
+  ggplot() + 
+  aes(x=Categ, y=lifetime_earn/1000000, fill=race, color=race, label=lifetime_earn/1000000, alpha=0.2) + 
+  geom_col() + geom_text(size=3, color=&quot;white&quot;, alpha=1) + 
+  coord_flip() + scale_color_ipsum() + scale_fill_ipsum() + 
+  theme_modern_rc() + 
+  labs(y=&quot;Lifetime Earnings [in millions]&quot;, x=&quot;Race:Gender&quot;) +
+  guides(fill=FALSE, color=FALSE, alpha=FALSE)</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-4-1.png" width="768" /></p>
+</div>
+<div id="student-debt" class="section level2">
+<h2>Student Debt</h2>
+<p>The student debt data is not super extensive. At three year intervals, we see growth across categories but higher levels and rates are notable by racial category. A line plot is a good place to start.</p>
+<pre class="r"><code>student_debt %&gt;% ggplot() + 
+  aes(x=year, y=loan_debt_pct, color=race) + 
+  geom_line() + geom_point(size=3) + 
+  scale_color_viridis_d() + 
+  labs(y=&quot;Share of Families with Student Loan Debt&quot;) + 
+  theme_ipsum_rc()</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+<p>A faceted bar plot.</p>
+<pre class="r"><code>student_debt %&gt;% ggplot() + 
+  aes(x=race, y=loan_debt_pct, fill=race) + 
+  geom_col() + scale_color_viridis_d() + 
+  labs(y=&quot;Share of Families with Student Loan Debt&quot;) + 
+  guides(fill=FALSE) + theme_ipsum_rc() + 
+  coord_flip() + facet_wrap(vars(year))</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+</div>
+<div id="retirement" class="section level2">
+<h2>Retirement</h2>
+<p>Liquid retirement savings offer an interesting basis for comparison.</p>
+<pre class="r"><code>retirement %&gt;% ggplot() + 
+  aes(x=year, y=retirement, color=race) + 
+  geom_line() + geom_point() + 
+  scale_color_ipsum() + theme_ipsum_rc() + 
+  labs(y=&quot;Liquid Retirment Savings&quot;, color=&quot;Race&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/index_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

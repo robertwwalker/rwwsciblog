@@ -21,7 +21,9 @@ projects: []
 ---
 
 ```{r, include=FALSE}
-source("E:/Gmail-Setup.R")
+# source("/Volumes/winback/Gmail-Setup.R")
+library(gmailr)
+gm_auth_configure(path='/Volumes/WorkPart/gmailBGS.json')
 ```
 
 # tl;dr
@@ -33,7 +35,7 @@ In September of 2018, I began to track email solicitations by the Trump Campaign
 I will use the wonderful `gmailr` package to access my gmail.  You need a key and an id that the vignette gives guidance on.  I invoke those elsewhere to keep the tokens safe.  First, let me grab all the solicitations; I identify them by the domain in from *rnchq.com*.
 
 ```{r, message=FALSE, warning=FALSE}
-my.messages <- gm_messages("rnchq.com", 1500)
+my.messages <- gm_messages("rnchq.com OR donaldjtrump.com", 5000)
 get_emails <- function(message_ids) {
 results <- list()
 for (message_id in message_ids) {
@@ -104,7 +106,7 @@ library(lubridate); library(hrbrthemes)
 Trump.dates <- make_email_dates_dt(my.Trump.mails)
 # Trump.dates
 Trump.dates %>% group_by(email_date) %>% summarise(Count = n()) -> Trump.dates.Counted
-Trump.dates.Counted %>% filter(email_date <= Sys.Date()) %>% ggplot(., aes(x=email_date, y=Count)) + geom_line(color="red") + geom_vline(aes(xintercept=as.Date("2020-11-03")), color="blue", alpha=0.3) + labs(title="Trump Fundraising Emails", x="Date of Email", y="Solicitations") + theme_ipsum_rc() -> p1
+Trump.dates.Counted %>% filter(email_date <= Sys.Date()) %>% ggplot(., aes(x=email_date, y=Count)) + geom_line(color="red") + geom_vline(aes(xintercept=as.Date("2020-11-03")), color="blue", alpha=0.3) + labs(title="Trump Fundraising Emails", x="Date of Email", y="Solicitations", caption="Sent from rnchq.com or donaldjtrump.com") + theme_ipsum_rc() -> p1
 p1 + geom_text(data = data.frame(x = as.Date("2020-11-02"),
 y = 2.87691946455173,
 label = "Election"),

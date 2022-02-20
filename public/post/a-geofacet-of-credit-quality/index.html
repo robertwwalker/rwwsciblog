@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>A GeoFacet of Credit Quality &middot; rww.science</title>
+		<title>A GeoFacet of Credit Quality &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -85,10 +85,12 @@
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
+<script src="https://rww-science.website/post/a-geofacet-of-credit-quality/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness. I had always had it on my list to do something like this and recently ran across a package called <code>geofacet</code> that makes it simply to easy to do. So here goes. The code is below the post.</p>
-<p><img src="/post/2020-04-03-a-geofacet-of-credit-quality/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness. I had always had it on my list to do something like this and recently ran across a package called <code>geofacet</code> that makes it simply to easy to do. The end result should parse out state level credit risk and showcase the time series of credit risk for each of the states.</p>
+<p>So here goes. The code is below the post.</p>
+<p><img src="https://rww-science.website/post/a-geofacet-of-credit-quality/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
 <pre class="r"><code>library(haven)
 library(dplyr)
 Pew.Data &lt;- read_dta(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/Pew/modeledforprediction.dta&quot;))
@@ -235,7 +237,7 @@ Res1 %&gt;% ggplot(., aes(x=year, y=Credit.Quality, group=state)) +
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

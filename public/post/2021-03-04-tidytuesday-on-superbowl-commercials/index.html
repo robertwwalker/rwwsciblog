@@ -1,0 +1,293 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>tidyTuesday on Superbowl Commercials &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">March 4, 2021</span>
+                                
+                                <h1>tidyTuesday on Superbowl Commercials</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/header-attrs/header-attrs.js"></script>
+
+
+<p>The tidyTuesday data for the week of March 4, 2021 represent 247 rows of Superbowl advertisements coded on a few dimensions by <code>fivethirtyeight</code>. The original article uses 233 and there are a few with at least some missing features in the dataset. The idea was to use binary evaluations of patriotic, funny, uses sex, and a host of other characteristics to describe the universe of Super Bowl ads. One thing that stands out is the difference between Budweiser and Bud Light. Here is a brief look at the data that we have.</p>
+<div class="figure">
+<img src="images/tt342021.jpeg" style="width:80.0%" alt="" />
+<p class="caption">screenshot of tidyTuesday description of superbowl commercials</p>
+</div>
+<p>The data look like this…</p>
+<pre class="r"><code>youtube &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-03-02/youtube.csv&#39;)
+head(youtube)</code></pre>
+<pre><code>## # A tibble: 6 x 25
+##    year brand  superbowl_ads_dot_… youtube_url  funny show_product_qu… patriotic
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;               &lt;chr&gt;        &lt;lgl&gt; &lt;lgl&gt;            &lt;lgl&gt;    
+## 1  2018 Toyota https://superbowl-… https://www… FALSE FALSE            FALSE    
+## 2  2020 Bud L… https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## 3  2006 Bud L… https://superbowl-… https://www… TRUE  FALSE            FALSE    
+## 4  2018 Hynud… https://superbowl-… https://www… FALSE TRUE             FALSE    
+## 5  2003 Bud L… https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## 6  2020 Toyota https://superbowl-… https://www… TRUE  TRUE             FALSE    
+## # … with 18 more variables: celebrity &lt;lgl&gt;, danger &lt;lgl&gt;, animals &lt;lgl&gt;,
+## #   use_sex &lt;lgl&gt;, id &lt;chr&gt;, kind &lt;chr&gt;, etag &lt;chr&gt;, view_count &lt;dbl&gt;,
+## #   like_count &lt;dbl&gt;, dislike_count &lt;dbl&gt;, favorite_count &lt;dbl&gt;,
+## #   comment_count &lt;dbl&gt;, published_at &lt;dttm&gt;, title &lt;chr&gt;, description &lt;chr&gt;,
+## #   thumbnail &lt;chr&gt;, channel_title &lt;chr&gt;, category_id &lt;dbl&gt;</code></pre>
+<p>A basic visualization</p>
+<pre class="r"><code>library(hrbrthemes); library(magrittr)
+# Fix the spelling of Hyundai
+youtube %&lt;&gt;% mutate(brand = recode(brand, Hynudai = &quot;Hyundai&quot;))
+# Grab the top 75 most likes and plot them
+youtube %&gt;% top_n(75, like_count) %&gt;% group_by(brand) %&gt;% summarise(Count = n()) %&gt;% mutate(legendV = paste(brand, sep=&quot;-&quot;)) %&gt;% ggplot() + aes(x=fct_reorder(legendV, Count), y=Count, fill=legendV) + geom_col() + coord_flip() + labs(x=&quot;Brand&quot;, title=&quot;Top 75 Ads in Likes by brand&quot;) + theme_ipsum() + guides(fill=FALSE)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-2-1.png" width="1152" /></p>
+<p>Doritos seems to have the most popular commercials followed by Budweiser and Bud Light, Pepsi and Coca-Cola. Were we to combine Budweiser and Bud Light, they would clearly come out on top.</p>
+<p>Now to slice it up a little bit. There are only ten brands in the dataset of 247 ads.</p>
+<pre class="r"><code>youtube %&gt;% janitor::tabyl(brand) %&gt;% arrange(n)</code></pre>
+<pre><code>##      brand  n    percent
+##        NFL 11 0.04453441
+##     Toyota 11 0.04453441
+##    E-Trade 13 0.05263158
+##        Kia 13 0.05263158
+##  Coca-Cola 21 0.08502024
+##    Hyundai 22 0.08906883
+##    Doritos 25 0.10121457
+##      Pepsi 25 0.10121457
+##  Budweiser 43 0.17408907
+##  Bud Light 63 0.25506073</code></pre>
+<div id="sex-themed-ads" class="section level2">
+<h2>Sex-Themed Ads?</h2>
+<p>One category that I did not expect was sex-themed ads. How often do those occur and what brand chose this form?</p>
+<pre class="r"><code>youtube %&gt;% group_by(brand, use_sex) %&gt;% summarise(Count = n()) %&gt;% ungroup() %&gt;% pivot_wider(names_from=use_sex, values_from = Count) %&gt;% data.frame() %&gt;% mutate(TRUE. = replace_na(TRUE., 0), Total = FALSE. + TRUE., prop = TRUE./Total) -&gt; Brand.Prop
+youtube %&gt;% group_by(brand, use_sex) %&gt;% summarise(Count = n()) %&gt;% left_join(., Brand.Prop) %&gt;% ggplot() + aes(x=fct_reorder(brand, prop), y=Count, fill=use_sex) + geom_col() + coord_flip() + scale_fill_ipsum() + theme_ipsum() + labs(fill=&quot;Sexually Themed?&quot;, title=&quot;Super Bowl Ads by Brand and Sex-Themed&quot;, x=&quot;Brand&quot;, caption=&quot;Sorted by Proportion of Sex-Themed Ads&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-4-1.png" width="1152" /></p>
+<p>I think I like that basic method of visualization. For this tidyTuesday, I will build it into a function so that I can repeat it for the various characteristics.</p>
+</div>
+<div id="a-function" class="section level2">
+<h2>A Function</h2>
+<p>Now I want to build a basic function that will take the data and whatever variable I wish to fill on and render the data wrangling and plotting automagically. I will need <code>rlang</code> to handle the passing of the variable name along with the companion <code>!!</code> method of address and <code>as_name</code> to build the caption and title elements. When I began writing it, I was only going to pull the data together but then I remembered as_name and could complete it; it bears the unfortunate name <code>DataMaker</code> for this reason.</p>
+<pre class="r"><code>DataMaker &lt;- function(data, var) {
+var &lt;- enquo(var)
+data %&gt;% 
+  group_by(brand, !! var ) %&gt;% 
+  summarise(Count = n()) %&gt;% 
+  ungroup() %&gt;% 
+  pivot_wider(names_from=!! var, values_from = Count) %&gt;%
+  data.frame() %&gt;% 
+  mutate(TRUE. = replace_na(TRUE., 0), 
+         Total = FALSE. + TRUE., 
+         prop = TRUE./Total) %&gt;% 
+  select(brand, Total, prop) -&gt; Brand.Prop
+data %&gt;% 
+  group_by(brand, !! var) %&gt;% 
+  summarise(Count = n()) %&gt;% 
+  left_join(., Brand.Prop) %&gt;% ggplot() + aes(x=fct_reorder(brand, prop), y=Count, fill=!! var) + geom_col() + coord_flip() + scale_fill_ipsum() + theme_ipsum() + labs(fill=as_name(var), title=paste0(&quot;Super Bowl Ads by Brand and &quot;,as_name(var)), caption=paste0(&quot;Sorted by Proportion &quot;, as_name(var)), x=&quot;Brand&quot;)
+}
+DataMaker(youtube, patriotic)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-5-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, danger)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-6-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, animals)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-7-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, funny)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-8-1.png" width="1152" /></p>
+<pre class="r"><code>DataMaker(youtube, celebrity)</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/index_files/figure-html/unnamed-chunk-9-1.png" width="1152" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

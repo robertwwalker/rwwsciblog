@@ -1,6 +1,6 @@
 ---
-title: Trump's Tweets, Part II
-author: RWW
+title: "Trump's Tweets, Part II"
+authors: ["RWW"]
 date: '2018-12-19'
 slug: trump-s-tweets-part-ii
 categories:
@@ -19,9 +19,9 @@ header:
 
 # Trump's Tone
 
-A cool post on sentiment analysis can be found [here](http://dataaspirant.com/2018/03/22/twitter-sentiment-analysis-using-r/).  I will now get at the time series characteristics of his tweets and the sentiment stuff.
+A cool post on sentiment analysis can be found [here](http://dataaspirant.com/2018/03/22/twitter-sentiment-analysis-using-r/).  I will now get at the time series characteristics of his tweets and the sentiment stuff.  This plays off of a previous post.
 
-I start by loading the tmls object that I created [in the previous post](https://rww.science/post/trump-tweet-word-clouds/).  
+I start by loading the tmls object that I created [in the previous post](https://rww.science/post/trump-tweet-word-clouds/).  To capture constant content over time, there I describe how to download and break up the timeline.
 
 ## Trump's Overall Tweeting
 

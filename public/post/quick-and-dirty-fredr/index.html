@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>Quick and Dirty Fredr &middot; rww.science</title>
+		<title>Quick and Dirty fredr &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -78,16 +78,17 @@
                                 
                                 <span class="date">February 24, 2020</span>
                                 
-                                <h1>Quick and Dirty Fredr</h1>
+                                <h1>Quick and Dirty fredr</h1>
                                 <p></p>
                             </header>
                             
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
-<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
-<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+<script src="https://rww-science.website/post/quick-and-dirty-fredr/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/quick-and-dirty-fredr/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/quick-and-dirty-fredr/index_files/pymjs/pym.v1.js"></script>
+<script src="https://rww-science.website/post/quick-and-dirty-fredr/index_files/widgetframe-binding/widgetframe.js"></script>
 
 
 <div id="some-data-from-fredr" class="section level2">
@@ -105,28 +106,28 @@ Debt.Search %&gt;% select(id, title)</code></pre>
 ##    &lt;chr&gt;          &lt;chr&gt;                                                         
 ##  1 DDDM04USA156N… Outstanding Domestic Public Debt Securities to GDP for United…
 ##  2 DDDM04CNA156N… Outstanding Domestic Public Debt Securities to GDP for China  
-##  3 DDDM04JPA156N… Outstanding Domestic Public Debt Securities to GDP for Japan  
-##  4 DDDM04DEA156N… Outstanding Domestic Public Debt Securities to GDP for Germany
-##  5 WLSFAL         Liabilities: Deposits with F.R. Banks, Other Than Reserve Bal…
-##  6 DDDM04ARA156N… Outstanding Domestic Public Debt Securities to GDP for Argent…
-##  7 DDDM04HKA156N… Outstanding Domestic Public Debt Securities to GDP for Hong K…
-##  8 DDDM04BRA156N… Outstanding Domestic Public Debt Securities to GDP for Brazil 
-##  9 DDDM04ITA156N… Outstanding Domestic Public Debt Securities to GDP for Italy  
-## 10 DDDM04MXA156N… Outstanding Domestic Public Debt Securities to GDP for Mexico 
-## 11 DDDM04CHA156N… Outstanding Domestic Public Debt Securities to GDP for Switze…
-## 12 DDDM04THA156N… Outstanding Domestic Public Debt Securities to GDP for Thaila…
-## 13 DDDM04AUA156N… Outstanding Domestic Public Debt Securities to GDP for Austra…
+##  3 DDDM04BRA156N… Outstanding Domestic Public Debt Securities to GDP for Brazil 
+##  4 DDDM04MXA156N… Outstanding Domestic Public Debt Securities to GDP for Mexico 
+##  5 DDDM04JPA156N… Outstanding Domestic Public Debt Securities to GDP for Japan  
+##  6 DDDM04INA156N… Outstanding Domestic Public Debt Securities to GDP for India  
+##  7 WLSFAL         Liabilities: Deposits with F.R. Banks, Other Than Reserve Bal…
+##  8 WDSFAL         Factors Absorbing Reserve Funds: Deposits with Federal Reserv…
+##  9 DDDM04GBA156N… Outstanding Domestic Public Debt Securities to GDP for United…
+## 10 DDDM04ARA156N… Outstanding Domestic Public Debt Securities to GDP for Argent…
+## 11 DDDM04ITA156N… Outstanding Domestic Public Debt Securities to GDP for Italy  
+## 12 DDDM04NLA156N… Outstanding Domestic Public Debt Securities to GDP for Nether…
+## 13 DDDM04CHA156N… Outstanding Domestic Public Debt Securities to GDP for Switze…
 ## 14 DDDM04GRA156N… Outstanding Domestic Public Debt Securities to GDP for Greece 
-## 15 DDDM04INA156N… Outstanding Domestic Public Debt Securities to GDP for India  
-## 16 DDDM04NLA156N… Outstanding Domestic Public Debt Securities to GDP for Nether…
-## 17 DDDM04RUA156N… Outstanding Domestic Public Debt Securities to GDP for Russia…
+## 15 DDDM04CAA156N… Outstanding Domestic Public Debt Securities to GDP for Canada 
+## 16 DDDM04DEA156N… Outstanding Domestic Public Debt Securities to GDP for Germany
+## 17 DDDM04KRA156N… Outstanding Domestic Public Debt Securities to GDP for Republ…
 ## 18 DDDM04TRA156N… Outstanding Domestic Public Debt Securities to GDP for Turkey</code></pre>
 <p>Next, I need to acquire the data that I want. I probably should have reversed the order of some of the operations here. For example, I don’t really want the non-domestic public debt but I am not going to filter them before downloading. That’s not great but it isn’t all that much data either. The command <code>fredr</code> aliases the <code>fredr_series_observations</code> command that obtains data directly from <strong>FRED</strong>. I will use a variant of <em>map</em> to grab the relevant series <code>id</code> above and then join them back to the Search results.</p>
 <pre class="r"><code>Debt.Data &lt;- map_dfr(Debt.Search$id, fredr) %&gt;% left_join(Debt.Search, by=c(&quot;series_id&quot; = &quot;id&quot;))</code></pre>
 <p>Now let me splice off the United States and plot it.</p>
 <pre class="r"><code>US.Debt &lt;- dplyr::filter(Debt.Data, grepl(&#39;to GDP for United States&#39;, title))
 ggplot(US.Debt, aes(x=date, y=value)) + geom_line(size=3) + theme_economist() + theme(plot.title = element_text(color=&quot;red&quot;, size=11, face=&quot;bold.italic&quot;)) + labs(title=US.Debt$title[1])</code></pre>
-<p><img src="/post/2020-02-24-quick-and-dirty-fredr/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/quick-and-dirty-fredr/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>And because I ended up with a bunch of them; multiple time series plots. To automate this, I will first remove everything that represents liabilities above in the FRB system. Then I need to use the series title to select everything that I want and separate off the country names for labels. The only hard-coding hacks for the final plot are the title. Here’s what we get, with color encoding the country names.</p>
 <pre class="r"><code>library(stringr)
 Ctry.DD &lt;- Debt.Data %&gt;% filter(!grepl(&#39;Liabilities: Deposits&#39;, title))
@@ -135,7 +136,7 @@ plot1 &lt;- ggplot(Ctry.DD, aes(x=date, y=value, color=Country)) + geom_line(siz
 library(widgetframe)
 frameWidget(plotly::ggplotly(plot1))</code></pre>
 <div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2020-02-24-quick-and-dirty-fredr/index_files/figure-html//widgets/widget_unnamed-chunk-3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-3.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 
 
@@ -238,7 +239,7 @@ frameWidget(plotly::ggplotly(plot1))</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

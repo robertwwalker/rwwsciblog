@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>fredr is very neat &middot; rww.science</title>
+		<title>fredr is very neat &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -76,13 +76,12 @@
                         <section class="post">
                             <header class="major">
                                 
-                                <span class="date">April 11, 2019</span>
-                                
                                 <h1>fredr is very neat</h1>
                                 <p></p>
                             </header>
                             
                             
+<script src="https://rww-science.website/post/fredr-is-very-neat/index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="fred-via-fredr" class="section level1">
@@ -110,14 +109,14 @@ ChargeOff %&gt;% select(title)</code></pre>
 ##    &lt;chr&gt;                                                                        
 ##  1 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
 ##  2 Charge-Off Rate on Loans Secured by Real Estate, All Commercial Banks        
-##  3 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
-##  4 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, Single Fami…
-##  5 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
-##  6 Charge-Off Rate on Loans Secured by Real Estate, Top 100 Banks Ranked by Ass…
+##  3 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, Commercial …
+##  4 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
+##  5 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, Single Fami…
+##  6 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
 ##  7 Charge-Off Rate on Commercial Real Estate Loans (Excluding Farmland), Booked…
 ##  8 Charge-Off Rate on Loans Secured by Real Estate, Banks Not Among the 100 Lar…
-##  9 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, Commercial …
-## 10 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, Single Fami…
+##  9 Charge-Off Rate on Loans Secured by Real Estate, All Commercial Banks        
+## 10 Net Charge-Offs on All Loans and Leases, Secured by Real Estate, All Commerc…
 ## # … with 14 more rows</code></pre>
 <p>Wow, there is a rich array of data from that query. An even cooler feature is the ability to retrieve multiple at once in combination with the <code>map_dfr</code> command from the <code>purrr</code> library to make it tidy; that will go through the search results and stack the data that is returned [bind it together by rows]. These map commands are the tidy version of apply. In this case, binding the columns will likely fail because the times series are unlikely to be of the same length and that would create ragged columns. Better tidy from the start here.</p>
 <pre class="r"><code>library(stringr)
@@ -128,7 +127,7 @@ SeriesTitle &lt;- ChargeOff.Short[1,&quot;title&quot;] %&gt;% str_split(., &quot
 ChargeOff.Short %&gt;% ggplot(data = ., mapping = aes(x = date, y = value)) +
     geom_line() +
     labs(x = &quot;Date&quot;, y = &quot;Rate&quot;, title=SeriesTitle[[1]], subtitle = SeriesTitle[[2]] )</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <div id="counties-and-mapping" class="section level2">
 <h2>Counties and Mapping</h2>
 <p>When I was setting up <code>fredr</code>, I came across some data on subprime credit percentages. The data that I need for what I want to do is not obvious from the vignette and it turns out that this data is stored in a rather inconvenient fashion.</p>
@@ -139,7 +138,8 @@ ChargeOff.Short %&gt;% ggplot(data = ., mapping = aes(x = date, y = value)) +
 <p>The way that these are organized in FRED is going to make this a mess. The series_id actually contains data. Every data vector is stored as the series name and a FIPS code embdeded. The FIPS code is likely to be the last five characters/numbers. Fun. My other limitation is that I am only seeing 1000 of 3000+ counties. That’s a limit of the API. I am going to have to do this a bit differently. I am going to work backward. I have access to the full set of county fips codes so I think that I can build the dataset to query. Here goes.</p>
 <pre class="r"><code>library(readr)
 CFIPS &lt;- read_delim(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/COUNTYFIPS.txt&quot;), &quot;\t&quot;, escape_double = FALSE, trim_ws = TRUE)</code></pre>
-<pre><code>## Parsed with column specification:
+<pre><code>## 
+## ── Column specification ────────────────────────────────────────────────────────
 ## cols(
 ##   FIPS = col_character(),
 ##   Name = col_character(),
@@ -162,7 +162,7 @@ CFIPS &lt;- read_delim(url(&quot;https://github.com/robertwwalker/academic-mymod
 SubPrime.OR &lt;- left_join(SubPrime.OR, CFIPS, by=&quot;series_id&quot;)
 SubPrime.OR %&gt;% ggplot(aes(x=date, y=value, colour=series_id)) +
   geom_line() + theme(legend.position=&quot;none&quot;) + ggtitle(&quot;The Subprime Credit Rate Across Oregon Counties&quot;)</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Now I have something to work with. Just to show what <code>gganimate</code> can do; I will animate that.</p>
 <pre class="r"><code>library(gganimate)
 library(ggrepel)
@@ -172,14 +172,247 @@ SubPrime.OR %&gt;% ggplot(aes(x=date, y=value, colour=series_id)) +
   geom_point(aes(group=series_id)) +
   geom_text_repel(aes(y = value, x = as.Date(&quot;2019-01-01&quot;), label = Name), hjust = 1, nudge_x = 8) + theme(legend.position=&quot;none&quot;) + labs(title=&#39;The Subprime Credit Rate Across Oregon Counties: {frame_along}&#39;, y =&quot;Subprime Rate&quot;) +
   transition_reveal(date)</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 28 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 30 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 30 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 29 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 28 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 22 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 22 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 28 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 21 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 19 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 19 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 19 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 19 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 21 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 20 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 22 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 22 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 23 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps
+
+## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 26 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 25 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 29 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<pre><code>## Warning: ggrepel: 27 unlabeled data points (too many overlaps). Consider
+## increasing max.overlaps</code></pre>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-6-1.gif" /><!-- --></p>
 <p>My goal here is to build an animation of the map of this. So here goes.</p>
 <pre class="r"><code>states &lt;- map_data(&quot;state&quot;)
 OR.df &lt;- subset(states, region == &quot;oregon&quot;)
 OR_base &lt;- ggplot(data = OR.df, mapping = aes(x = long, y = lat, group = group)) +
 geom_polygon(color = &quot;black&quot;, fill = &quot;gray&quot;)+ theme_minimal() 
 OR_base + geom_point(aes(x=-123.0433, y=44.925167))</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <pre class="r"><code>library(emoGG)
 counties &lt;- map_data(&quot;county&quot;)
 OR.county &lt;- subset(counties, region == &quot;oregon&quot;)
@@ -187,7 +420,7 @@ OR.Map &lt;- ggplot(data = OR.df, mapping = aes(x = long, y = lat, group = group
     geom_polygon(color = &quot;black&quot;, fill = &quot;gray&quot;)+ theme_minimal() 
 OR_emoj &lt;- OR_base +  add_emoji(&quot;1f352&quot;, x=-123.0433, y=44.925167, ysize=0.5)
 OR_emoj</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>Now to build a first map to make sure that it works.</p>
 <pre class="r"><code>library(maps)</code></pre>
 <pre><code>## 
@@ -217,7 +450,7 @@ OR.MD &lt;- inner_join(OR.county, OneYear, by = &quot;subregion&quot;)</code></p
       ditch_the_axes +
       ggtitle(&quot;Subprime Credit Percentages by County&quot;)
 Polt1</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <p>Now for the general case. Same merge but with all the data.</p>
 <pre class="r"><code>OR.MD2 &lt;- left_join(SubPrime.M, OR.county, by = &quot;subregion&quot;)
 OR.MD2 &lt;- OR.MD2 %&gt;% mutate(Subprime.Pct = value)</code></pre>
@@ -232,7 +465,7 @@ p &lt;- OR.Map +
   labs(title = &#39;Subprime Credit Percentage by Quarter: {closest_state}&#39;) +
   transition_states(date, transition_length = 3, state_length = 3)
 animate(p, nframes = 300)</code></pre>
-<p><img src="/post/2019-04-11-fredr-is-very-neat/index_files/figure-html/unnamed-chunk-13-1.gif" /><!-- --></p>
+<p><img src="https://rww-science.website/post/fredr-is-very-neat/index_files/figure-html/unnamed-chunk-13-1.gif" /><!-- --></p>
 </div>
 </div>
 
@@ -336,7 +569,7 @@ animate(p, nframes = 300)</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

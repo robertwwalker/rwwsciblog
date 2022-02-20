@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -47,14 +47,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -104,19 +104,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -131,105 +130,100 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">December 19, 2018</span>
+            <span class="date">October 9, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/trump-s-tweets-part-ii/">Trump&#39;s Tweets, Part II</a></h2>
+            <h2><a href="https://rww-science.website/post/the-economist-s-visualization-errors/">The Economist&#39;s Visualization Errors</a></h2>
         </header>
         
         
-        <p>Trump’s Tone A cool post on sentiment analysis can be found here. I will now get at the time series characteristics of his tweets and the sentiment stuff.
-I start by loading the tmls object that I created in the previous post.
-Trump’s Overall Tweeting What does it look like?
-library(tidyverse) library(tidytext) library(SnowballC) library(tm) library(syuzhet) library(rtweet) load(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/TMLS.RData&quot;)) names(tml.djt) ## [1] &quot;user_id&quot; &quot;status_id&quot; ## [3] &quot;created_at&quot; &quot;screen_name&quot; ## [5] &quot;text&quot; &quot;source&quot; ## [7] &quot;display_text_width&quot; &quot;reply_to_status_id&quot; ## [9] &quot;reply_to_user_id&quot; &quot;reply_to_screen_name&quot; ## [11] &quot;is_quote&quot; &quot;is_retweet&quot; ## [13] &quot;favorite_count&quot; &quot;retweet_count&quot; ## [15] &quot;hashtags&quot; &quot;symbols&quot; ## [17] &quot;urls_url&quot; &quot;urls_t.</p>
+        <p>The Economist’s Errors and Credit Where Credit is DueThe Economist is serious about their use of data visualization and they have occasionally owned up to errors in their visualizations. They can be deceptive, uninformative, confusing, excessively busy, and present a host of other barriers to clean communication. Their blog post on their errors is great.
+I have drawn the following example from a #tidyTuesday earlier this year that explores this.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/trump-s-tweets-part-ii/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/the-economist-s-visualization-errors/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">December 18, 2018</span>
+            <span class="date">October 9, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/trump-tweet-word-clouds/">Trump Tweet Word Clouds</a></h2>
+            <h2><a href="https://rww-science.website/post/tidytuesday-does-pizza/">tidyTuesday does Pizza</a></h2>
         </header>
         
         
-        <p>Mining Twitter Data Is rather easy. You have to arrange a developer account with Twitter and set up an app. After that, Twitter gives you access to a consumer key and secret and an access token and access secret. My tool of choice for this is rtweet because it automagically processes tweet elements and makes them easy to slice and dice. I also played with twitteR but it was harder to work with for what I wanted.</p>
+        <p>Pizza RatingsThe #tidyTuesday for this week involves pizza shop ratings data. The data come from a variety of sources; it is price, ratings, and similar data for pizza restaurants. The actual contents vary depending on the data source. I will begin by loading the data and summarizing what data seem to be available so that we can figure out what we can do with it.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/trump-tweet-word-clouds/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tidytuesday-does-pizza/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 17, 2018</span>
+            <span class="date">May 22, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/">tidyTuesday meets the Economics of Majors</a></h2>
+            <h2><a href="https://rww-science.website/post/some-basic-text-on-the-mueller-report/">Some Basic Text Analysis on the Mueller Report</a></h2>
         </header>
         
         
-        <p>This week’s tidyTuesday focuses on degrees and majors and their deployment in the labor market. The original data came from 538. A description of sources and measures. The tidyTesday writeup is here.
-library(tidyverse) options(scipen=6) library(extrafont) font_import() ## Importing fonts may take a few minutes, depending on the number of fonts and the speed of the system. ## Continue? [y/n] Major.Employment &lt;- read.csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv&quot;) library(skimr) skim(Major.Employment)  Table 1: Data summary  Name Major.</p>
+        <p>So this Robert Mueller guy wrote a reportI may as well analyse it a bit. There are tons of things that we might wish to discover about the report; my goal is not at that.
+First, let me see if I can get a hold of the data. I grabbed the report directly from the Department of Justice website. You can follow this link. The report is really long and making sense of it could be done in an absolute ton of ways.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/some-basic-text-on-the-mueller-report/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">May 9, 2018</span>
+            <span class="date">April 30, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/tidytuesday-coffee-chains/">tidyTuesday: coffee chains</a></h2>
+            <h2><a href="https://rww-science.website/post/nflscrapr-is-amazing/">nflscrapR is amazing</a></h2>
         </header>
         
         
-        <p>The tidyTuesday for this week is coffee chain locations For this week: 1. The basic link to the #tidyTuesday shows an original article for Week 6.
-First, let’s import the data; it is a single Excel spreadsheet. The page notes that starbucks, Tim Horton, and Dunkin Donuts have raw data available.
-library(readxl) library(tidyverse) ## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4 ## ✓ tibble 3.</p>
+        <p>Scraping NFL dataNote: An original version of this post had issues induced by overtime games. There is a better way to handle all of this that I learned from a brief analysis of a tie game between Cleveland and Pittsburgh in Week One.
+The nflscrapR package is designed to make data on NFL games more easily available. To install the package, we need to grab it from github.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tidytuesday-coffee-chains/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/nflscrapr-is-amazing/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 18, 2018</span>
+            <span class="date">April 14, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/tidytuesday-takes-on-global-mortality/">Global mortality tidyTuesday</a></h2>
+            <h2><a href="https://rww-science.website/post/visualisation-with-archigos-leaders-of-the-world/">Visualisation with Archigos: Leaders of the World</a></h2>
         </header>
         
         
-        <p>tidyTuesday on Global Mortality The three generic challenge graphics involve two global summaries, a raw count by type and a percentage by type. The individual county breakdowns are recorded for a predetermined year below. This can all be seen in the original. For whatever reason, I cannot open this data remotely.
-Here is this week’s tidyTuesday.
-library(skimr) library(tidyverse) library(rlang) # global_mortality &lt;- readRDS(&quot;../../data/global_mortality.rds&quot;) global_mortality &lt;- readRDS(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/global_mortality.rds&quot;)) skim(global_mortality)  Table 1: Data summary  Name global_mortality  Number of rows 6156  Number of columns 35  _______________________   Column type frequency:   character 2  numeric 33  ________________________   Group variables None    Variable type: character</p>
+        <p>ArchigosIs an amazing collaboration that produced a comprehensive dataset of world leaders going pretty far back; see Archigos on the web. For thinking about leadership, it is quite natural. In this post, I want to do some reshaping into country year and leader year datasets and explore the basic confines of Archigos. I also want to use gganimate for a few things. So what do we know?</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tidytuesday-takes-on-global-mortality/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/visualisation-with-archigos-leaders-of-the-world/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 8, 2018</span>
+            <span class="date">March 17, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/scraping-epl-salary-data/">Scraping EPL Salary Data</a></h2>
+            <h2><a href="https://rww-science.website/post/stocks-and-gganimate/">Stocks and gganimate</a></h2>
         </header>
         
         
-        <p>EPL Scraping In a previous post, I scraped some NFL data and learned the structure of Sportrac. Now, I want to scrape the available data on the EPL. The EPL data is organized in a few distinct but potentially linked tables. The basic structure is organized around team folders. Let me begin by isolating those URLs.
-library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/epl/&quot; read.base &lt;- read_html(base_url) team.URL &lt;- read.base %&gt;% html_nodes(&quot;.team-name&quot;) %&gt;% html_attr(&#39;href&#39;) team.</p>
+        <p>tidyquantAutomates a lot of equity research and calculation using tidy concepts. Here, I will first use it to get the components of the S and P 500 and pick out those with weights over 1.25 percent. In the next step, I download the data and finally calculate daily returns and a cumulative wealth index.
+library(tidyquant)library(tidyverse)tq_index(&quot;SP500&quot;) %&gt;% filter(weight &gt; 0.0125) %&gt;% select(symbol,company) -&gt; TickersTickers &lt;- Tickers %&gt;% filter(symbol!</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/scraping-epl-salary-data/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/stocks-and-gganimate/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -287,9 +281,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -309,9 +301,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -331,9 +321,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -353,9 +341,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -375,9 +361,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -396,12 +380,10 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
                     
 
-                        
                         
                             
                         
 
-                    
                     
 
                 
@@ -427,11 +409,9 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -457,11 +437,9 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -487,11 +465,9 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -517,11 +493,9 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -534,6 +508,26 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
                         10 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
                 
 
             
@@ -646,7 +640,7 @@ library(rvest) library(tidyverse) base_url &lt;- &quot;http://www.spotrac.com/ep
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -47,14 +47,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -104,19 +104,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -131,117 +130,105 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">November 15, 2019</span>
+            <span class="date">December 19, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/building-a-blogdown/">Building a Blogdown</a></h2>
+            <h2><a href="https://rww-science.website/post/simple-point-maps-in-r/">Simple Point Maps in R</a></h2>
         </header>
         
         
-        <p>Pre-Talk Slides
-Set the RStudio to install blogdown.
-install.packages(&quot;blogdown&quot;) and to get a working local version of Hugo, the static site generator at the heart of this,
-blogdown::install_hugo()  Motivation Credit where credit is due; Alison Hill motivated all of this with her wealth of resources. Indeed, I redesigned the flow for today because of her brilliant R-Ladies Canberra seminar [I found the resource links on Twitter and the idea is</p>
+        <p>Mapping Points in RMy goal is a streamlined and self-contained freeware map maker with points denoting addresses. It is a three step process that involves:
+Get a map.
+Geocode the addresses into latitude and longitude.
+Combine the the two with a first map layer and a second layer on top that contains the points.From there, it is pretty easy to get fancy using ggplotly to put relevant text hovers into place.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/building-a-blogdown/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/simple-point-maps-in-r/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 23, 2019</span>
+            <span class="date">December 17, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/tribute-to-griffin-park/">Tribute to Griffin Park</a></h2>
+            <h2><a href="https://rww-science.website/post/dog-movements-a-tidytuesday/">Dog Movements: a tidyTuesday</a></h2>
         </header>
         
         
-        <p>Ode to Griffin Park Griffin Park&rsquo;s famous four corners make it the only football ground in England with four pubs on the four corners surrounding the ground.
-Here&rsquo;s a link to the curated twitter thread.
-In the Beginning
-The Griffin
-To the Brook
-The Brook
-Sussex Best at the Brook
-The Garden
-Up New Road
-The New Road Gate at Griffin Park
-The New Inn
-Doom Bar
-Rules on the Main &ndash; Ealing &ndash; Road</p>
+        <p>Adoptable Dogs# devtools::install_github(&quot;thebioengineer/tidytuesdayR&quot;, force=TRUE)tuesdata51 &lt;- tidytuesdayR::tt_load(2019, week = 51)dog_moves &lt;- tuesdata51$dog_movesdog_des &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-17/dog_descriptions.csv&#39;)library(tidyverse); library(scatterpie)library(rgeos)library(maptools)library(rgdal); library(usmap); library(ggthemes)The Base MapMy.Map &lt;- us_map(regions = &quot;states&quot;)Base.Plot &lt;- ggplot() + geom_polygon(data=My.Map, aes(x=x, y=y, group=group), fill=&quot;white&quot;, color=&quot;black&quot;) + theme_map()Base.PlotA fifty state map to plot this information on.
+New.Dat &lt;- left_join(My.Map, dog_moves, by= c(&quot;full&quot; = &quot;location&quot;))ggplot() + geom_polygon(data=New.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/tribute-to-griffin-park/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/dog-movements-a-tidytuesday/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 10, 2019</span>
+            <span class="date">December 16, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/fariss-human-rights-data-with-animation/">Fariss Human Rights Data with Animation</a></h2>
+            <h2><a href="https://rww-science.website/post/tidytuesday-measles/">tidyTuesday Measles</a></h2>
         </header>
         
         
-        <p>Fariss Data Is neat and complete.
-load(&quot;FarissHRData.RData&quot;) skimr::skim(HR.Data)  Table 1: Data summary  Name HR.Data  Number of rows 11717  Number of columns 27  _______________________   Column type frequency:   factor 1  numeric 26  ________________________   Group variables None    Variable type: factor
-  skim_variable n_missing complete_rate ordered n_unique top_counts    COW_YEAR 0 1 FALSE 11717 100: 1, 100: 1, 100: 1, 100: 1    Variable type: numeric</p>
+        <p>tidyTuesday: December 10, 2019Replicating plots from simplystatistics. One nice twist is the development of a tidytuesdayR package to grab the necessary data in an easy way. You can install the package via github. I will also use fiftystater and ggflags.
+devtools::install_github(&quot;thebioengineer/tidytuesdayR&quot;)devtools::install_github(&quot;ellisp/ggflags&quot;)devtools::install_github(&quot;wmurphyrd/fiftystater&quot;)tuesdata &lt;- tidytuesdayR::tt_load(2019, week = 50)## --- Downloading #TidyTuesday Information for 2019-12-10 ----## --- Identified 4 files available for download ----## --- Downloading files ---## Warning in identify_delim(temp_file): Not able to detect delimiter for the file.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/fariss-human-rights-data-with-animation/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tidytuesday-measles/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 10, 2019</span>
+            <span class="date">December 16, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/generative-art/">Generative aRt</a></h2>
+            <h2><a href="https://rww-science.website/post/trying-out-leaflet/">Trying out Leaflet</a></h2>
         </header>
         
         
-        <p>mathart A cool package for math generated art that I just discovered. Here is the install code for it
-install.packages(c(&quot;devtools&quot;, &quot;mapproj&quot;, &quot;tidyverse&quot;, &quot;ggforce&quot;, &quot;Rcpp&quot;)) devtools::install_github(&quot;marcusvolz/mathart&quot;) devtools::install_github(&quot;marcusvolz/ggart&quot;) devtools::install_github(&quot;gsimchoni/kandinsky&quot;) Load some libraries library(mathart) library(ggart) library(ggforce) library(Rcpp) library(tidyverse)  Generate some Art? This is quite fun to do.
-set.seed(12341) terminals &lt;- data.frame(x = runif(10, 0, 10000), y = runif(10, 0, 10000)) df &lt;- 1:10000 %&gt;% map_df(~weiszfeld(terminals, c(points$x[.], points$y[.])), .id = &quot;id&quot;) p &lt;- ggplot() + geom_point(aes(x, y), points, size = 1, alpha = 0.</p>
+        <p>International MurdersAre among the data for analysis in the tidyTuesday for December 10, 2019. These are made for a map.
+library(tidyverse)library(leaflet)library(stringr)library(sf)library(here)library(widgetframe)library(htmlwidgets)library(htmltools)options(digits = 3)set.seed(1234)theme_set(theme_minimal())library(tidytuesdayR)tuesdata &lt;- tt_load(2019, week = 50)murders &lt;- tuesdata$gun_murdersThere isn’t much data so it should make this a bit easier. Now for some data. As it happens, the best way I currently know how to do this is going to involve acquiring a spatial frame.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/generative-art/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/trying-out-leaflet/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 9, 2019</span>
+            <span class="date">December 9, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/simple-oregon-county-mapping/">Simple Oregon County Mapping</a></h2>
+            <h2><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/">Philadelphia Parking Tickets: a tidyTuesday</a></h2>
         </header>
         
         
-        <p>Some Data for the Map I want to get some data to place on the map. I found a website with population and population change data for Oregon in .csv format. I cannot direct download it from R, instead I have to button download it and import it.
-library(tidyverse) ## ── Attaching packages ────────────────────────── tidyverse 1.3.0 ── ## ✓ ggplot2 3.2.1 ✓ purrr 0.3.3 ## ✓ tibble 2.1.3 ✓ dplyr 0.</p>
+        <p>Philadelphia MapUse ggmap for the base layer.
+library(ggmap); library(osmdata); library(tidyverse)PHI &lt;- get_map(getbb(&quot;Philadelphia, PA&quot;), maptype = &quot;stamen&quot;, zoom=12)Get the Tickets DataTidyTuesday covers 1.26 million parking tickets in Philadelphia.
+tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-03/tickets.csv&quot;)## Parsed with column specification:## cols(## violation_desc = col_character(),## issue_datetime = col_datetime(format = &quot;&quot;),## fine = col_double(),## issuing_agency = col_character(),## lat = col_double(),## lon = col_double(),## zip_code = col_double()## )Two Lines of Code Leftlibrary(lubridate); library(ggthemes)tickets &lt;- tickets %&gt;% mutate(Day = wday(issue_datetime, label=TRUE)) # use lubridate to extract the day of the month.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/simple-oregon-county-mapping/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 9, 2019</span>
+            <span class="date">December 9, 2019</span>
             
-            <h2><a href="http://localhost:1313/post/the-economist-s-visualization-errors/">The Economist&#39;s Visualization Errors</a></h2>
+            <h2><a href="https://rww-science.website/post/uscensus-mapping/">US Census Mapping</a></h2>
         </header>
         
         
-        <p>The Economist’s Errors and Credit Where Credit is Due The Economist is serious about their use of data visualization and they have occasionally owned up to errors in their visualizations. They can be deceptive, uninformative, confusing, excessively busy, and present a host of other barriers to clean communication. Their blog post on their errors is great.
-I have drawn the following example from a #tidyTuesday earlier this year that explores this.</p>
+        <p>Searching and Mapping the CensusSearching for the Asian Population via the CensusTo use tidycensus, there are limitations imposed by the available tables. There is ACS – a survey of about 3 million people – and the two main decennial census files [SF1] and [SF2]. I will search SF1 for the Asian population.
+library(tidycensus); library(kableExtra)library(tidyverse); library(stringr)v10 &lt;- load_variables(2010, &quot;sf1&quot;, cache = TRUE)v10 %&gt;% filter(str_detect(concept, &quot;ASIAN&quot;)) %&gt;% filter(str_detect(label, &quot;Female&quot;)) %&gt;% kable() %&gt;% scroll_box(width = &quot;100%&quot;)namelabelconceptP012D026Total!</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/the-economist-s-visualization-errors/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/uscensus-mapping/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -529,6 +516,26 @@ I have drawn the following example from a #tidyTuesday earlier this year that ex
                 
 
             
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
 
             
             
@@ -638,7 +645,7 @@ I have drawn the following example from a #tidyTuesday earlier this year that ex
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

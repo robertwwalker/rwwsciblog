@@ -1,6 +1,6 @@
 ---
-title: Simple Oregon County Mapping
-author: RWW
+title: 'Simple Oregon County Mapping'
+authors: ["RWW"]
 date: '2019-10-09'
 slug: simple-oregon-county-mapping
 categories:

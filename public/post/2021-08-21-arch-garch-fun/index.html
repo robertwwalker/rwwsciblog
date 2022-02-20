@@ -1,0 +1,606 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>ARCH and GARCH Models &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">August 21, 2021</span>
+                                
+                                <h1>ARCH and GARCH Models</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2021-08-21-arch-garch-fun/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="nke" class="section level2">
+<h2><code>NKE</code></h2>
+<p>First, let me use tidyquant to acquire the data.</p>
+<pre class="r"><code>library(tidyquant); library(tidyverse)
+NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;)
+NKE</code></pre>
+<pre><code>## # A tibble: 666 × 8
+##    symbol date        open  high   low close   volume adjusted
+##    &lt;chr&gt;  &lt;date&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1 NKE    2019-01-02  72.8  74.6  72.2  74.1  6762700     72.3
+##  2 NKE    2019-01-03  73.2  73.3  71.2  72.8  8007400     71.0
+##  3 NKE    2019-01-04  73.4  75.1  73.1  74.7  7844200     72.9
+##  4 NKE    2019-01-07  74.7  76.4  74.3  75.7  8184800     73.9
+##  5 NKE    2019-01-08  76.8  77.4  76.2  76.7  8809000     74.9
+##  6 NKE    2019-01-09  77.0  77.2  76.1  76.6  8591000     74.8
+##  7 NKE    2019-01-10  75.6  77.3  75.5  76.4 11148600     74.6
+##  8 NKE    2019-01-11  76.3  76.9  75.8  76.0 10689900     74.2
+##  9 NKE    2019-01-14  75.5  76.8  75.5  76.1  5677400     74.3
+## 10 NKE    2019-01-15  76.2  78.0  76.1  77.9  6212400     76.0
+## # … with 656 more rows</code></pre>
+<p>For a variety of reasons, equities are unlikely to be mean-reverting in level form. Let me apply some unit-root testing for Nike since 2019.</p>
+<pre class="r"><code>NKEAC &lt;- NKE %&gt;% select(date, adjusted)
+summary(urca::ur.df(NKEAC$adjusted))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression none 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 - 1 + z.diff.lag)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.9267 -0.9000 -0.0264  0.9268 20.5833 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)  
+## z.lag.1     0.0013526  0.0007182   1.883   0.0601 .
+## z.diff.lag -0.0280298  0.0389140  -0.720   0.4716  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.028 on 662 degrees of freedom
+## Multiple R-squared:  0.005798,   Adjusted R-squared:  0.002794 
+## F-statistic:  1.93 on 2 and 662 DF,  p-value: 0.1459
+## 
+## 
+## Value of test-statistic is: 1.8834 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau1 -2.58 -1.95 -1.62</code></pre>
+<pre class="r"><code>summary(urca::ur.df(NKEAC$adjusted, type=&quot;trend&quot;))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression trend 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + tt + z.diff.lag)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -10.1777  -0.9159   0.0210   0.9828  20.3831 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  0.8816357  0.4870604   1.810   0.0707 .
+## z.lag.1     -0.0129501  0.0069872  -1.853   0.0643 .
+## tt           0.0019613  0.0009489   2.067   0.0391 *
+## z.diff.lag  -0.0208542  0.0390192  -0.534   0.5932  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 2.025 on 660 degrees of freedom
+## Multiple R-squared:  0.007157,   Adjusted R-squared:  0.002644 
+## F-statistic: 1.586 on 3 and 660 DF,  p-value: 0.1915
+## 
+## 
+## Value of test-statistic is: -1.8534 2.6743 2.1364 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau3 -3.96 -3.41 -3.12
+## phi2  6.09  4.68  4.03
+## phi3  8.27  6.25  5.34</code></pre>
+<pre class="r"><code>summary(urca::ur.df(NKEAC$adjusted, type = &quot;drift&quot;))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression drift 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + z.diff.lag)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.9611 -0.9019 -0.0319  0.9202 20.6090 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  1.447e-01  3.327e-01   0.435    0.664
+## z.lag.1      7.332e-05  3.027e-03   0.024    0.981
+## z.diff.lag  -2.708e-02  3.900e-02  -0.694    0.488
+## 
+## Residual standard error: 2.03 on 661 degrees of freedom
+## Multiple R-squared:  0.0007301,  Adjusted R-squared:  -0.002293 
+## F-statistic: 0.2415 on 2 and 661 DF,  p-value: 0.7855
+## 
+## 
+## Value of test-statistic is: 0.0242 1.8661 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau2 -3.43 -2.86 -2.57
+## phi1  6.43  4.59  3.78</code></pre>
+<pre class="r"><code>summary(urca::ur.kpss(NKEAC$adjusted, type = &quot;mu&quot;))</code></pre>
+<pre><code>## 
+## ####################### 
+## # KPSS Unit Root Test # 
+## ####################### 
+## 
+## Test is of type: mu with 6 lags. 
+## 
+## Value of test-statistic is: 8.1284 
+## 
+## Critical value for a significance level of: 
+##                 10pct  5pct 2.5pct  1pct
+## critical values 0.347 0.463  0.574 0.739</code></pre>
+<pre class="r"><code>summary(urca::ur.kpss(NKEAC$adjusted, type = &quot;tau&quot;))</code></pre>
+<pre><code>## 
+## ####################### 
+## # KPSS Unit Root Test # 
+## ####################### 
+## 
+## Test is of type: tau with 6 lags. 
+## 
+## Value of test-statistic is: 1.1868 
+## 
+## Critical value for a significance level of: 
+##                 10pct  5pct 2.5pct  1pct
+## critical values 0.119 0.146  0.176 0.216</code></pre>
+<p>So the process seems to clearly contain a unit-root, statistically. Let’s have a look.</p>
+<div id="visualizing-adjusted-close" class="section level3">
+<h3>Visualizing Adjusted Close</h3>
+<pre class="r"><code>library(fpp3)
+NKE %&gt;% mutate(tday = row_number()) %&gt;% as_tsibble(index=tday) %&gt;% autoplot(adjusted)</code></pre>
+<p><img src="https://rww-science.website/post/2021-08-21-arch-garch-fun/index_files/figure-html/unnamed-chunk-3-1.png" width="1152" /></p>
+</div>
+</div>
+<div id="returns" class="section level2">
+<h2>Returns</h2>
+<p>Let me work with returns.</p>
+<pre class="r"><code>NKER &lt;- NKE %&gt;% tq_transmute(select=adjusted, mutate_fun = periodReturn, period=&quot;daily&quot;) %&gt;% mutate(tday = row_number())
+NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
+<p><img src="https://rww-science.website/post/2021-08-21-arch-garch-fun/index_files/figure-html/unnamed-chunk-4-1.png" width="1152" /></p>
+<div id="unit-roots-and-returns" class="section level3">
+<h3>Unit roots and returns</h3>
+<p>How do the returns seem to behave?</p>
+<pre class="r"><code>summary(urca::ur.df(NKER$daily.returns))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression none 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 - 1 + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.121075 -0.007406  0.000831  0.010751  0.155109 
+## 
+## Coefficients:
+##            Estimate Std. Error t value Pr(&gt;|t|)    
+## z.lag.1    -0.96100    0.05559 -17.288   &lt;2e-16 ***
+## z.diff.lag -0.06403    0.03879  -1.651   0.0993 .  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02021 on 662 degrees of freedom
+## Multiple R-squared:  0.5156, Adjusted R-squared:  0.5141 
+## F-statistic: 352.3 on 2 and 662 DF,  p-value: &lt; 2.2e-16
+## 
+## 
+## Value of test-statistic is: -17.2877 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau1 -2.58 -1.95 -1.62</code></pre>
+<pre class="r"><code>summary(urca::ur.df(NKER$daily.returns, type=&quot;trend&quot;))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression trend 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + tt + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.122496 -0.008818 -0.000600  0.009477  0.153228 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  9.566e-04  1.573e-03   0.608    0.543    
+## z.lag.1     -9.723e-01  5.583e-02 -17.414   &lt;2e-16 ***
+## tt           1.555e-06  4.088e-06   0.380    0.704    
+## z.diff.lag  -5.842e-02  3.885e-02  -1.504    0.133    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02019 on 660 degrees of freedom
+## Multiple R-squared:  0.5182, Adjusted R-squared:  0.516 
+## F-statistic: 236.6 on 3 and 660 DF,  p-value: &lt; 2.2e-16
+## 
+## 
+## Value of test-statistic is: -17.4142 101.0865 151.6272 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau3 -3.96 -3.41 -3.12
+## phi2  6.09  4.68  4.03
+## phi3  8.27  6.25  5.34</code></pre>
+<pre class="r"><code>summary(urca::ur.df(NKER$daily.returns, type = &quot;drift&quot;))</code></pre>
+<pre><code>## 
+## ############################################### 
+## # Augmented Dickey-Fuller Test Unit Root Test # 
+## ############################################### 
+## 
+## Test regression drift 
+## 
+## 
+## Call:
+## lm(formula = z.diff ~ z.lag.1 + 1 + z.diff.lag)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.122547 -0.008819 -0.000644  0.009216  0.153680 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.0014744  0.0007871   1.873   0.0615 .  
+## z.lag.1     -0.9718217  0.0557835 -17.421   &lt;2e-16 ***
+## z.diff.lag  -0.0586536  0.0388196  -1.511   0.1313    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.02017 on 661 degrees of freedom
+## Multiple R-squared:  0.5181, Adjusted R-squared:  0.5167 
+## F-statistic: 355.3 on 2 and 661 DF,  p-value: &lt; 2.2e-16
+## 
+## 
+## Value of test-statistic is: -17.4213 151.7537 
+## 
+## Critical values for test statistics: 
+##       1pct  5pct 10pct
+## tau2 -3.43 -2.86 -2.57
+## phi1  6.43  4.59  3.78</code></pre>
+<pre class="r"><code>summary(urca::ur.kpss(NKER$daily.returns, type = &quot;mu&quot;))</code></pre>
+<pre><code>## 
+## ####################### 
+## # KPSS Unit Root Test # 
+## ####################### 
+## 
+## Test is of type: mu with 6 lags. 
+## 
+## Value of test-statistic is: 0.0576 
+## 
+## Critical value for a significance level of: 
+##                 10pct  5pct 2.5pct  1pct
+## critical values 0.347 0.463  0.574 0.739</code></pre>
+<pre class="r"><code>summary(urca::ur.kpss(NKER$daily.returns, type = &quot;tau&quot;))</code></pre>
+<pre><code>## 
+## ####################### 
+## # KPSS Unit Root Test # 
+## ####################### 
+## 
+## Test is of type: tau with 6 lags. 
+## 
+## Value of test-statistic is: 0.0309 
+## 
+## Critical value for a significance level of: 
+##                 10pct  5pct 2.5pct  1pct
+## critical values 0.119 0.146  0.176 0.216</code></pre>
+<p>So we can reject the null of a unit root and we fail to reject the null of stationarity of the returns. How about the correlation functions?</p>
+</div>
+<div id="acf-and-pacf-of-returns" class="section level3">
+<h3>ACF and PACF of Returns</h3>
+<pre class="r"><code>NKER %&gt;% as_tsibble(index=tday) %&gt;% gg_tsdisplay(daily.returns, plot_type = &quot;partial&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-08-21-arch-garch-fun/index_files/figure-html/unnamed-chunk-6-1.png" width="1152" /></p>
+<p>They are nominally white noise.</p>
+<pre class="r"><code>Box.test(NKER$daily.returns, type = &quot;Ljung-Box&quot;)</code></pre>
+<pre><code>## 
+##  Box-Ljung test
+## 
+## data:  NKER$daily.returns
+## X-squared = 0.69704, df = 1, p-value = 0.4038</code></pre>
+<pre class="r"><code>NKER %&gt;% as_tsibble(index=tday) %&gt;% model(ARIMA(daily.returns)) %&gt;% report()</code></pre>
+<pre><code>## Series: daily.returns 
+## Model: ARIMA(0,0,0) w/ mean 
+## 
+## Coefficients:
+##       constant
+##         0.0015
+## s.e.    0.0008
+## 
+## sigma^2 estimated as 0.0004068:  log likelihood=1655.24
+## AIC=-3306.48   AICc=-3306.46   BIC=-3297.48</code></pre>
+<p>So the returns have a slightly positive and marginally significant constant. Nike has averaged 0.15 percent returns per day over the period given this very simple representation.</p>
+</div>
+</div>
+<div id="models" class="section level1">
+<h1>Models</h1>
+<p>Let’s start with a representation of an AR(p) process.</p>
+<p><span class="math display">\[
+R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t}
+\]</span></p>
+<p>where</p>
+<p><span class="math display">\[ \mathbb{E}[\epsilon_{t}] =  0 \]</span></p>
+<p>and</p>
+<p><span class="math display">\[\mathbb{E}[\epsilon \epsilon^{\prime}] = \sigma^{2} \cdot I_{T}\]</span></p>
+<p>where <span class="math inline">\(R_{t}\)</span> represent the returns at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\mu\)</span> is the mean of the stationary process generating <span class="math inline">\(R_{t}\)</span> and <span class="math inline">\(\epsilon\)</span> is a white noise error term. Note the stationarity of <span class="math inline">\(R_t\)</span> is arises so long as the roots of <span class="math inline">\(1 - \phi_{1}z + \phi_{2}z^2 + \ldots + \phi_{p}z^{p} = 0\)</span>. Note that the unconditional variance is constant.</p>
+<div id="archm" class="section level2">
+<h2>ARCH(m)</h2>
+<p>The ARCH(m) process of Engel (1982) describes the square of <span class="math inline">\(\epsilon_{t}\)</span> to follow an AR(m) process such that
+<span class="math display">\[
+\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}
+\]</span>
+with <span class="math inline">\(\omega\)</span> as white noise. The <span class="math inline">\(\epsilon\)</span> are errors in forecasting <span class="math inline">\(R\)</span>; the same restriction on the roots will apply from before. The unconditional variance is still a constant described now by <span class="math inline">\(\frac{\xi}{1-a_{1}-a_{2}-\ldots-a_{m}}\)</span>.</p>
+<p>There are a few implementations of the basic test for ARCH effects. Let’s have a look at one through six lags. I am not going to tidy this.</p>
+<pre class="r"><code>1:6 %&gt;% map(function(x) {FinTS::ArchTest(NKER$daily.returns, lags = x)})</code></pre>
+<pre><code>## [[1]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 32.387, df = 1, p-value = 1.263e-08
+## 
+## 
+## [[2]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 52.016, df = 2, p-value = 5.069e-12
+## 
+## 
+## [[3]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 52.012, df = 3, p-value = 2.978e-11
+## 
+## 
+## [[4]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 52.108, df = 4, p-value = 1.31e-10
+## 
+## 
+## [[5]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 55.928, df = 5, p-value = 8.408e-11
+## 
+## 
+## [[6]]
+## 
+##  ARCH LM-test; Null hypothesis: no ARCH effects
+## 
+## data:  NKER$daily.returns
+## Chi-squared = 76.629, df = 6, p-value = 1.772e-14</code></pre>
+<p>The evidence suggests the presence of ARCH effects. Let’s model them. For this, we need a way to represent these models in a consistent syntax.</p>
+</div>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

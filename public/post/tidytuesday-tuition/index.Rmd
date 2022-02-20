@@ -1,6 +1,6 @@
 ---
-title: tidyTuesday - Tuition
-author: RWW
+title: 'tidyTuesday - Tuition'
+authors: ["RWW"]
 date: '2018-04-03'
 slug: tidytuesday-tuition
 categories:
@@ -48,14 +48,14 @@ labels <- plot_data %>%
 
 plot <- plot_data %>%
   ggplot(., aes(x = year, y = avg_tuition, group = state)) +
-  geom_text_repel(data = filter(plot_data, state %in% labels, year == "2015-16"), aes(label = state), direction = "y", nudge_x = 0.1, segment.size = 0.1, hjust = 0, family = "Oxygen", size = 3) +
+  geom_text_repel(data = filter(plot_data, state %in% labels, year == "2015-16"), aes(label = state), direction = "y", nudge_x = 0.1, segment.size = 0.1, hjust = 0, size = 3) +
   geom_path(color = "grey50", size = 0.5, alpha = 0.5) +
   geom_point(color = "grey50") +
   geom_path(data = nat_avg, color = "red", size = 1) +
   geom_point(data = nat_avg, color = "red") +
   scale_y_continuous(labels = scales::dollar) +
   labs(x = NULL, y = NULL, title = "Comparison of the average US tuition growth between 2005 and 2015", subtitle = "Eastern and Northeastern students consistently face tutition above the national average, indicated by the red line.", caption = "\nData: http://trends.collegeboard.org/ | Graphic: @jakekaupp") +
-  theme_minimal(base_family = "Oswald-Light") +
+#  theme_minimal(base_family = "Oswald-Light") +
   theme(panel.grid.minor = element_blank())
 print(plot)
 ```
@@ -96,9 +96,9 @@ my.plot <- plot_data %>%
   geom_path(data = nat_avg, color = "red", size = 1) +
   geom_point(data = nat_avg, color = "red") +
   scale_y_continuous(labels = scales::dollar) + 
-  geom_text_repel(data = filter(plot_data, state %in% labels, year == "2015-16"), aes(label = state), direction = "both", nudge_x = 0.4, nudge_y = 1, segment.size = 0.1, family = "Oxygen", size = 2) +
+  geom_text_repel(data = filter(plot_data, state %in% labels, year == "2015-16"), aes(label = state), direction = "both", nudge_x = 0.4, nudge_y = 1, segment.size = 0.1, size = 2) +
   labs(x = NULL, y = NULL, title = "Comparison of the average US tuition growth between 2005 and 2015", subtitle = "Eastern and Northeastern students consistently face tutition above the national average [red line].", caption = "\nData: http://trends.collegeboard.org/ | Graphic: @jakekaupp | Tweak color:@PieRatio", cex=0.7) +
-  theme_minimal(base_family = "Oswald-Light") +
+  theme_minimal(base_family = "Roboto Condensed") +
   theme(panel.grid.minor = element_blank())
 ggsave(my.plot, filename = glue('tidyweek-{Sys.Date()}.png'), height = 8, width = 8, dpi = 300)
 print(my.plot)

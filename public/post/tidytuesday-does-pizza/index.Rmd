@@ -33,7 +33,7 @@ library(extrafont)
 
 ## Pizza Ratings
 
-The `#tidyTuesday` for this week involves pizza shop ratings data.  The data come from a variety of sources; it is price, ratings, and similar data for pizza restaurants.  I will begin by loading the data and summarizing what data seem to be available so that we can figure out what we can do with it.  Let's see what we have.
+The `#tidyTuesday` for this week involves pizza shop ratings data.  The data come from a variety of sources; it is price, ratings, and similar data for pizza restaurants.  The actual contents vary depending on the data source.  I will begin by loading the data and summarizing what data seem to be available so that we can figure out what we can do with it.  Let's see what we have.
 
 ```{r cars}
 pizza_jared <- readr::read_csv("https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_jared.csv")

@@ -1,0 +1,369 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>slider is a magical way of creating moving averages &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">April 26, 2021</span>
+                                
+                                <h1>slider is a magical way of creating moving averages</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="nikes-stock" class="section level2">
+<h2>Nike’s Stock</h2>
+<pre><code># Load libraries
+library(tidyquant)
+library(tidyverse)
+library(fpp3)</code></pre>
+<p>With those libraries, I should have what I need. Let me get Nike’s stock from 2015.</p>
+<pre class="r"><code># Get Nike stock data
+Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;)
+Nike.Stocks %&gt;% as_tsibble(index=date) %&gt;% autoplot(adjusted) + labs(y=&quot;Adjusted Closing Price&quot;, title=&quot;NKE since 2015&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>Now I want to create monthly data. I will the <code>yearmonth</code> type from lubridate. By default, <code>tidyquant</code> uses <code>yearmon</code> which is different.</p>
+<pre class="r"><code># Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.
+Nike.Returns &lt;- Nike.Stocks %&gt;% tq_transmute(adjusted, mutate_fun=periodReturn, period=&quot;monthly&quot;) 
+Nike.Returns # It is monthly but the date is a date.  To make them match, I need a yearmonth</code></pre>
+<pre><code>## # A tibble: 76 x 2
+##    date       monthly.returns
+##    &lt;date&gt;               &lt;dbl&gt;
+##  1 2015-01-30         -0.0293
+##  2 2015-02-27          0.0558
+##  3 2015-03-31          0.0331
+##  4 2015-04-30         -0.0149
+##  5 2015-05-29          0.0314
+##  6 2015-06-30          0.0625
+##  7 2015-07-31          0.0667
+##  8 2015-08-31         -0.0301
+##  9 2015-09-30          0.103 
+## 10 2015-10-30          0.0655
+## # … with 66 more rows</code></pre>
+<p>I want to mutate the <code>date</code> to be a <code>yearmonth</code>. Getting the time measure right is the crucial part of this.</p>
+<pre class="r"><code>Nike.Returns &lt;- Nike.Returns %&gt;% mutate(date = yearmonth(date))
+Nike.Returns</code></pre>
+<pre><code>## # A tibble: 76 x 2
+##        date monthly.returns
+##       &lt;mth&gt;           &lt;dbl&gt;
+##  1 2015 Jan         -0.0293
+##  2 2015 Feb          0.0558
+##  3 2015 Mar          0.0331
+##  4 2015 Apr         -0.0149
+##  5 2015 May          0.0314
+##  6 2015 Jun          0.0625
+##  7 2015 Jul          0.0667
+##  8 2015 Aug         -0.0301
+##  9 2015 Sep          0.103 
+## 10 2015 Oct          0.0655
+## # … with 66 more rows</code></pre>
+<p>Now let me try another mutation. Let me keep the last closing price of the month. The last step here makes sure the dates are the same type. All of this remains <code>tibble</code> as the type; not <code>tsibble</code>. That is convenient for joining data.</p>
+<pre class="r"><code>Nike.Last &lt;- Nike.Stocks %&gt;% 
+  tq_transmute(select = adjusted, mutate_fun = to.monthly)
+Nike.Last</code></pre>
+<pre><code>## # A tibble: 76 x 2
+##    date      adjusted
+##    &lt;yearmon&gt;    &lt;dbl&gt;
+##  1 Jan 2015      43.0
+##  2 Feb 2015      45.5
+##  3 Mar 2015      47.0
+##  4 Apr 2015      46.3
+##  5 May 2015      47.7
+##  6 Jun 2015      50.7
+##  7 Jul 2015      54.1
+##  8 Aug 2015      52.4
+##  9 Sep 2015      57.9
+## 10 Oct 2015      61.6
+## # … with 66 more rows</code></pre>
+<p>That is not quite right. This is a <code>yearmon</code> type. I need to change that.</p>
+<pre class="r"><code>Nike.Last &lt;- Nike.Last%&gt;%
+  mutate(date = yearmonth(date))
+Nike.Last</code></pre>
+<pre><code>## # A tibble: 76 x 2
+##        date adjusted
+##       &lt;mth&gt;    &lt;dbl&gt;
+##  1 2015 Jan     43.0
+##  2 2015 Feb     45.5
+##  3 2015 Mar     47.0
+##  4 2015 Apr     46.3
+##  5 2015 May     47.7
+##  6 2015 Jun     50.7
+##  7 2015 Jul     54.1
+##  8 2015 Aug     52.4
+##  9 2015 Sep     57.9
+## 10 2015 Oct     61.6
+## # … with 66 more rows</code></pre>
+<p>The dates match up in type now, so they should join up nicely. Let’s try that.</p>
+<pre class="r"><code>Nike.Data &lt;- Nike.Returns %&gt;% left_join(., Nike.Last, by = c(&quot;date&quot; = &quot;date&quot;))
+Nike.Data</code></pre>
+<pre><code>## # A tibble: 76 x 3
+##        date monthly.returns adjusted
+##       &lt;mth&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+##  1 2015 Jan         -0.0293     43.0
+##  2 2015 Feb          0.0558     45.5
+##  3 2015 Mar          0.0331     47.0
+##  4 2015 Apr         -0.0149     46.3
+##  5 2015 May          0.0314     47.7
+##  6 2015 Jun          0.0625     50.7
+##  7 2015 Jul          0.0667     54.1
+##  8 2015 Aug         -0.0301     52.4
+##  9 2015 Sep          0.103      57.9
+## 10 2015 Oct          0.0655     61.6
+## # … with 66 more rows</code></pre>
+<p>The next step is to turn it into a tsibble. That means defining the yearmonth as the data and indexing a tsibble by that.</p>
+<pre class="r"><code>Nike.Data &lt;- Nike.Data  %&gt;% mutate(date = yearmonth(date)) %&gt;% as_tsibble(index=date)</code></pre>
+<p>Now it is a <code>tsibble</code> to work with in the <code>fpp3</code> workflow. Finally, let’s set up training and test sets. Working with the Nike data; use filter_index to grab all the data up to and including January 2020</p>
+<pre class="r"><code>Nike.Data.Train &lt;- Nike.Data  %&gt;% filter_index(. ~ &quot;2020-01&quot;)
+# Look at it.
+Nike.Data.Train %&gt;% tail()</code></pre>
+<pre><code>## # A tsibble: 6 x 3 [1M]
+##       date monthly.returns adjusted
+##      &lt;mth&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+## 1 2019 Aug         -0.0152     83.3
+## 2 2019 Sep          0.111      92.6
+## 3 2019 Oct         -0.0465     88.3
+## 4 2019 Nov          0.0467     92.4
+## 5 2019 Dec          0.0836    100. 
+## 6 2020 Jan         -0.0495     95.2</code></pre>
+<pre class="r"><code># Create a test set as everything that is not in the training set, e.g. the last 15 months
+Nike.Data.Test &lt;- anti_join(Nike.Data,Nike.Data.Train) %&gt;% as_tsibble(index=date)
+Nike.Data.Test</code></pre>
+<pre><code>## # A tsibble: 15 x 3 [1M]
+##        date monthly.returns adjusted
+##       &lt;mth&gt;           &lt;dbl&gt;    &lt;dbl&gt;
+##  1 2020 Feb        -0.0693      88.6
+##  2 2020 Mar        -0.0743      82.0
+##  3 2020 Apr         0.0537      86.4
+##  4 2020 May         0.134       98.0
+##  5 2020 Jun        -0.00538     97.4
+##  6 2020 Jul        -0.00449     97.0
+##  7 2020 Aug         0.149      111. 
+##  8 2020 Sep         0.122      125. 
+##  9 2020 Oct        -0.0435     120. 
+## 10 2020 Nov         0.122      134. 
+## 11 2020 Dec         0.0524     141. 
+## 12 2021 Jan        -0.0557     133. 
+## 13 2021 Feb         0.0110     135. 
+## 14 2021 Mar        -0.0140     133. 
+## 15 2021 Apr        -0.00971    132.</code></pre>
+</div>
+<div id="the-forecasting-workflow" class="section level2">
+<h2>The Forecasting Workflow</h2>
+<pre class="r"><code>Nike.Mods &lt;- Nike.Data.Train %&gt;%
+  model(
+    ARIMA(monthly.returns),
+    ETS(monthly.returns))
+Nike.Mods %&gt;% forecast(h=12) %&gt;% accuracy(Nike.Data.Test)</code></pre>
+<pre><code>## # A tibble: 2 x 10
+##   .model               .type     ME   RMSE    MAE   MPE  MAPE  MASE RMSSE   ACF1
+##   &lt;chr&gt;                &lt;chr&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;
+## 1 ARIMA(monthly.retur… Test  0.0174 0.0828 0.0737  148.  148.   NaN   NaN 0.0130
+## 2 ETS(monthly.returns) Test  0.0174 0.0828 0.0737  148.  148.   NaN   NaN 0.0130</code></pre>
+<p>A plot.</p>
+<pre class="r"><code>Nike.Mods %&gt;% forecast(h=12) %&gt;% autoplot() + geom_point(data=Nike.Data.Test, aes(x=date, y=monthly.returns)) + facet_wrap(vars(.model)) + guides(level=FALSE, color=FALSE, fill=FALSE) + theme_minimal()</code></pre>
+<p><img src="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+<div id="three-month-trailing-averages" class="section level2">
+<h2>Three-month trailing averages</h2>
+<pre class="r"><code>NMA &lt;- Nike.Data %&gt;% mutate(MMR3 = slider::slide_dbl(monthly.returns, mean, .before=3, .after=0), MMR6 = slider::slide_dbl(monthly.returns, mean, .before=6, .after=0)) 
+NMA %&gt;% autoplot(MMR3) + autolayer(NMA %&gt;% select(MMR6), color=&quot;red&quot;) + labs(x=&quot;Month&quot;, y=&quot;Monthly Returns of Nike&quot;, title=&quot;Monthly Returns of Nike&quot;, subtitle=&quot;3 and 6 month trailing averages [red]&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

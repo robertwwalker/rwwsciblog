@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>A Quick tidyTuesday on Beer, Breweries, and Ingredients &middot; rww.science</title>
+		<title>A Quick tidyTuesday on Beer, Breweries, and Ingredients &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -85,7 +85,7 @@
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
-<script src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="beer-distribution" class="section level1">
@@ -303,7 +303,7 @@ brewer_sizeT %&gt;%
   theme_minimal() + theme(axis.text.x = element_text(size=8, angle=45), axis.text.y = element_text(size=6)) +
   facet_wrap(vars(year)) +
   labs(x=&quot;&quot;, y=&quot;Number of Brewers&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 </div>
 <div id="the-rise-of-micro-brews" class="section level1">
@@ -331,7 +331,7 @@ brewer_sizeT %&gt;%
 <p>The trend is good.</p>
 <pre class="r"><code>brewing_materials &lt;- brewing_materials %&gt;% mutate(date = as.Date(paste0(&quot;01/&quot;,month,&quot;/&quot;,year), format=&quot;%d/%m/%Y&quot;), Month.Pct.Chg = ((month_current - month_prior_year) / month_prior_year))
 brewing_materials %&gt;% filter(str_detect(type, &quot;Hops&quot;)) %&gt;%  ggplot(., aes(x=date, y=Month.Pct.Chg, color=type)) + geom_line() + geom_point(alpha=0.1) + guides(color=FALSE) + facet_wrap(vars(type), scales = &quot;free_y&quot;) + labs(title=&quot;Month to Month Last Year Percent Change in Hops&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>There is something legitimately weird about December 2014. Let me clear it up a bit.</p>
 <pre class="r"><code>My.brewing_materials &lt;- brewing_materials
 My.brewing_materials$Month.Pct.Chg[My.brewing_materials$Month.Pct.Chg &gt; 10] &lt;- 10
@@ -343,7 +343,7 @@ Plot1 &lt;- My.brewing_materials %&gt;%
   facet_wrap(vars(type), scales = &quot;free_y&quot;) + 
   labs(title=&quot;Month to Month Last Year Percent Change in Hops&quot;, caption = &quot;Real value for maximum Hops(dry) is 120&quot;)
 Plot1</code></pre>
-<p><img src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="a-geofacet" class="section level1">
 <h1>A GeoFacet</h1>
@@ -364,7 +364,7 @@ ggplot(dataBS, aes(x=year, y=Percent.Change, group=state)) +
      facet_geo(~ state) +
      theme_bw() + theme(axis.text.x = element_text(size=4, angle=45), axis.text.y = element_text(size=6)) + labs(title=&quot;Change in Barrels [pct]&quot;)</code></pre>
 <pre><code>## Warning: Removed 65 row(s) containing missing values (geom_path).</code></pre>
-<p><img src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 </div>
 <div id="plot-barrels" class="section level1">
@@ -374,7 +374,7 @@ ggplot(dataBS, aes(x=year, y=Percent.Change, group=state)) +
      facet_geo(~ state) +
      theme_bw() + theme(axis.text.x = element_text(size=4, angle=45), axis.text.y = element_text(size=6))  + labs(title=&quot;Barrels&quot;)</code></pre>
 <pre><code>## Warning: Removed 14 row(s) containing missing values (geom_path).</code></pre>
-<p><img src="http://localhost:1313/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 
 
@@ -477,7 +477,7 @@ ggplot(dataBS, aes(x=year, y=Percent.Change, group=state)) +
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

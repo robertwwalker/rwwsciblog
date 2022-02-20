@@ -1,6 +1,6 @@
 ---
 title: 'Non-Profits in Oregon: Socrata is Cool'
-author: Robert W. Walker
+authors: ["RWW"]
 date: '2020-05-01'
 slug: non-profits-in-oregon-socrata-is-cool
 categories:
@@ -11,7 +11,6 @@ tags:
   - Maps
 subtitle: ''
 summary: ''
-authors: []
 lastmod: '2020-05-01T23:04:07-07:00'
 featured: no
 image:
@@ -33,7 +32,7 @@ library(ggthemes)
 
 # Socrata: The Open Data Portal
 
-I did not previously know much about precisely how open data portals had evolved.  Oregon's is quite nice and I will take the opportunity to map and summarise non-profits throughout the state.  Here is the data.
+I did not previously know much about precisely how open data portals had evolved.  Oregon's is quite nice and I will take the opportunity to map and summarise non-profits throughout the state.  I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals.  The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted.  Here is the data.
 
 ```{r}
 library(RSocrata)

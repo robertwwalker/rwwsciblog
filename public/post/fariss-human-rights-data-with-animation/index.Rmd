@@ -1,6 +1,6 @@
 ---
 title: Fariss Human Rights Data with Animation
-author: RWW
+authors: ["RWW"]
 date: '2019-10-10'
 slug: fariss-human-rights-data-with-animation
 categories:
@@ -16,6 +16,7 @@ header:
   preview: yes
 ---
 
+Chris Fariss has some really neat data on international human rights that are really interesting to visualize for insight into the development of human rights over time.  The data arise from measurement models applied to a variety of underlying indicators and they are presented in rather easy to work with forms.  The basic structure is panel data.  Let's see what we have.
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -24,15 +25,16 @@ library(ggthemes)
 library(gganimate)
 library(ggrepel)
 library(here)
+library(kableExtra)
 ```
 
 ## Fariss Data
 
-Is neat and complete.
+Is neat and complete.  What does a basic summary look like?
 
 ```{r cars}
 load("FarissHRData.RData")
-skimr::skim(HR.Data)
+skimr::skim(HR.Data) %>% kable() %>% scroll_box(width = "500px", height = "400px")
 # HR.Data$year <- as.Date(HR.Data$YEAR, format = "%Y")
 ```
 
@@ -42,12 +44,15 @@ skimr::skim(HR.Data)
 ( ggplot(HR.Data) + aes(x=YEAR, y=theta_mean, color=as.factor(COW)) + geom_line(alpha = 0.3) +  scale_color_viridis_d(guide=FALSE) + labs(x="Year", y="Human Rights Dynamic Factor Score", title = "The Evolution of Human Rights with Normed Scores", caption = "See Fariss and Schnakenberg (2014)" )  -> p1 )
 ```
 
+## A first animation
 
 ```{r}
 library(gganimate)
 p1 <- p1 + transition_reveal(YEAR) # this is kind of a hack, the year isn't right
 animate(p1, nframes = 200)
 ```
+
+## Divide it up by continents
 
 ```{r}
 COW.Codes <- distinct(COW.Codes) # Duplicates exist in the COW Code master file
@@ -62,7 +67,7 @@ Now I have something to work with that is labeled.
 p2
 ```
 
-Now let's look at that.
+Now let's look at that as an animation.
 
 ```{r}
 p2 <- p2 + transition_reveal(YEAR)

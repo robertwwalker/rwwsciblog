@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>GDPR Violations &middot; rww.science</title>
+		<title>GDPR Violations &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -85,14 +85,14 @@
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
-<script src="http://localhost:1313/post/gdpr-violations/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/gdpr-violations/index_files/header-attrs/header-attrs.js"></script>
 
 
 <div id="r-markdown" class="section level2">
 <h2>R Markdown</h2>
 <p>I love this intro photo from the tidyTuesday page.</p>
 <p><img src="https://camo.githubusercontent.com/0c831f8d61fee52c54b4edf861012ea51643195f/68747470733a2f2f776f726470726573732e736d6172746c6f6f6b2e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031382f30312f676470722e706e67" /></p>
-<p>This week’s tidyTuesday data cover violations of the GDPR.</p>
+<p>This week’s tidyTuesday data cover violations of the GDPR (General Data Protection Regulations) regulatory regime for data privacy in the European Union. <a href="https://en.wikipedia.org/wiki/General_Data_Protection_Regulation">The Wikipedia entry on GDPR</a> is fairly extensive. The dataset is large and suggests some interesting regulatory arbitrage. Let’s have a look at the data. First, let’s load them.</p>
 <pre class="r"><code>gdpr_violations &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-21/gdpr_violations.tsv&#39;)</code></pre>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -517,7 +517,7 @@ skim(gdpr_violations)</code></pre>
 <h1>Revenue?</h1>
 <pre class="r"><code>GDPT &lt;- gdpr_violations %&gt;% group_by(name) %&gt;% summarise(Collected = sum(price), Violations = n())
 GDPT %&gt;% select(name, Collected) %&gt;% ggplot(., aes(x=fct_reorder(name, Collected), y=Collected/1e7, fill=name)) + geom_col() + scale_fill_viridis_d() + coord_flip() + labs(x=&quot;Country&quot;, y=&quot;Total Fines Collected (in Millions)&quot;) + guides(fill=FALSE)</code></pre>
-<p><img src="http://localhost:1313/post/gdpr-violations/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/gdpr-violations/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="a-map" class="section level1">
 <h1>A Map</h1>
@@ -530,7 +530,7 @@ library(sf)</code></pre>
 <pre><code>## Warning: attribute variables are assumed to be spatially constant throughout all
 ## geometries</code></pre>
 <pre class="r"><code>ggplot(Europe) + geom_sf()</code></pre>
-<p><img src="http://localhost:1313/post/gdpr-violations/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/gdpr-violations/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <div id="merge-data" class="section level2">
 <h2>Merge Data</h2>
 <p>Plot some Europe Maps.</p>
@@ -539,17 +539,17 @@ library(sf)</code></pre>
 <h2>Total Collections</h2>
 <pre class="r"><code>Map.Me &lt;- left_join(Europe, GDPT, by = c(&quot;sovereignt&quot; = &quot;name&quot;))
 ggplot(Map.Me) + aes(fill=Collected) + geom_sf() + scale_fill_viridis_c()</code></pre>
-<p><img src="http://localhost:1313/post/gdpr-violations/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/gdpr-violations/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 <div id="count-of-violations" class="section level2">
 <h2>Count of Violations</h2>
 <pre class="r"><code>ggplot(Map.Me) + aes(fill=Violations) + geom_sf() + scale_fill_viridis_c()</code></pre>
-<p><img src="http://localhost:1313/post/gdpr-violations/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/gdpr-violations/index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="cost-per-violation" class="section level2">
 <h2>Cost per violation</h2>
 <pre class="r"><code>Map.Me %&gt;% mutate(Avg.Fine = Collected / Violations) %&gt;% ggplot(.) + aes(fill=Avg.Fine) + geom_sf() + labs(title=&quot;Average Fine per Violation&quot;) + scale_fill_viridis_c()</code></pre>
-<p><img src="http://localhost:1313/post/gdpr-violations/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/gdpr-violations/index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
 
@@ -653,7 +653,7 @@ ggplot(Map.Me) + aes(fill=Collected) + geom_sf() + scale_fill_viridis_c()</code>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

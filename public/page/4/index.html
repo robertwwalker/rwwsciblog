@@ -2,8 +2,8 @@
 
 <html lang='en'>
 	<head>
-	<meta name="generator" content="Hugo 0.80.0" />
-		<title>rww.science</title>
+	<meta name="generator" content="Hugo 0.66.0" />
+		<title>rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -47,14 +47,14 @@
 
 				
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
 				
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -104,19 +104,18 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 30, 2020</span>
+        <span class="date">August 23, 2021</span>
         
-        <h2><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         
-        <p>tl;dr In September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The Data I will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
     </header>
     
-    <a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="image main"><img src="" alt="" /></a>
-    
     <ul class="actions">
-        <li><a href="http://localhost:1313/post/analyzing-the-trump-campaign-s-solicitations/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -131,111 +130,113 @@ The Data I will use the wonderful gmailr package to access my gmail. You need a 
     <article>
         <header>
             
-            <span class="date">February 18, 2020</span>
+            <span class="date">March 24, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/r-for-driving-directions/">R for Driving Directions?</a></h2>
+            <h2><a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/">Visualising COVID-19 in Oregon</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/r-for-driving-directions/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Driving Directions from R There is no reason that maps with driving directions cannot be produced in R. Given the directions api from Google, it should be doable. As it happens, I was surprised how easy it was. Let me try to map a simple A to B location. First, to the locations; I will specify two. It is possible to geolocate addresses for this also, I happened to have the GPS coordinates in hand.</p>
+        <p>Oregon COVID dataI now have a few days of data. These data are current as of March 24, 2020. I will present the first version of these visualizations here and then move the auto-update to a different location. A messy first version of the scraping exercise is at the bottom of this post.
+paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;)## [1] &quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID2020-03-24.RData&quot;load(url(paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;)))A base mapLoad the tigris library then grab the map as an sf object; there is a geom_sf that makes them easy to work with.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/r-for-driving-directions/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 18, 2020</span>
+            <span class="date">March 21, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/the-carbon-footprint-of-food-produced-for-consumption/">The Carbon Footprint of Food Produced for Consumption</a></h2>
+            <h2><a href="https://rww-science.website/post/covid-19-in-oregon/">Mapping COVID-19 in Oregon</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/the-carbon-footprint-of-food-produced-for-consumption/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/covid-19-in-oregon/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>tidyTuesday on the Carbon Footprint of Feeding the Planet The tidyTuesday for this week relies on data scraped from the Food and Agricultural Organization of the United Nations. The blog post for obtaining the data can be found on r-tastic. The scraping exercise is nice and easy to follow and explored a case of cleaning up a very messy data structure. I took this exercise as practice for using pivot_wider and pivot_longer.</p>
+        <p>Oregon COVID dataThe Oregon data are available from OHA here. I cut and pasted the first two days because it was easy with datapasta. As it goes on, it was easier to write a script that I detail elsewhere that I can self-update.
+urbnmaprThe Urban Institute has an excellent state and county mapping package. I want to make use of the county-level data and plot the starter map.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/the-carbon-footprint-of-food-produced-for-consumption/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/covid-19-in-oregon/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">January 31, 2020</span>
+            <span class="date">March 19, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/mapping-san-francisco-trees/">Mapping San Francisco Trees</a></h2>
+            <h2><a href="https://rww-science.website/post/tidytuesday-on-the-office/">tidyTuesday on the Office</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/mapping-san-francisco-trees/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/tidytuesday-on-the-office/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Trees in San Francisco This week’s data cover trees in San Francisco.
-sf_trees &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-28/sf_trees.csv&#39;) library(tidyverse); library(ggmap); library(skimr) skim(sf_trees)  Table 1: Data summary  Name sf_trees  Number of rows 192987  Number of columns 12  _______________________   Column type frequency:   character 6  Date 1  numeric 5  ________________________   Group variables None    Variable type: character
-  skim_variable n_missing complete_rate min max empty n_unique whitespace    legal_status 54 1.</p>
+        <p>The Officelibrary(tidyverse)office_ratings &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-17/office_ratings.csv&#39;)A First PlotThe number of episodes for the Office by season.
+library(janitor)TableS &lt;- office_ratings %&gt;% tabyl(season)p1 &lt;- TableS %&gt;% ggplot(., aes(x=as.factor(season), y=n, fill=as.factor(season))) + geom_col() + labs(x=&quot;Season&quot;, y=&quot;Episodes&quot;, title=&quot;The Office: Episodes&quot;) + guides(fill=FALSE)p1RatingsHow are the various seasons and episodes rated?
+p2 &lt;- office_ratings %&gt;% ggplot(., aes(x=as.factor(season), y=imdb_rating, fill=as.factor(season), color=as.factor(season))) + geom_violin(alpha=0.3) + guides(fill=FALSE, color=FALSE) + labs(x=&quot;Season&quot;, y=&quot;IMDB Rating&quot;) + geom_point()p2PatchworkUsing patchwork, we can combine multiple plots.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/mapping-san-francisco-trees/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tidytuesday-on-the-office/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">January 31, 2020</span>
+            <span class="date">March 19, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/updating-hugo-and-academic/">Updating Hugo and Academic</a></h2>
+            <h2><a href="https://rww-science.website/post/tracking-covid-19/">Tracking COVID-19 2020-03-24</a></h2>
         </header>
         
-        <a href="http://localhost:1313/post/updating-hugo-and-academic/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/tracking-covid-19/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>Updating Hugo: It’s Changed Alot… Many key features of hugo have been in a state of flux since I began this blogdown a few years ago. It was time to update hugo and the academic theme that I have built around and customized. A number of things broke.
-  The config.toml and the like In my original website, there was only one configuation file. Now it has split into four parts; for blogdown, config.</p>
+        <p>R to Import COVID Datalibrary(tidyverse)library(gganimate)COVID.states &lt;- read.csv(url(&quot;http://covidtracking.com/api/states/daily.csv&quot;))COVID.states &lt;- COVID.states %&gt;% mutate(Date = as.Date(as.character(date), format = &quot;%Y%m%d&quot;))The Raw Testing IncidenceI want to use patchwork to show the testing rate by state in the United States. Then I want to show where things currently stand. In both cases, a base-10 log is used on the number of tests.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/updating-hugo-and-academic/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tracking-covid-19/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">January 18, 2020</span>
+            <span class="date">February 27, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/a-quick-tidytuesday-on-passwords/">a quick tidyTuesday on Passwords</a></h2>
+            <h2><a href="https://rww-science.website/post/a-look-at-vix/">A Look at VIX :2020-10-19</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/a-look-at-vix/" class="image fit"><img src="" alt="" /></a>
         
-        <p>First, I wanted to acquire the distribution of letters and then play with that. I embedded the result here. The second step is to import the tidyTuesday data.
-library(tidyverse) Letter.Freq &lt;- data.frame(stringsAsFactors=FALSE, Letter = c(&quot;E&quot;, &quot;T&quot;, &quot;A&quot;, &quot;O&quot;, &quot;I&quot;, &quot;N&quot;, &quot;S&quot;, &quot;R&quot;, &quot;H&quot;, &quot;D&quot;, &quot;L&quot;, &quot;U&quot;, &quot;C&quot;, &quot;M&quot;, &quot;F&quot;, &quot;Y&quot;, &quot;W&quot;, &quot;G&quot;, &quot;P&quot;, &quot;B&quot;, &quot;V&quot;, &quot;K&quot;, &quot;X&quot;, &quot;Q&quot;, &quot;J&quot;, &quot;Z&quot;), Frequency = c(12.02, 9.1, 8.12, 7.68, 7.31, 6.95, 6.28, 6.</p>
+        
+        <p>Get Some VIX dataNB: I originally wrote this on February 27, 2020 so there is commentary surrounding that date. It was done on the quick for curiosity. I will update it by recompiling it with new data and will update the commentary noting when it took place.
+Chicago Board Of Exchange (CBOE) makes data available regularly. To judge the currency of the data, I have tailed it below after converting the dates to a valid date format.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/a-quick-tidytuesday-on-passwords/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/a-look-at-vix/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">December 19, 2019</span>
+            <span class="date">February 24, 2020</span>
             
-            <h2><a href="http://localhost:1313/post/simple-point-maps-in-r/">Simple Point Maps in R</a></h2>
+            <h2><a href="https://rww-science.website/post/quick-and-dirty-fredr/">Quick and Dirty fredr</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/quick-and-dirty-fredr/" class="image fit"><img src="" alt="" /></a>
         
-        <p>Mapping Points in R My goal is a streamlined and self-contained freeware map maker with points denoting addresses. It is a three step process that involves:
-Get a map.
- Geocode the addresses into latitude and longitude.
- Combine the the two with a first map layer and a second layer on top that contains the points.  From there, it is pretty easy to get fancy using ggplotly to put relevant text hovers into place.</p>
+        
+        <p>Some Data from FREDrDownloading the FRED data on national debt as a percentage of GDP. I first want to examine the US data and will then turn to some comparisons. fredr makes it markable asy to do! I will use two core tools from fredr. First, fredr_series_search allows one to enter search text and retrieve the responsive series given that search text. They can be sorted in particular ways, two such options are shown below.</p>
         
         <ul class="actions">
-            <li><a href="http://localhost:1313/post/simple-point-maps-in-r/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/quick-and-dirty-fredr/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -523,6 +524,26 @@ Get a map.
                 
 
             
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
 
             
             
@@ -632,7 +653,7 @@ Get a map.
 
 					
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

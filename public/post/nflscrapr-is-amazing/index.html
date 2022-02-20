@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>nflscrapR is amazing &middot; rww.science</title>
+		<title>nflscrapR is amazing &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,14 +83,15 @@
                             </header>
                             
                             
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<script src="/rmarkdown-libs/kePrint/kePrint.js"></script>
+<script src="https://rww-science.website/post/nflscrapr-is-amazing/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/nflscrapr-is-amazing/index_files/kePrint/kePrint.js"></script>
+<link href="https://rww-science.website/post/nflscrapr-is-amazing/index_files/lightable/lightable.css" rel="stylesheet" />
 
 
 <div id="scraping-nfl-data" class="section level1">
 <h1>Scraping NFL data</h1>
 <p><em>Note: An original version of this post had issues induced by overtime games. There is a better way to handle all of this that I learned from a brief analysis of a tie game between Cleveland and Pittsburgh in Week One.</em></p>
-<p>The <code>nflscrapR</code> package is designed to make data on NFL games more easily available. To install the package, we need to grab it from github.</p>
+<p>The <code>nflscrapR</code> package is designed to make data on NFL games more easily available. To install the package, we need to grab it from github. The package provides play by play data available for entire NFL seasons. Numerous fascinating applications of this data have come out of the Sloan Conference and other places that do cutting edge sports analytics.</p>
 <pre class="r"><code>devtools::install_github(repo = &quot;maksimhorowitz/nflscrapR&quot;)</code></pre>
 <p>The github page for <a href="https://github.com/maksimhorowitz/nflscrapR">nflscrapR</a> is quite informative.</p>
 <div id="getting-some-data" class="section level2">
@@ -8497,7 +8498,6 @@ Dallas.Table %&gt;% head()</code></pre>
 WLTabs$Wins &lt;- WLTabs$home_win
 WLTabs[WLTabs$HA==&quot;away_team&quot;,&quot;Wins&quot;] &lt;- WLTabs[WLTabs$HA==&quot;away_team&quot;,&quot;away_win&quot;]
 WinsTab &lt;- WLTabs %&gt;% group_by(abbr) %&gt;% summarise(Wins = sum(Wins==TRUE))</code></pre>
-<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p>Now I want to put together a plot of a season. The way to make it modular is to choose a team and program the rest as a function with that as input. The hack that I undertook is recalibrating the time remaining to take account of the mess of overtime games.</p>
 <pre class="r"><code>season_animator &lt;- function(teamName, data1=full_season_2018, data2=all_2018_games, nflteams = nflscrapR::nflteams) {
   # This creates the team color vector
@@ -8573,7 +8573,7 @@ WinsTab &lt;- WLTabs %&gt;% group_by(abbr) %&gt;% summarise(Wins = sum(Wins==TRU
   animate(p, nframes=450)
 }
 season_animator(&quot;DAL&quot;)</code></pre>
-<p><img src="/post/2019-04-30-nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-9-1.gif" /><!-- --></p>
+<p><img src="https://rww-science.website/post/nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-9-1.gif" /><!-- --></p>
 <p>I decided it was time to experiment with shiny apps again and so I built one out of this. <a href="https://rwalkerwu.shinyapps.io/NFL-Scrapr/">Check it out!</a>. Overtime games make things a bit messy. I finally managed to fix that, both above and in the Shiny by taking game time remaining and turning the overtime seconds into negatives; that made sense given the flipped scale.</p>
 </div>
 </div>
@@ -8582,13 +8582,13 @@ season_animator(&quot;DAL&quot;)</code></pre>
 <p>What does Dallas do with the ball?</p>
 <pre class="r"><code>p &lt;- dal_season %&gt;%  filter(posteam==&quot;DAL&quot;) %&gt;% ggplot(aes(x=play_type, fill=play_type)) + geom_bar() + scale_fill_viridis_d(guide=FALSE) + transition_states(game_id) + labs(title = &quot;{closest_state}&quot;, x=&quot;Type of Play&quot;) + theme_economist_white()
 animate(p)</code></pre>
-<p><img src="/post/2019-04-30-nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-10-1.gif" /><!-- --></p>
+<p><img src="https://rww-science.website/post/nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-10-1.gif" /><!-- --></p>
 <p>That’s kinda cool. Now I want to clean that up. I do not really want to look at most of the types of possession plays; no play, pass, and run seem interesting, though. Let’s try that out. I also want to change up the display a little bit. Instead of looking at it as a series of graphics, I want the bars to represent the percents from the previous type table and then to show the whole season as it arrives.</p>
 <pre class="r"><code>dal_RP &lt;- dal_season  %&gt;% filter(posteam==&quot;DAL&quot; &amp; play_type %in% c(&quot;no_play&quot;,&quot;run&quot;,&quot;pass&quot;)) %&gt;% tabyl(game_date, play_type)
 dal_RP &lt;-  dal_RP %&gt;% gather(&quot;play_type&quot;, &quot;count&quot;, pass,run,no_play)
 p &lt;- dal_RP %&gt;% ggplot(aes(x=game_date, y=count, color=play_type)) + geom_line() + scale_color_viridis_d() +  labs(title = &quot;{frame_along}&quot;, y=&quot;Number of Plays&quot;, color=&quot;Play Type&quot;, x=&quot;Game Date&quot;) + theme_economist_white() + geom_point(aes(group=seq_along(game_date), size=1.5, alpha=0.5)) + guides(size=FALSE, alpha=FALSE) + transition_reveal(game_date) 
 animate(p)</code></pre>
-<p><img src="/post/2019-04-30-nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-11-1.gif" /><!-- --></p>
+<p><img src="https://rww-science.website/post/nflscrapr-is-amazing/index_files/figure-html/unnamed-chunk-11-1.gif" /><!-- --></p>
 <p>I think that more or less gets what I want. This might also be a cool case for a simple plotly line plot with a hover for the game and details.</p>
 </div>
 </div>
@@ -8693,7 +8693,7 @@ animate(p)</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

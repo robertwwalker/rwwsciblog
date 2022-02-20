@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>Non-Profits in Oregon: Socrata is Cool &middot; rww.science</title>
+		<title>Non-Profits in Oregon: Socrata is Cool &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -85,19 +85,19 @@
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<script src="/rmarkdown-libs/htmlwidgets/htmlwidgets.js"></script>
-<script src="/rmarkdown-libs/pymjs/pym.v1.js"></script>
-<script src="/rmarkdown-libs/widgetframe-binding/widgetframe.js"></script>
+<script src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/pymjs/pym.v1.js"></script>
+<script src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/widgetframe-binding/widgetframe.js"></script>
 
 
 <div id="socrata-the-open-data-portal" class="section level1">
 <h1>Socrata: The Open Data Portal</h1>
-<p>I did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. Here is the data.</p>
+<p>I did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals. The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted. Here is the data.</p>
 <pre class="r"><code>library(RSocrata)
 Oregon.Nonprofits &lt;- read.socrata(&quot;https://data.oregon.gov/resource/8kyv-b2kw.csv&quot;)
 glimpse(Oregon.Nonprofits)</code></pre>
-<pre><code>## Rows: 163,489
+<pre><code>## Rows: 163,677
 ## Columns: 18
 ## $ registry_number             &lt;int&gt; 299818, 299818, 299818, 299818, 299818, 5…
 ## $ business_name               &lt;chr&gt; &quot;UNITED METHODIST CHURCH, OREGON CITY, OR…
@@ -121,7 +121,7 @@ glimpse(Oregon.Nonprofits)</code></pre>
 <h2>A basic zip code map</h2>
 <pre class="r"><code>or_zips &lt;- zctas(cb = TRUE, starts_with = &quot;97&quot;, class=&quot;sf&quot;)
 or_zips %&gt;% ggplot(., aes(geometry=geometry, group=ZCTA5CE10)) + geom_sf()</code></pre>
-<p><img src="/post/2020-05-01-non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="join-a-summary-table-by-zip-code." class="section level2">
 <h2>Join a summary table by zip code.</h2>
@@ -129,7 +129,7 @@ or_zips %&gt;% ggplot(., aes(geometry=geometry, group=ZCTA5CE10)) + geom_sf()</c
 <pre class="r"><code>ON &lt;- Oregon.Nonprofits %&gt;% group_by(zip_code) %&gt;% summarise(Nonprofits = n_distinct(registry_number)) %&gt;% ungroup()
 Map.Me &lt;- merge(or_zips, ON, by.x= &quot;ZCTA5CE10&quot;, by.y = &quot;zip_code&quot;)
 Map.Me %&gt;% ggplot(., aes(geometry=geometry, fill=Nonprofits)) + geom_sf() + scale_fill_viridis_c()</code></pre>
-<p><img src="/post/2020-05-01-non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 <div id="some-summary" class="section level2">
 <h2>Some Summary</h2>
@@ -143,7 +143,7 @@ Map.Me %&gt;% ggplot(., aes(geometry=geometry, fill=Nonprofits)) + geom_sf() + s
   labs(title=&quot;The Distribution of Oregon Non-Profits&quot;, fill=&quot;Type&quot;, x=&quot;&quot;) + 
   guides(fill=FALSE) + 
   theme_minimal()</code></pre>
-<p><img src="/post/2020-05-01-non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<p><img src="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/index_files/figure-html/unnamed-chunk-4-1.png" width="672" />
 # A Leaflet</p>
 <pre class="r"><code>library(tidyverse)
 library(leaflet)
@@ -161,7 +161,7 @@ addPolygons(color = &quot;#444444&quot;, weight = 1, smoothFactor = 0.5,
       bringToFront = TRUE))
 frameWidget(lf)</code></pre>
 <div id="htmlwidget-1" style="width:100%;height:480px;" class="widgetframe html-widget"></div>
-<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"/post/2020-05-01-non-profits-in-oregon-socrata-is-cool/index_files/figure-html//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"url":"index_files/figure-html//widgets/widget_unnamed-chunk-5.html","options":{"xdomain":"*","allowfullscreen":false,"lazyload":false}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 
@@ -265,7 +265,7 @@ frameWidget(lf)</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

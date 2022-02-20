@@ -1,7 +1,7 @@
 ---
 title: fredr is very neat
-author: RWW
-date: '2019-04-11'
+authors: ["RWW"]
+fredate: '2019-04-11'
 slug: fredr-is-very-neat
 categories:
   - tidyverse
@@ -33,7 +33,6 @@ library(ggplot2)
 ```
 
 A student wanted to find data on charge-offs.  `fredr` has a search capability.  Let's see what we can find.
-
 
 ```{r COSearch}
 ChargeOff <- fredr_series_search_text(

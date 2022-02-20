@@ -1,13 +1,12 @@
 ---
-title: COVID in the US and the World
-author: Robert W. Walker
+title: 'COVID in the US and the World'
+authors: ["RWW"]
 date: '2020-03-25'
 slug: covid-in-the-us-and-the-world
 categories: []
 tags: []
 subtitle: ''
 summary: ''
-authors: []
 lastmod: '2020-03-25T23:33:58-07:00'
 featured: no
 image:
@@ -70,11 +69,11 @@ frameWidget(L2)
 Now I will work with the nominal time series of this.
 
 ```{r}
-SR.TS <- read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/who_covid_19_situation_reports/who_covid_19_sit_rep_time_series/who_covid_19_sit_rep_time_series.csv"))
+SR.TS <- readr::read_csv(url("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/who_covid_19_situation_reports/who_covid_19_sit_rep_time_series/who_covid_19_sit_rep_time_series.csv"))
 ```
 Something is wrong with the `3/5/2020` column.  It has two values; one a number and another parenthetical number.  I just replace the value.
 
-```{r}
+```{r, eval=FALSE}
 SR.TS$`3/5/2020`[18] <- "128"
 SR.TS <- SR.TS %>% mutate(`3/5/2020` = as.numeric(`3/5/2020`))
 ```
@@ -84,7 +83,7 @@ SR.TS <- SR.TS %>% mutate(`3/5/2020` = as.numeric(`3/5/2020`))
 Now it is time to rearrange this data.  Let's start with the global case totals.
 
 ```{r}
-SR.Global <- SR.TS %>% filter(`Country/Region`=="Globally") %>% pivot_longer(cols=c(4:dim(SR.TS)[[2]])) %>% pivot_wider(., names_from = `Province/States`, values_from = value) %>% mutate(date=as.Date(name, format = "%m/%d/%Y"))
+SR.Global <- SR.TS %>% filter(`Country/Region`=="Globally") %>% pivot_longer(cols=c(5:dim(SR.TS)[[2]])) %>% pivot_wider(., names_from = `Province/States`, values_from = value) %>% mutate(date=as.Date(name, format = "%m/%d/%Y"))
 ```
 
 ## The Plot

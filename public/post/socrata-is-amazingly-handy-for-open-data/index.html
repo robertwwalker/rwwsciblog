@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>Socrata is amazingly handy for open data &middot; rww.science</title>
+		<title>Socrata is amazingly handy for open data &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -85,12 +85,12 @@
                             <div class="image main"><img src="" alt="" /></div>
                             
                             
-<script src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/header-attrs/header-attrs.js"></script>
-<script src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/kePrint/kePrint.js"></script>
-<link href="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/lightable/lightable.css" rel="stylesheet" />
-<script src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/htmlwidgets/htmlwidgets.js"></script>
-<script src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/pymjs/pym.v1.js"></script>
-<script src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/widgetframe-binding/widgetframe.js"></script>
+<script src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/kePrint/kePrint.js"></script>
+<link href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/lightable/lightable.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/pymjs/pym.v1.js"></script>
+<script src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/widgetframe-binding/widgetframe.js"></script>
 
 
 <p>The Socrata package makes it easy to access API calls built around SODA for open data access. If you try to skip the Socrata part, you usually only get a fraction of the available data. Socrata is intended to make open access data easier to manage and many government entities in the US use it as the portal to public data access. The R package makes interfacing with it much easier. First, how can we install it? It is on CRAN.</p>
@@ -699,13 +699,13 @@ NA
 <h2>How many school districts per county?</h2>
 <pre class="r"><code>library(magrittr); library(hrbrthemes)
 SchoolSpend %&gt;% group_by(county_name, school_year) %&gt;% tally() %&gt;% mutate(school_year = as.Date(school_year, format = &quot;%m/%d/%Y&quot;)) %&gt;% filter(school_year == max(school_year)) %&gt;% ggplot() + aes(x=fct_reorder(county_name, n), y=n, fill=county_name) + geom_col() + coord_flip() + guides(fill=FALSE) + labs(x= &quot;County&quot;, y=&quot;Number of School Districts&quot;) + theme_minimal()</code></pre>
-<p><img src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="by-students" class="section level2">
 <h2>By Students?</h2>
 <pre class="r"><code>SchoolSpend %&gt;% group_by(county_name) %&gt;% mutate(school_year = as.Date(school_year, format = &quot;%m/%d/%Y&quot;)) %&gt;% filter(school_year == max(school_year)) %&gt;% summarise(Students = sum(student_count), Year = mean(school_year), County = as.factor(county_name)) %&gt;% unique() -&gt; Dat
 ggplot(Dat) + aes(x=fct_reorder(County, -Students), y=Students, fill=county_name) + geom_col() + coord_flip() + guides(fill=FALSE) + labs(x= &quot;County&quot;, y=&quot;Students&quot;) + theme_minimal()</code></pre>
-<p><img src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>There are a number of other bits of data organized by year and district. There is certainly more to examine, but then I found this.</p>
 </div>
 <div id="voter-registration-data" class="section level1">
@@ -714,7 +714,7 @@ ggplot(Dat) + aes(x=fct_reorder(County, -Students), y=Students, fill=county_name
 <pre class="r"><code>VoterReg &lt;- read.socrata(&quot;https://data.oregon.gov/resource/6a4f-ecbi.csv&quot;)
 VoterReg %&gt;% filter(sysdate == &quot;2020-11-03&quot;) %&gt;% group_by(county) %&gt;% summarise(Voters = sum(count_v_id)) %&gt;% ggplot(., aes(x=fct_reorder(county, Voters), y=Voters, label=Voters)) + geom_col(fill=&quot;white&quot;, color=&quot;skyblue&quot;) + geom_text(size=2.2) + coord_flip() + labs(x=&quot;County&quot;, y=&quot;Registered Voters&quot;) + theme_minimal() -&gt; Plot1
 Plot1</code></pre>
-<p><img src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>library(plotly); library(widgetframe)
 ggp1 &lt;- ggplotly(Plot1)
 frameWidget(ggp1)</code></pre>
@@ -727,7 +727,7 @@ CurrVR$DRE &lt;- &quot;Other&quot;
 CurrVR$DRE[CurrVR$party==&quot;Democrat&quot;] &lt;- &quot;Democrat&quot;
 CurrVR$DRE[CurrVR$party==&quot;Republican&quot;] &lt;- &quot;Republican&quot;
 CurrVR %&gt;% group_by(county) %&gt;% mutate(Voters = sum(count_v_id)) %&gt;% ggplot(., aes(x=fct_reorder(county, Voters), y=Voters, label=Voters)) + geom_col() + geom_text(size=2.2) + coord_flip() + labs(x=&quot;County&quot;, y=&quot;Registered Voters&quot;) + theme_minimal()</code></pre>
-<p><img src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="the-plot-by-party" class="section level2">
 <h2>The Plot by Party</h2>
@@ -738,7 +738,7 @@ ggplot(.) +
  geom_col() + scale_fill_viridis_d() +
  coord_flip() +
  theme_minimal() + labs(x=&quot;County&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/index.en_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 </div>
 </div>
 
@@ -842,7 +842,7 @@ ggplot(.) +
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

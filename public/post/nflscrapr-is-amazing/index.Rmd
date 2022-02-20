@@ -1,6 +1,6 @@
 ---
-title: nflscrapR is amazing
-author: RWW
+title: 'nflscrapR is amazing'
+authors: ["RWW"]
 date: '2019-04-30'
 slug: nflscrapr-is-amazing
 categories:
@@ -22,7 +22,7 @@ header:
 
 *Note: An original version of this post had issues induced by overtime games.  There is a better way to handle all of this that I learned from a brief analysis of a tie game between Cleveland and Pittsburgh in Week One.*
 
-The `nflscrapR` package is designed to make data on NFL games more easily available.  To install the package, we need to grab it from github.
+The `nflscrapR` package is designed to make data on NFL games more easily available.  To install the package, we need to grab it from github.  The package provides play by play data available for entire NFL seasons.  Numerous fascinating applications of this data have come out of the Sloan Conference and other places that do cutting edge sports analytics.
 
 ```{r cars, eval=FALSE, echo=TRUE}
 devtools::install_github(repo = "maksimhorowitz/nflscrapR")

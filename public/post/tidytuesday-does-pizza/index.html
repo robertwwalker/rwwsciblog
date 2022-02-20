@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>tidyTuesday does Pizza &middot; rww.science</title>
+		<title>tidyTuesday does Pizza &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,15 +83,15 @@
                             </header>
                             
                             
-<script src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/header-attrs/header-attrs.js"></script>
-<script src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/htmlwidgets/htmlwidgets.js"></script>
-<script src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/pymjs/pym.v1.js"></script>
-<script src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/widgetframe-binding/widgetframe.js"></script>
+<script src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/pymjs/pym.v1.js"></script>
+<script src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/widgetframe-binding/widgetframe.js"></script>
 
 
 <div id="pizza-ratings" class="section level2">
 <h2>Pizza Ratings</h2>
-<p>The <code>#tidyTuesday</code> for this week involves pizza shop ratings data. The data come from a variety of sources; it is price, ratings, and similar data for pizza restaurants. I will begin by loading the data and summarizing what data seem to be available so that we can figure out what we can do with it. Let’s see what we have.</p>
+<p>The <code>#tidyTuesday</code> for this week involves pizza shop ratings data. The data come from a variety of sources; it is price, ratings, and similar data for pizza restaurants. The actual contents vary depending on the data source. I will begin by loading the data and summarizing what data seem to be available so that we can figure out what we can do with it. Let’s see what we have.</p>
 <pre class="r"><code>pizza_jared &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-10-01/pizza_jared.csv&quot;)</code></pre>
 <pre><code>## 
 ## ── Column specification ────────────────────────────────────────────────────────
@@ -273,7 +273,7 @@
 <pre class="r"><code>pizzaData &lt;- pizza_datafiniti %&gt;% filter(province==&quot;OR&quot;) %&gt;% group_by(name) %&gt;% mutate(Tcount = n(), PriceAvg = mean(price_range_max - price_range_min)) %&gt;% ungroup()
 p &lt;- pizzaData %&gt;% ggplot(.) + aes(x=reorder(name,PriceAvg), fill=PriceAvg) + geom_bar() + coord_flip() + labs(x=&quot;Pizza Restaurant&quot;, y=&quot;Count&quot;, title=&quot;Oregon Pizzerias&quot;, caption = &quot;data from #tidyTuesday; sorted by Average Price&quot;)
 p</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/figure-html/ORPizza-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/figure-html/ORPizza-1.png" width="672" /></p>
 <p>Now I want a map.</p>
 <pre class="r"><code>pizzaData$group &lt;- 44
 states &lt;- map_data(&quot;state&quot;)
@@ -281,13 +281,13 @@ OR.df &lt;- subset(states, region == &quot;oregon&quot;)
 OR_base &lt;- ggplot(data = OR.df, mapping = aes(x = long, y = lat, group = group)) +
 geom_polygon(color = &quot;black&quot;, fill = &quot;gray&quot;) + labs(title=&quot;Oregon Pizzerias&quot;)
 OR_base</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>OR.Pizza &lt;- OR_base + geom_point(data = pizzaData, aes(y=latitude, x=longitude, group=group), color = &quot;red&quot;)
 OR.Pizza</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Combine them into one picture</p>
 <pre class="r"><code>grid.arrange(p,OR.Pizza, ncol=2)</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Now to use a girafe to put this together interactively.</p>
 <pre class="r"><code>theme_set(theme_minimal())
 pizzaData &lt;- pizzaData %&gt;% mutate(name = str_remove(name, &quot;[&#39;``]&quot;))
@@ -325,7 +325,7 @@ plot_gg(mtplot, width = 3.5, multicore = TRUE, windowsize = c(1200, 1200),
 <pre><code>## Warning in make_shadow(heightmap, shadowdepth, shadowwidth, background, :
 ## `magick` package required for smooth shadow--using basic shadow instead.</code></pre>
 <pre class="r"><code>render_snapshot(clear = TRUE)</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-does-pizza/index_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
 </div>
 
 
@@ -428,7 +428,7 @@ plot_gg(mtplot, width = 3.5, multicore = TRUE, windowsize = c(1200, 1200),
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 

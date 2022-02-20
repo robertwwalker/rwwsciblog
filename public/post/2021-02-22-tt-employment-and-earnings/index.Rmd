@@ -1,0 +1,38 @@
+---
+title: 'tt: Employment and Earnings'
+author: RWW
+date: '2021-02-22'
+slug: []
+categories:
+  - R
+  - tidyTuesday
+  - dataviz
+tags:
+  - R
+  - tidyTuesday
+  - R Markdown
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+
+As a continuation of the #DuBoisChallenge, this week's tidyTuesday presents employment by industry, sex, race, and occupation.  There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS.  Let's see what we have.
+
+```{r}
+library(tidyverse)
+library(fpp3)
+library(magrittr)
+employed <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv')
+earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv')
+employed %<>% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))
+```
+
+Let me try to plot something.
+
+```{r}
+employed %>% filter(race_gender=="TOTAL") %>% autoplot(employ_n) + guides(color=FALSE)
+```
+
+To be continued....

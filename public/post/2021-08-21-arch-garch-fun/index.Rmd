@@ -1,0 +1,110 @@
+---
+title: ARCH and GARCH Models
+author: RWW
+date: '2021-08-21'
+slug: []
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE, fig.width=12, fig.height=6)
+```
+
+## `NKE`
+
+First, let me use tidyquant to acquire the data.
+
+```{r}
+library(tidyquant); library(tidyverse)
+NKE <- tq_get("NKE", from="2019-01-01")
+NKE
+```
+
+For a variety of reasons, equities are unlikely to be mean-reverting in level form.  Let me apply some unit-root testing for Nike since 2019.
+
+```{r}
+NKEAC <- NKE %>% select(date, adjusted)
+summary(urca::ur.df(NKEAC$adjusted))
+summary(urca::ur.df(NKEAC$adjusted, type="trend"))
+summary(urca::ur.df(NKEAC$adjusted, type = "drift"))
+summary(urca::ur.kpss(NKEAC$adjusted, type = "mu"))
+summary(urca::ur.kpss(NKEAC$adjusted, type = "tau"))
+```
+
+So the  process seems to clearly contain a unit-root, statistically.  Let's have a look.
+
+### Visualizing Adjusted Close
+
+```{r}
+library(fpp3)
+NKE %>% mutate(tday = row_number()) %>% as_tsibble(index=tday) %>% autoplot(adjusted)
+```
+
+## Returns
+
+Let me work with returns.
+
+```{r}
+NKER <- NKE %>% tq_transmute(select=adjusted, mutate_fun = periodReturn, period="daily") %>% mutate(tday = row_number())
+NKER %>% as_tsibble(index=tday) %>% autoplot(daily.returns)
+```
+
+### Unit roots and returns
+
+How do the returns seem to behave?
+
+```{r}
+summary(urca::ur.df(NKER$daily.returns))
+summary(urca::ur.df(NKER$daily.returns, type="trend"))
+summary(urca::ur.df(NKER$daily.returns, type = "drift"))
+summary(urca::ur.kpss(NKER$daily.returns, type = "mu"))
+summary(urca::ur.kpss(NKER$daily.returns, type = "tau"))
+```
+
+So we can reject the null of a unit root and we fail to reject the null of stationarity of the returns.  How about the correlation functions?
+
+### ACF and PACF of Returns
+
+```{r}
+NKER %>% as_tsibble(index=tday) %>% gg_tsdisplay(daily.returns, plot_type = "partial")
+```
+
+They are nominally white noise.
+
+```{r}
+Box.test(NKER$daily.returns, type = "Ljung-Box")
+NKER %>% as_tsibble(index=tday) %>% model(ARIMA(daily.returns)) %>% report()
+```
+So the returns have a slightly positive and marginally significant constant.  Nike has averaged 0.15 percent returns per day over the period given this very simple representation.
+
+# Models
+
+Let's start with a representation of an AR(p) process.
+
+$$
+R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t}
+$$
+
+where 
+
+$$ \mathbb{E}[\epsilon_{t}] =  0 $$ 
+
+and 
+
+$$\mathbb{E}[\epsilon \epsilon^{\prime}] = \sigma^{2} \cdot I_{T}$$
+
+where $R_{t}$ represent the returns at time $t$, $\mu$ is the mean of the stationary process generating $R_{t}$ and $\epsilon$ is a white noise error term.  Note the stationarity of $R_t$ is arises so long as the roots of $1 - \phi_{1}z + \phi_{2}z^2 + \ldots + \phi_{p}z^{p} = 0$.  Note that the unconditional variance is constant.
+
+## ARCH(m)
+
+The ARCH(m) process of Engel (1982) describes the square of $\epsilon_{t}$ to follow an AR(m) process such that
+$$
+\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}
+$$
+with $\omega$ as white noise.  The $\epsilon$ are errors in forecasting $R$; the same restriction on the roots will apply from before.  The unconditional variance is still a constant described now by $\frac{\xi}{1-a_{1}-a_{2}-\ldots-a_{m}}$.
+
+There are a few implementations of the basic test for ARCH effects.  Let's have a look at one through six lags.  I am not going to tidy this.
+
+```{r}
+1:6 %>% map(function(x) {FinTS::ArchTest(NKER$daily.returns, lags = x)})
+```
+The evidence suggests the presence of ARCH effects.  Let's model them.  For this, we need a way to represent these models in a consistent syntax.

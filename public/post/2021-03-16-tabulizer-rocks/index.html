@@ -1,0 +1,807 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>tabulizer Rocks &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">March 16, 2021</span>
+                                
+                                <h1>tabulizer Rocks</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2021-03-16-tabulizer-rocks/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/2021-03-16-tabulizer-rocks/index_files/kePrint/kePrint.js"></script>
+<link href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="voter-turnout-in-oregon" class="section level2">
+<h2>Voter Turnout in Oregon</h2>
+<p>Oregon’s voter turnout data is published by the Oregon Secretary of State’s office. You can find a <a href="https://sos.oregon.gov/elections/Documents/Voter_Turnout_History_General_Election.pdf">direct link to the .pdf here</a>. How hard is to recover a .pdf table? Let’s see. I am going to work with <code>tabulizer</code>.</p>
+<pre class="r"><code>library(tabulizer)
+library(dplyr)</code></pre>
+<p>The key function for this will be <code>extract_tables</code>; with knowledge of that let’s see if it just automagically works.</p>
+<pre class="r"><code>library(kableExtra)
+location &lt;- &#39;https://sos.oregon.gov/elections/Documents/Voter_Turnout_History_General_Election.pdf&#39;
+out &lt;- extract_tables(location)
+head(out) %&gt;% kable() %&gt;% scroll_box(height=&quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table class="kable_wrapper">
+<tbody>
+<tr>
+<td>
+<table>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Year
+</td>
+<td style="text-align:left;">
+Total Registered Voters
+</td>
+<td style="text-align:left;">
+Total Votes Cast
+</td>
+<td style="text-align:left;">
+% of Turnout
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020
+</td>
+<td style="text-align:left;">
+2,951,428
+</td>
+<td style="text-align:left;">
+2,317,965
+</td>
+<td style="text-align:left;">
+78.50%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2018
+</td>
+<td style="text-align:left;">
+2,763,105
+</td>
+<td style="text-align:left;">
+1,873,891
+</td>
+<td style="text-align:left;">
+67.80%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2016
+</td>
+<td style="text-align:left;">
+2,553,808
+</td>
+<td style="text-align:left;">
+2,051,452
+</td>
+<td style="text-align:left;">
+80.33%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2014
+</td>
+<td style="text-align:left;">
+2,174,763
+</td>
+<td style="text-align:left;">
+1,541,782
+</td>
+<td style="text-align:left;">
+70.90%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2012
+</td>
+<td style="text-align:left;">
+2,199,360
+</td>
+<td style="text-align:left;">
+1,820,507
+</td>
+<td style="text-align:left;">
+82.80%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2010
+</td>
+<td style="text-align:left;">
+2,068,798
+</td>
+<td style="text-align:left;">
+1,487,210
+</td>
+<td style="text-align:left;">
+71.89%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2008
+</td>
+<td style="text-align:left;">
+2,153,914
+</td>
+<td style="text-align:left;">
+1,845,251
+</td>
+<td style="text-align:left;">
+85.67%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2006
+</td>
+<td style="text-align:left;">
+1,976,669
+</td>
+<td style="text-align:left;">
+1,399,650
+</td>
+<td style="text-align:left;">
+70.81%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2004
+</td>
+<td style="text-align:left;">
+2,141,249
+</td>
+<td style="text-align:left;">
+1,851,671
+</td>
+<td style="text-align:left;">
+86.48%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2002
+</td>
+<td style="text-align:left;">
+1,872,615
+</td>
+<td style="text-align:left;">
+1,293,756
+</td>
+<td style="text-align:left;">
+69.09%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2000
+</td>
+<td style="text-align:left;">
+1,954,006
+</td>
+<td style="text-align:left;">
+1,559,215
+</td>
+<td style="text-align:left;">
+79.80%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1998
+</td>
+<td style="text-align:left;">
+1,965,981
+</td>
+<td style="text-align:left;">
+1,160,400
+</td>
+<td style="text-align:left;">
+59.02%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1996
+</td>
+<td style="text-align:left;">
+1,962,155
+</td>
+<td style="text-align:left;">
+1,399,180
+</td>
+<td style="text-align:left;">
+71.31%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1994
+</td>
+<td style="text-align:left;">
+1,832,774
+</td>
+<td style="text-align:left;">
+1,254,265
+</td>
+<td style="text-align:left;">
+68.44%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1992
+</td>
+<td style="text-align:left;">
+1,775,416
+</td>
+<td style="text-align:left;">
+1,462,314
+</td>
+<td style="text-align:left;">
+82.36%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1990
+</td>
+<td style="text-align:left;">
+1,476,500
+</td>
+<td style="text-align:left;">
+1,133,125
+</td>
+<td style="text-align:left;">
+76.74%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1988
+</td>
+<td style="text-align:left;">
+1,528,478
+</td>
+<td style="text-align:left;">
+1,235,199
+</td>
+<td style="text-align:left;">
+80.81%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1986
+</td>
+<td style="text-align:left;">
+1,502,244
+</td>
+<td style="text-align:left;">
+1,088,140
+</td>
+<td style="text-align:left;">
+72.43%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1984
+</td>
+<td style="text-align:left;">
+1,608,693
+</td>
+<td style="text-align:left;">
+1,265,824
+</td>
+<td style="text-align:left;">
+78.69%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1982
+</td>
+<td style="text-align:left;">
+1,516,589
+</td>
+<td style="text-align:left;">
+1,063,913
+</td>
+<td style="text-align:left;">
+70.15%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1980
+</td>
+<td style="text-align:left;">
+1,569,222
+</td>
+<td style="text-align:left;">
+1,209,691
+</td>
+<td style="text-align:left;">
+77.09%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1978
+</td>
+<td style="text-align:left;">
+1,482,339
+</td>
+<td style="text-align:left;">
+937,423
+</td>
+<td style="text-align:left;">
+63.20%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1976
+</td>
+<td style="text-align:left;">
+1,420,146
+</td>
+<td style="text-align:left;">
+1,048,561
+</td>
+<td style="text-align:left;">
+73.83%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1974
+</td>
+<td style="text-align:left;">
+1,143,073
+</td>
+<td style="text-align:left;">
+792,557
+</td>
+<td style="text-align:left;">
+69.34%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1972
+</td>
+<td style="text-align:left;">
+1,197,676
+</td>
+<td style="text-align:left;">
+953,376
+</td>
+<td style="text-align:left;">
+79.60%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1970
+</td>
+<td style="text-align:left;">
+955,459
+</td>
+<td style="text-align:left;">
+671,878
+</td>
+<td style="text-align:left;">
+70.32%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1968
+</td>
+<td style="text-align:left;">
+971,851
+</td>
+<td style="text-align:left;">
+824,562
+</td>
+<td style="text-align:left;">
+84.84%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1966
+</td>
+<td style="text-align:left;">
+949,825
+</td>
+<td style="text-align:left;">
+693,796
+</td>
+<td style="text-align:left;">
+73.04%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1964
+</td>
+<td style="text-align:left;">
+932,461
+</td>
+<td style="text-align:left;">
+791,245
+</td>
+<td style="text-align:left;">
+84.86%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1962
+</td>
+<td style="text-align:left;">
+883,690
+</td>
+<td style="text-align:left;">
+644,772
+</td>
+<td style="text-align:left;">
+72.96%
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1960
+</td>
+<td style="text-align:left;">
+900,627
+</td>
+<td style="text-align:left;">
+779,159
+</td>
+<td style="text-align:left;">
+86.51%
+</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>So far so good. Now a bit of wrangling in two steps. First, I need to get rid of the first row. Second, I need to get rid of the percent signs and commas.</p>
+<pre class="r"><code>library(stringr)
+Cleaned &lt;- out %&gt;% data.frame() %&gt;% 
+  filter(X1!=&quot;Year&quot;) %&gt;% 
+  transmute(year = as.numeric(X1), 
+            RegVoters = as.numeric(str_remove_all(X2, &quot;,&quot;)), 
+            Votes = as.numeric(str_remove_all(X3, &quot;,&quot;)), 
+            Vote.Percent = as.numeric(str_remove(X4, &quot;%&quot;)))
+Cleaned %&gt;% head() %&gt;% kable() %&gt;% scroll_box(height=&quot;300px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:300px; ">
+<table>
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+year
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+RegVoters
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Votes
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Vote.Percent
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+2020
+</td>
+<td style="text-align:right;">
+2951428
+</td>
+<td style="text-align:right;">
+2317965
+</td>
+<td style="text-align:right;">
+78.50
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2018
+</td>
+<td style="text-align:right;">
+2763105
+</td>
+<td style="text-align:right;">
+1873891
+</td>
+<td style="text-align:right;">
+67.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:right;">
+2553808
+</td>
+<td style="text-align:right;">
+2051452
+</td>
+<td style="text-align:right;">
+80.33
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:right;">
+2174763
+</td>
+<td style="text-align:right;">
+1541782
+</td>
+<td style="text-align:right;">
+70.90
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:right;">
+2199360
+</td>
+<td style="text-align:right;">
+1820507
+</td>
+<td style="text-align:right;">
+82.80
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:right;">
+2068798
+</td>
+<td style="text-align:right;">
+1487210
+</td>
+<td style="text-align:right;">
+71.89
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>One more relevant feature is that midterms and presidential years are a bit different so let me denote this with an indicator. The method I will use is does the integer division of year minus 1960 divided by four have no remainder [TRUE] or have a remainder [FALSE].</p>
+<pre class="r"><code>library(fpp3); library(magrittr); library(hrbrthemes)
+Cleaned %&lt;&gt;% mutate(President = as.factor(((year - 1960) %% 4) == 0))</code></pre>
+<p>Now I have exactly the dataset that I want. What does the plot look like?</p>
+<pre class="r"><code>Cleaned %&gt;% ggplot(.) + aes(x=year, y=Vote.Percent, color=President, group=President) + geom_point() + geom_line() + scale_color_ipsum() + labs(title=&quot;Voter Turnout in Oregon since 1960&quot;, x=&quot;Year&quot;, y=&quot;Turnout (%)&quot;, color=&quot;Presidential Election?&quot;) + theme_ipsum_rc()</code></pre>
+<p><img src="https://rww-science.website/post/2021-03-16-tabulizer-rocks/index_files/figure-html/unnamed-chunk-5-1.png" width="768" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

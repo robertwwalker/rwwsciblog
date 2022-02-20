@@ -2,7 +2,7 @@
 
 <html lang='en'>
 	<head>
-		<title>tidyTuesday meets the Economics of Majors &middot; rww.science</title>
+		<title>tidyTuesday meets the Economics of Majors &middot; rww-science: the blog</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		
@@ -22,14 +22,14 @@
 
                 
 <header id="header">
-    <a href='/' class="logo">rww.science</a>
+    <a href='/' class="logo">rww-science: the blog</a>
 </header>
 
                 
 
 <nav id="nav">
     <ul class="links">
-        <li class="active"><a href='/'>rww.science</a></li>
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
         
         <li><a href='/#footer'>Contact</a></li>
         
@@ -83,7 +83,7 @@
                             </header>
                             
                             
-<script src="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/index_files/header-attrs/header-attrs.js"></script>
 
 
 <p>This week’s tidyTuesday focuses on degrees and majors and their deployment in the labor market. The original data came from 538. A description of sources and measures. The tidyTesday writeup is <a href="https://github.com/fivethirtyeight/data/tree/master/college-majors">here</a>.</p>
@@ -467,7 +467,7 @@ skim(Major.Employment)</code></pre>
   ggtitle(&quot;Median Income and Unemployment&quot;) +
   theme(text=element_text(size=8), title = element_text(size=12)) 
 my.plot</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <pre class="r"><code>Major.Employment &lt;- Major.Employment %&gt;% mutate(ShareCol= College_jobs / Total)
 my.plot &lt;- Major.Employment %&gt;% ggplot(aes(Unemployment_rate,ShareCol, label=str_to_title(Major), color=ShareWomen)) +
   geom_point(alpha=0.1) +
@@ -482,14 +482,14 @@ my.plot &lt;- Major.Employment %&gt;% ggplot(aes(Unemployment_rate,ShareCol, lab
 my.plot</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_text).</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>An Esquisse starter. Unemployment rate is x. Median wage is y. Major categories are colors and size is a function of Total</p>
 <pre class="r"><code>ggplot(data = Major.Employment) +
 aes(x = Unemployment_rate, y = Median, color = Major_category, size = Total) +
 geom_point() +
 theme_minimal()</code></pre>
 <pre><code>## Warning: Removed 1 rows containing missing values (geom_point).</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <pre class="r"><code>Major.Employment %&gt;% drop_na() %&gt;% ggplot() +
   aes(x = Unemployment_rate, y = Median, color = ShareWomen, label=str_to_title(Major)) +
 #  geom_point() +
@@ -501,7 +501,7 @@ theme_minimal()</code></pre>
   xlab(&quot;Unemployment Rate&quot;) +
   ylab(&quot;Median Wage&quot;) +
   ggtitle(&quot;Wages and Unemployment with Women in the Profession&quot;)</code></pre>
-<p><img src="http://localhost:1313/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Alas.</p>
 
 
@@ -604,7 +604,7 @@ theme_minimal()</code></pre>
 
                     
 <div id="copyright">
-    <ul><li>&copy; rww.science</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
 </div>
 
 
