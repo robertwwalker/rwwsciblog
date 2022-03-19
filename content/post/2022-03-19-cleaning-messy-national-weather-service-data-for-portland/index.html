@@ -1,0 +1,1181 @@
+---
+title: Cleaning Messy National Weather Service Data for Portland
+author: RWW
+date: '2022-03-19'
+slug: nws-monthly-joins
+categories:
+  - ggplot
+  - tidyverse
+  - time series
+tags:
+  - time series
+  - tidyverse
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="loading-nws-data" class="section level2">
+<h2>Loading NWS Data</h2>
+<p>I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;))
+head(NWS, 10) %&gt;% kable() %&gt;%
+    kable_styling() %&gt;%
+    scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Daily.Temperature.and.Precipitation.Data
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.3
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.4
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.5
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.6
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.7
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.8
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.9
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.10
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.11
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.12
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.13
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.14
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.15
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.16
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.17
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.18
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.19
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.20
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.21
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.22
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.23
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.24
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.25
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.26
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.27
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.28
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.29
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.30
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.31
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.32
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.33
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Portland, Oregon Airport
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Starts:
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+13 Oct 1940
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+END Year:
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+2019
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+TX is Maximum Temperature (deg F), TX is Minimum Temperature (deg F), PR is Precipitation (inches), SN is Snowfall (inches)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Example: High Temperature 23 October 1940 is 58 while low was 53 deg.
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+YR
+</td>
+<td style="text-align:left;">
+MO
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+AVG or Total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+TX
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+70
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+78
+</td>
+<td style="text-align:left;">
+78
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+63
+</td>
+<td style="text-align:left;">
+61
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+56
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+52
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+TN
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+52
+</td>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+54
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+PR
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.13
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.63
+</td>
+<td style="text-align:left;">
+1.03
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.18
+</td>
+<td style="text-align:left;">
+0.58
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+SN
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The column names are stored in the seventh row; to properly import this. In addition, there are two missing value codes: <code>M</code> and <code>-</code> that will have to be accounted for. I will use <code>skip</code> to skip the first 6 rows and declare two distinct values to be encoded as missing. Let’s see what we get.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;), skip=6, na.strings = c(&quot;M&quot;,&quot;-&quot;))
+head(NWS, 10)</code></pre>
+<pre><code>##      YR MO  X   X1   X2   X3   X4   X5   X6   X7   X8   X9  X10  X11  X12  X13
+## 1  1940 10 TX &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   75
+## 2  1940 10 TN &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   57
+## 3  1940 10 PR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; 0.01
+## 4  1940 10 SN &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    0
+## 5  1940 11 TX   52   53   47   55   51   58   56   50   48   47   46   45   45
+## 6  1940 11 TN   40   38   36   32   42   46   46   42   35   34   35   33   34
+## 7  1940 11 PR 0.17 0.02    T    0 0.07 0.28 0.85 0.29 0.02 0.01 0.01    0    0
+## 8  1940 11 SN    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 9  1940 12 TX   51   53   52   51   56   54   50   51   48   50   46   45   43
+## 10 1940 12 TN   42   40   42   42   44   37   34   35   32   26   34   28   27
+##    X14 X15 X16  X17  X18 X19  X20  X21 X22  X23  X24 X25 X26  X27  X28  X29 X30
+## 1   70  64  72   72   78  78   64   63  61   58   57  57  57   56   53   59  59
+## 2   53  52  50   58   58  59   54   48  41   53   48  41  38   37   45   48  50
+## 3    T   T   0 0.13    0   T 0.14 0.05   0 0.63 1.03   0   0    T 0.18 0.58 0.5
+## 4    0   0   0    0    0   0    0    0   0    0    0   0   0    0    0    0   0
+## 5   47  53  49   46   49  46   49   50  44   42   44  51  44   45   59   57  45
+## 6   33  28  27   36   30  29   36   33  28   37   35  37  36   38   43   40  39
+## 7    0   0   0 0.29 0.01   0 0.37    T   0 0.12 0.62   0   0 0.51 0.89    T   T
+## 8    0   0   0    0    0   0    0    0   0    0    0   0   0    0    0    0   0
+## 9   40  39  39   41   41  45   46   62  60   56   53  54  45   50   51   43  44
+## 10  25  29  33   35   34  35   41   39  39   42   42  42  40   38   36   35  37
+##     X31 AVG.or.Total
+## 1    52         &lt;NA&gt;
+## 2    46         &lt;NA&gt;
+## 3  0.25         &lt;NA&gt;
+## 4     0            0
+## 5  &lt;NA&gt;         49.1
+## 6  &lt;NA&gt;         35.9
+## 7  &lt;NA&gt;         4.53
+## 8  &lt;NA&gt;            0
+## 9    45         48.5
+## 10   32           36</code></pre>
+<p>Two other things are of note. The first one is that R really doesn’t like columns to be named as numbers so we have an <code>X</code> in front of the numeric days. The second is that the column denoting which variable the rows represent is now <code>X</code>. Let me rename <code>X</code> to be <code>Variable</code>.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;), skip=6, na.strings = c(&quot;M&quot;,&quot;-&quot;)) %&gt;% 
+  rename(Variable = X)
+str(NWS)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    3808 obs. of  35 variables:
+##  $ YR          : int  1940 1940 1940 1940 1940 1940 1940 1940 1940 1940 ...
+##  $ MO          : int  10 10 10 10 11 11 11 11 12 12 ...
+##  $ Variable    : chr  &quot;TX&quot; &quot;TN&quot; &quot;PR&quot; &quot;SN&quot; ...
+##  $ X1          : chr  NA NA NA NA ...
+##  $ X2          : chr  NA NA NA NA ...
+##  $ X3          : chr  NA NA NA NA ...
+##  $ X4          : chr  NA NA NA NA ...
+##  $ X5          : chr  NA NA NA NA ...
+##  $ X6          : chr  NA NA NA NA ...
+##  $ X7          : chr  NA NA NA NA ...
+##  $ X8          : chr  NA NA NA NA ...
+##  $ X9          : chr  NA NA NA NA ...
+##  $ X10         : chr  NA NA NA NA ...
+##  $ X11         : chr  NA NA NA NA ...
+##  $ X12         : chr  NA NA NA NA ...
+##  $ X13         : chr  &quot;75&quot; &quot;57&quot; &quot;0.01&quot; &quot;0&quot; ...
+##  $ X14         : chr  &quot;70&quot; &quot;53&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X15         : chr  &quot;64&quot; &quot;52&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X16         : chr  &quot;72&quot; &quot;50&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X17         : chr  &quot;72&quot; &quot;58&quot; &quot;0.13&quot; &quot;0&quot; ...
+##  $ X18         : chr  &quot;78&quot; &quot;58&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X19         : chr  &quot;78&quot; &quot;59&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X20         : chr  &quot;64&quot; &quot;54&quot; &quot;0.14&quot; &quot;0&quot; ...
+##  $ X21         : chr  &quot;63&quot; &quot;48&quot; &quot;0.05&quot; &quot;0&quot; ...
+##  $ X22         : chr  &quot;61&quot; &quot;41&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X23         : chr  &quot;58&quot; &quot;53&quot; &quot;0.63&quot; &quot;0&quot; ...
+##  $ X24         : chr  &quot;57&quot; &quot;48&quot; &quot;1.03&quot; &quot;0&quot; ...
+##  $ X25         : chr  &quot;57&quot; &quot;41&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X26         : chr  &quot;57&quot; &quot;38&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X27         : chr  &quot;56&quot; &quot;37&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X28         : chr  &quot;53&quot; &quot;45&quot; &quot;0.18&quot; &quot;0&quot; ...
+##  $ X29         : chr  &quot;59&quot; &quot;48&quot; &quot;0.58&quot; &quot;0&quot; ...
+##  $ X30         : chr  &quot;59&quot; &quot;50&quot; &quot;0.5&quot; &quot;0&quot; ...
+##  $ X31         : chr  &quot;52&quot; &quot;46&quot; &quot;0.25&quot; &quot;0&quot; ...
+##  $ AVG.or.Total: chr  NA NA NA &quot;0&quot; ...</code></pre>
+<p>It is disappointing that everything is stored as <code>character</code> type. That will prove advantageous in one respect because there is some <code>/A</code> garbage embedded in two of the variables (SN and PR). Here, I will ask R to find all columns that are stored as character and ask it to remove the string.</p>
+<pre class="r"><code>NWS &lt;- NWS %&gt;% mutate(across(where(is.character), ~str_remove(.x, &quot;/A&quot;)))</code></pre>
+<p>Now, we will have to fix the values <code>T</code> in the precipitation and snow variables [which are currently stored in repeated rows]. Nevertheless, this should give me what I need to create the monthly data.</p>
+<div id="monthly-data" class="section level3">
+<h3>Monthly Data</h3>
+<p>Now I will have to facilitate type conversions; the data are currently character instead of numeric. Looking at the data, I think it is reasonable, though not with total certainty, that they should take values bigger than 0 but smaller than the smallest measured values for that <code>Variable</code>; in this case, the smallest values that I note are 0.01. I will (somewhat) arbitrarily set them to 0.005. With that in mind, let’s see if we can create the monthly data by adjusting those values and selecting only the year, the month. the variable, and <code>AVG.or.Total</code> – the last column that contains the average high/low and the total snowfall and precipitation for that month of that year. Finally, let me change the type of that last column to numeric.</p>
+<pre class="r"><code># Now to create a Monthly time series.  The first step is to select the four columns 
+NWS.Monthly.Base &lt;- NWS %&gt;% 
+  select(YR, MO, Variable, AVG.or.Total) %&gt;% 
+  mutate(AVG.or.Total = recode(AVG.or.Total, T = &quot;O.005&quot;, `T/A` = &quot;O.005&quot;)) %&gt;% # Replace the trace amounts with numbers as they are not missing nor are they zero.
+  mutate(AVG.or.Total = stringr::str_replace_all(AVG.or.Total, &quot;/A&quot;, &quot;&quot;)) %&gt;%
+  mutate(AVG.or.Total = as.numeric(AVG.or.Total)) # Turn it into numeric
+summary(NWS.Monthly.Base)  # Show a summary</code></pre>
+<pre><code>##        YR             MO           Variable          AVG.or.Total  
+##  Min.   :1940   Min.   : 1.000   Length:3808        Min.   : 0.00  
+##  1st Qu.:1960   1st Qu.: 3.750   Class :character   1st Qu.: 0.78  
+##  Median :1980   Median : 7.000   Mode  :character   Median :33.25  
+##  Mean   :1980   Mean   : 6.508                      Mean   :28.55  
+##  3rd Qu.:2000   3rd Qu.:10.000                      3rd Qu.:52.50  
+##  Max.   :2020   Max.   :12.000                      Max.   :88.10  
+##                                                     NA&#39;s   :112</code></pre>
+<p>That seems to work. Two more steps to get a clean monthly dataset. The last step is to create four variables named TX, TN, PR, and SN as unique data.frames. To make merging them by a common index easier, I will use paste to create a character variable of the data and then turn it into a Date: <code>Month.YR</code>.</p>
+<pre class="r"><code>TX &lt;- NWS.Monthly.Base %&gt;% filter(Variable == &quot;TX&quot;) %&gt;% 
+    mutate(Month.Yr = as.Date(paste0(MO,&quot;-14-&quot;,YR), format = &quot;%m-%d-%Y&quot;),
+           TX = AVG.or.Total) %&gt;%
+    select(-c(Variable,AVG.or.Total))
+TN &lt;- NWS.Monthly.Base %&gt;% filter(Variable == &quot;TN&quot;) %&gt;% 
+    mutate(Month.Yr = as.Date(paste0(MO,&quot;-14-&quot;,YR), format = &quot;%m-%d-%Y&quot;),
+           TN = AVG.or.Total) %&gt;% 
+    select(-c(Variable,AVG.or.Total))
+PR &lt;- NWS.Monthly.Base %&gt;% filter(Variable == &quot;PR&quot;) %&gt;% 
+    mutate(Month.Yr = as.Date(paste0(MO,&quot;-14-&quot;,YR), format = &quot;%m-%d-%Y&quot;),
+           PR = AVG.or.Total) %&gt;%
+    select(-c(Variable,AVG.or.Total))
+SN &lt;- NWS.Monthly.Base %&gt;% filter(Variable == &quot;SN&quot;) %&gt;% 
+    mutate(Month.Yr = as.Date(paste0(MO,&quot;-14-&quot;,YR), format = &quot;%m-%d-%Y&quot;),
+           SN = AVG.or.Total) %&gt;%
+    select(-c(Variable,AVG.or.Total))</code></pre>
+<p>The last step is to merge the clean individual series together; I will use <code>left_join</code>.</p>
+<pre class="r"><code>NWS.Monthly.Clean &lt;- left_join(TX,TN) %&gt;% left_join(.,PR) %&gt;% left_join(.,SN)</code></pre>
+<p>Woo hoo! One down and one to go. But, as we should’ve noticed before, their totals aren’t actually great.</p>
+</div>
+</div>
+<div id="maximum-temperature" class="section level2">
+<h2>Maximum Temperature</h2>
+<pre class="r"><code>NWS.Monthly.Clean %&gt;% ggplot() + aes(x=Month.Yr, y=TX) + geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+<div id="minimum-temperature" class="section level2">
+<h2>Minimum Temperature</h2>
+<pre class="r"><code>NWS.Monthly.Clean %&gt;% ggplot() + aes(x=Month.Yr, y=TN) + geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="snow" class="section level2">
+<h2>Snow</h2>
+<pre class="r"><code>NWS.Monthly.Clean %&gt;% ggplot() + aes(x=Month.Yr, y=SN) + geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+</div>
+<div id="precipitation" class="section level2">
+<h2>Precipitation</h2>
+<pre class="r"><code>NWS.Monthly.Clean %&gt;% ggplot() + aes(x=Month.Yr, y=PR) + geom_line()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
