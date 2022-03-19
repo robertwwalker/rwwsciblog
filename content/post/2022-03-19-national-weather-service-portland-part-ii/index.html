@@ -1194,7 +1194,7 @@ NWS.Daily.Clean %&gt;% filter(date &gt; &quot;2010-01-01&quot;) %&gt;% autoplot(
 <div id="daily-2" class="section level3">
 <h3>Daily</h3>
 <p>Daily subseries plots are a mess because there are 31 and I am not sure that there would be much instructive anyway as daily variation in temperature is quite noisy.</p>
-<pre class="r"><code>NWS.Daily.Clean %&gt;% gg_subseries(TX)</code></pre>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% gg_subseries(TX, period=&quot;weeks&quot;)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>
 </div>
@@ -1202,10 +1202,8 @@ NWS.Daily.Clean %&gt;% filter(date &gt; &quot;2010-01-01&quot;) %&gt;% autoplot(
 <div id="autocorrelation" class="section level1">
 <h1>Autocorrelation</h1>
 <p>To what degree are observations separated by k time periods correlated.</p>
-<p><span class="math display">\[
-r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
-{\sum\limits_{t=1}^T (y_{t}-\bar{y})^2},
-\]</span>
+<p><span class="math display">\[r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
+{\sum\limits_{t=1}^T (y_{t}-\bar{y})^2}\]</span>
 where <span class="math inline">\(T\)</span> is the length of the time series. The autocorrelation coefficients make up the autocorrelation function or ACF.</p>
 <p>The autocorrelation coefficients for the monthly high temperatures can be computed using the ACF() function.</p>
 <div id="daily-acf" class="section level3">

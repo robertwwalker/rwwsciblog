@@ -137,17 +137,15 @@ NWS.Daily.Clean %>% filter(date > "2015-01-01") %>% gg_season(TX, labels = "both
 Daily subseries plots are a mess because there are 31 and I am not sure that there would be much instructive anyway as daily variation in temperature is quite noisy.
 
 ```{r}
-NWS.Daily.Clean %>% gg_subseries(TX)
+NWS.Daily.Clean %>% gg_subseries(TX, period="weeks")
 ```
 
 # Autocorrelation
 
 To what degree are observations separated by k time periods correlated.
 
-$$
-r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
- {\sum\limits_{t=1}^T (y_{t}-\bar{y})^2},
-$$
+$$r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
+ {\sum\limits_{t=1}^T (y_{t}-\bar{y})^2}$$
 where $T$ is the length of the time series. The autocorrelation coefficients make up the autocorrelation function or ACF.
 
 The autocorrelation coefficients for the monthly high temperatures can be computed using the ACF() function.
