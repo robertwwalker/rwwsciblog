@@ -1,0 +1,70 @@
+---
+title: Inflation Expectations
+author: RWW
+date: '2022-03-19'
+slug: inflation-expectations
+categories:
+  - dataviz
+  - ggplot
+  - time series
+  - tidyverse
+tags:
+  - time series
+  - tidyverse
+---
+
+The Federal Reserve Bank of New York provides interesting data on inflation expectations.  I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years.  But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.
+
+```{r, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lubridate); library(tsibble)
+library(readxl); library(magrittr)
+library(kableExtra)
+url <- "https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx"
+destfile <- "frbny_sce_data.xlsx"
+curl::curl_download(url, destfile)
+Inflation.Expectations <- read_excel(destfile, sheet=4, skip=3) 
+Inflation.Expectations %>% 
+  kable() %>%
+  kable_styling() %>%
+  scroll_box(width = "100%", height = "500px")
+```
+
+Now let me format the dates properly to treat these data as a time series.
+
+```{r}
+Inflation.Expectations %<>%
+  rename(date = 1) %>% 
+  mutate(date = yearmonth(parse_date_time(date, orders = "%Y%m")))
+```
+
+That's pretty much all that is required to visualize them.  Let's have a look.  I will use the `fpp3` library and `autoplot()`.
+
+```{r}
+library(fpp3)
+Inflation.Expectations %>% 
+  as_tsibble(index=date) %>% 
+  autoplot(`Median three-year ahead expected inflation rate`) + 
+  geom_line(aes(y=Inflation.Expectations$`Median one-year ahead expected inflation rate`, color="red")) +
+  hrbrthemes::theme_ipsum() + guides(color = "none")
+```
+
+Now let me pretty the plot.
+
+```{r}
+Inflation.Expectations %>% 
+  select(1:3) %>% 
+  pivot_longer(c(2:3)) %>%
+  mutate(Variable = name) %>%
+  ggplot(aes(x=date, y=value, color=Variable)) +
+  geom_line(size=2) +
+  scale_color_viridis_d(option="C") +
+  hrbrthemes::theme_ft_rc() +
+  theme(legend.position = "bottom") +
+  labs(y="Inflation Expectations", 
+       color="",
+       title="New York Fed Inflation Expectations",
+       caption = "data: https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx")
+```
+
+

@@ -1,0 +1,3156 @@
+---
+title: Inflation Expectations
+author: RWW
+date: '2022-03-19'
+slug: inflation-expectations
+categories:
+  - dataviz
+  - ggplot
+  - time series
+  - tidyverse
+tags:
+  - time series
+  - tidyverse
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+<script src="{{< blogdown/postref >}}index_files/kePrint/kePrint.js"></script>
+<link href="{{< blogdown/postref >}}index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<p>The Federal Reserve Bank of New York provides interesting data on inflation expectations. I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years. But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.</p>
+<pre class="r"><code>library(tidyverse)
+library(lubridate); library(tsibble)
+library(readxl); library(magrittr)
+library(kableExtra)
+url &lt;- &quot;https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&quot;
+destfile &lt;- &quot;frbny_sce_data.xlsx&quot;
+curl::curl_download(url, destfile)
+Inflation.Expectations &lt;- read_excel(destfile, sheet=4, skip=3) 
+Inflation.Expectations %&gt;% 
+  kable() %&gt;%
+  kable_styling() %&gt;%
+  scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+…1
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Median one-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Median three-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+25th Percentile one-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+25th Percentile three-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+75th Percentile one-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+75th Percentile three-year ahead expected inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Median point prediction one-year ahead inflation rate
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+Median point prediction three-year ahead inflation rate
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+201306
+</td>
+<td style="text-align:right;">
+3.090884
+</td>
+<td style="text-align:right;">
+3.416846
+</td>
+<td style="text-align:right;">
+1.9766899
+</td>
+<td style="text-align:right;">
+1.9509043
+</td>
+<td style="text-align:right;">
+5.944291
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+4.569018
+</td>
+<td style="text-align:right;">
+4.735714
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201307
+</td>
+<td style="text-align:right;">
+3.162522
+</td>
+<td style="text-align:right;">
+3.310545
+</td>
+<td style="text-align:right;">
+1.6002527
+</td>
+<td style="text-align:right;">
+1.5759639
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.330960
+</td>
+<td style="text-align:right;">
+4.682268
+</td>
+<td style="text-align:right;">
+4.893152
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201308
+</td>
+<td style="text-align:right;">
+3.395071
+</td>
+<td style="text-align:right;">
+3.799491
+</td>
+<td style="text-align:right;">
+2.0000000
+</td>
+<td style="text-align:right;">
+1.6044991
+</td>
+<td style="text-align:right;">
+7.192735
+</td>
+<td style="text-align:right;">
+7.192735
+</td>
+<td style="text-align:right;">
+4.800452
+</td>
+<td style="text-align:right;">
+5.040974
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201309
+</td>
+<td style="text-align:right;">
+3.367290
+</td>
+<td style="text-align:right;">
+3.546918
+</td>
+<td style="text-align:right;">
+1.9176887
+</td>
+<td style="text-align:right;">
+1.7006738
+</td>
+<td style="text-align:right;">
+6.874382
+</td>
+<td style="text-align:right;">
+7.027530
+</td>
+<td style="text-align:right;">
+4.754334
+</td>
+<td style="text-align:right;">
+4.878838
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201310
+</td>
+<td style="text-align:right;">
+3.174733
+</td>
+<td style="text-align:right;">
+3.196597
+</td>
+<td style="text-align:right;">
+1.6670417
+</td>
+<td style="text-align:right;">
+1.6044991
+</td>
+<td style="text-align:right;">
+6.414917
+</td>
+<td style="text-align:right;">
+6.558024
+</td>
+<td style="text-align:right;">
+4.619435
+</td>
+<td style="text-align:right;">
+4.875060
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201311
+</td>
+<td style="text-align:right;">
+3.196597
+</td>
+<td style="text-align:right;">
+3.314703
+</td>
+<td style="text-align:right;">
+1.6856116
+</td>
+<td style="text-align:right;">
+1.7418048
+</td>
+<td style="text-align:right;">
+6.232919
+</td>
+<td style="text-align:right;">
+6.754294
+</td>
+<td style="text-align:right;">
+4.087263
+</td>
+<td style="text-align:right;">
+4.684939
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201312
+</td>
+<td style="text-align:right;">
+3.137840
+</td>
+<td style="text-align:right;">
+3.299735
+</td>
+<td style="text-align:right;">
+1.6044991
+</td>
+<td style="text-align:right;">
+1.5653559
+</td>
+<td style="text-align:right;">
+6.026756
+</td>
+<td style="text-align:right;">
+6.357209
+</td>
+<td style="text-align:right;">
+4.518580
+</td>
+<td style="text-align:right;">
+4.648178
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201401
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.046670
+</td>
+<td style="text-align:right;">
+1.4001945
+</td>
+<td style="text-align:right;">
+1.2561138
+</td>
+<td style="text-align:right;">
+6.061110
+</td>
+<td style="text-align:right;">
+6.025575
+</td>
+<td style="text-align:right;">
+4.123138
+</td>
+<td style="text-align:right;">
+4.110649
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201402
+</td>
+<td style="text-align:right;">
+3.090884
+</td>
+<td style="text-align:right;">
+3.177027
+</td>
+<td style="text-align:right;">
+1.7688211
+</td>
+<td style="text-align:right;">
+1.5469180
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.035755
+</td>
+<td style="text-align:right;">
+4.131488
+</td>
+<td style="text-align:right;">
+4.079364
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201403
+</td>
+<td style="text-align:right;">
+3.196597
+</td>
+<td style="text-align:right;">
+3.377147
+</td>
+<td style="text-align:right;">
+1.5469180
+</td>
+<td style="text-align:right;">
+1.5469180
+</td>
+<td style="text-align:right;">
+6.097920
+</td>
+<td style="text-align:right;">
+6.223626
+</td>
+<td style="text-align:right;">
+4.521639
+</td>
+<td style="text-align:right;">
+4.651865
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201404
+</td>
+<td style="text-align:right;">
+3.303940
+</td>
+<td style="text-align:right;">
+3.204834
+</td>
+<td style="text-align:right;">
+1.7923245
+</td>
+<td style="text-align:right;">
+1.6874917
+</td>
+<td style="text-align:right;">
+6.303314
+</td>
+<td style="text-align:right;">
+6.235626
+</td>
+<td style="text-align:right;">
+4.473255
+</td>
+<td style="text-align:right;">
+4.317511
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201405
+</td>
+<td style="text-align:right;">
+3.171748
+</td>
+<td style="text-align:right;">
+3.196597
+</td>
+<td style="text-align:right;">
+1.6044991
+</td>
+<td style="text-align:right;">
+1.5469180
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.486081
+</td>
+<td style="text-align:right;">
+4.342987
+</td>
+<td style="text-align:right;">
+4.525708
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201406
+</td>
+<td style="text-align:right;">
+3.204563
+</td>
+<td style="text-align:right;">
+3.297345
+</td>
+<td style="text-align:right;">
+1.7576319
+</td>
+<td style="text-align:right;">
+1.5000967
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.414917
+</td>
+<td style="text-align:right;">
+4.752476
+</td>
+<td style="text-align:right;">
+4.599026
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201407
+</td>
+<td style="text-align:right;">
+3.111111
+</td>
+<td style="text-align:right;">
+3.218860
+</td>
+<td style="text-align:right;">
+1.6995459
+</td>
+<td style="text-align:right;">
+1.6775503
+</td>
+<td style="text-align:right;">
+6.366208
+</td>
+<td style="text-align:right;">
+6.510431
+</td>
+<td style="text-align:right;">
+4.539547
+</td>
+<td style="text-align:right;">
+4.516861
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201408
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.085294
+</td>
+<td style="text-align:right;">
+1.5752116
+</td>
+<td style="text-align:right;">
+1.6321160
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+4.039658
+</td>
+<td style="text-align:right;">
+4.273867
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201409
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.015459
+</td>
+<td style="text-align:right;">
+1.5734774
+</td>
+<td style="text-align:right;">
+1.4624749
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.339693
+</td>
+<td style="text-align:right;">
+3.873158
+</td>
+<td style="text-align:right;">
+4.153529
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201410
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.015459
+</td>
+<td style="text-align:right;">
+1.4624749
+</td>
+<td style="text-align:right;">
+1.3130764
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+3.458891
+</td>
+<td style="text-align:right;">
+3.997284
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201411
+</td>
+<td style="text-align:right;">
+3.015459
+</td>
+<td style="text-align:right;">
+3.034222
+</td>
+<td style="text-align:right;">
+1.4624749
+</td>
+<td style="text-align:right;">
+1.3726228
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+3.608507
+</td>
+<td style="text-align:right;">
+4.091155
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201412
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.1738002
+</td>
+<td style="text-align:right;">
+5.650182
+</td>
+<td style="text-align:right;">
+5.869063
+</td>
+<td style="text-align:right;">
+3.084015
+</td>
+<td style="text-align:right;">
+4.022125
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201501
+</td>
+<td style="text-align:right;">
+2.926264
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.1019423
+</td>
+<td style="text-align:right;">
+1.2069269
+</td>
+<td style="text-align:right;">
+5.423985
+</td>
+<td style="text-align:right;">
+5.985323
+</td>
+<td style="text-align:right;">
+3.315294
+</td>
+<td style="text-align:right;">
+4.147226
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201502
+</td>
+<td style="text-align:right;">
+2.830265
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.1975554
+</td>
+<td style="text-align:right;">
+1.1976033
+</td>
+<td style="text-align:right;">
+5.162554
+</td>
+<td style="text-align:right;">
+5.904663
+</td>
+<td style="text-align:right;">
+3.180199
+</td>
+<td style="text-align:right;">
+4.131799
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201503
+</td>
+<td style="text-align:right;">
+2.875452
+</td>
+<td style="text-align:right;">
+2.915113
+</td>
+<td style="text-align:right;">
+1.0760911
+</td>
+<td style="text-align:right;">
+1.0156784
+</td>
+<td style="text-align:right;">
+4.950111
+</td>
+<td style="text-align:right;">
+5.487096
+</td>
+<td style="text-align:right;">
+3.120108
+</td>
+<td style="text-align:right;">
+3.616236
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201504
+</td>
+<td style="text-align:right;">
+2.733259
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.997518
+</td>
+<td style="text-align:right;">
+5.643198
+</td>
+<td style="text-align:right;">
+3.157371
+</td>
+<td style="text-align:right;">
+3.888054
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201505
+</td>
+<td style="text-align:right;">
+2.955763
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.2215939
+</td>
+<td style="text-align:right;">
+4.906164
+</td>
+<td style="text-align:right;">
+5.337633
+</td>
+<td style="text-align:right;">
+3.257119
+</td>
+<td style="text-align:right;">
+3.802553
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201506
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.4025799
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+5.760430
+</td>
+<td style="text-align:right;">
+5.593090
+</td>
+<td style="text-align:right;">
+3.469145
+</td>
+<td style="text-align:right;">
+3.786062
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201507
+</td>
+<td style="text-align:right;">
+2.955357
+</td>
+<td style="text-align:right;">
+2.955680
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.1221224
+</td>
+<td style="text-align:right;">
+5.734184
+</td>
+<td style="text-align:right;">
+5.570208
+</td>
+<td style="text-align:right;">
+3.182219
+</td>
+<td style="text-align:right;">
+3.741563
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201508
+</td>
+<td style="text-align:right;">
+2.793575
+</td>
+<td style="text-align:right;">
+2.867507
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.1019423
+</td>
+<td style="text-align:right;">
+5.191454
+</td>
+<td style="text-align:right;">
+5.530786
+</td>
+<td style="text-align:right;">
+3.065382
+</td>
+<td style="text-align:right;">
+3.714436
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201509
+</td>
+<td style="text-align:right;">
+2.734659
+</td>
+<td style="text-align:right;">
+2.842578
+</td>
+<td style="text-align:right;">
+1.0432696
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.708744
+</td>
+<td style="text-align:right;">
+5.423985
+</td>
+<td style="text-align:right;">
+3.158668
+</td>
+<td style="text-align:right;">
+3.259574
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201510
+</td>
+<td style="text-align:right;">
+2.823326
+</td>
+<td style="text-align:right;">
+2.781905
+</td>
+<td style="text-align:right;">
+1.0252963
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.190876
+</td>
+<td style="text-align:right;">
+5.165283
+</td>
+<td style="text-align:right;">
+3.063085
+</td>
+<td style="text-align:right;">
+3.153144
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201511
+</td>
+<td style="text-align:right;">
+2.554007
+</td>
+<td style="text-align:right;">
+2.681402
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.733266
+</td>
+<td style="text-align:right;">
+5.045190
+</td>
+<td style="text-align:right;">
+3.049218
+</td>
+<td style="text-align:right;">
+3.144082
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201512
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.775065
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.730198
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+3.097423
+</td>
+<td style="text-align:right;">
+3.130671
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201601
+</td>
+<td style="text-align:right;">
+2.417507
+</td>
+<td style="text-align:right;">
+2.453082
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.8968862
+</td>
+<td style="text-align:right;">
+4.712423
+</td>
+<td style="text-align:right;">
+4.590201
+</td>
+<td style="text-align:right;">
+2.954850
+</td>
+<td style="text-align:right;">
+3.043420
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201602
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+2.622853
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.143975
+</td>
+<td style="text-align:right;">
+5.054150
+</td>
+<td style="text-align:right;">
+3.107146
+</td>
+<td style="text-align:right;">
+3.387503
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201603
+</td>
+<td style="text-align:right;">
+2.530770
+</td>
+<td style="text-align:right;">
+2.500490
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.488211
+</td>
+<td style="text-align:right;">
+4.708021
+</td>
+<td style="text-align:right;">
+3.089970
+</td>
+<td style="text-align:right;">
+3.104698
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201604
+</td>
+<td style="text-align:right;">
+2.613696
+</td>
+<td style="text-align:right;">
+2.791493
+</td>
+<td style="text-align:right;">
+1.0621943
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.084910
+</td>
+<td style="text-align:right;">
+5.487096
+</td>
+<td style="text-align:right;">
+3.089232
+</td>
+<td style="text-align:right;">
+3.153507
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201605
+</td>
+<td style="text-align:right;">
+2.622853
+</td>
+<td style="text-align:right;">
+2.734135
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.997918
+</td>
+<td style="text-align:right;">
+5.240709
+</td>
+<td style="text-align:right;">
+3.144871
+</td>
+<td style="text-align:right;">
+3.097219
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201606
+</td>
+<td style="text-align:right;">
+2.537871
+</td>
+<td style="text-align:right;">
+2.861800
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.894264
+</td>
+<td style="text-align:right;">
+5.309123
+</td>
+<td style="text-align:right;">
+3.144044
+</td>
+<td style="text-align:right;">
+3.652668
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201607
+</td>
+<td style="text-align:right;">
+2.521351
+</td>
+<td style="text-align:right;">
+2.501432
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.083651
+</td>
+<td style="text-align:right;">
+5.272973
+</td>
+<td style="text-align:right;">
+3.231861
+</td>
+<td style="text-align:right;">
+3.443616
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201608
+</td>
+<td style="text-align:right;">
+2.793575
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.9995852
+</td>
+<td style="text-align:right;">
+5.283558
+</td>
+<td style="text-align:right;">
+5.559269
+</td>
+<td style="text-align:right;">
+3.098649
+</td>
+<td style="text-align:right;">
+3.424709
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201609
+</td>
+<td style="text-align:right;">
+2.495162
+</td>
+<td style="text-align:right;">
+2.623311
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.812058
+</td>
+<td style="text-align:right;">
+5.242156
+</td>
+<td style="text-align:right;">
+3.044933
+</td>
+<td style="text-align:right;">
+3.551025
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201610
+</td>
+<td style="text-align:right;">
+2.588671
+</td>
+<td style="text-align:right;">
+2.582562
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.111414
+</td>
+<td style="text-align:right;">
+5.501368
+</td>
+<td style="text-align:right;">
+3.075901
+</td>
+<td style="text-align:right;">
+3.217843
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201611
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.9995852
+</td>
+<td style="text-align:right;">
+4.747997
+</td>
+<td style="text-align:right;">
+5.337633
+</td>
+<td style="text-align:right;">
+3.114850
+</td>
+<td style="text-align:right;">
+3.099744
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201612
+</td>
+<td style="text-align:right;">
+2.812191
+</td>
+<td style="text-align:right;">
+2.831908
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.191454
+</td>
+<td style="text-align:right;">
+5.576227
+</td>
+<td style="text-align:right;">
+3.171784
+</td>
+<td style="text-align:right;">
+3.822607
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201701
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+2.895548
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+5.552731
+</td>
+<td style="text-align:right;">
+3.131943
+</td>
+<td style="text-align:right;">
+3.819542
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201702
+</td>
+<td style="text-align:right;">
+2.961960
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.309342
+</td>
+<td style="text-align:right;">
+5.640829
+</td>
+<td style="text-align:right;">
+3.134774
+</td>
+<td style="text-align:right;">
+3.688152
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201703
+</td>
+<td style="text-align:right;">
+2.736074
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.707835
+</td>
+<td style="text-align:right;">
+5.423985
+</td>
+<td style="text-align:right;">
+3.099358
+</td>
+<td style="text-align:right;">
+3.099730
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201704
+</td>
+<td style="text-align:right;">
+2.793575
+</td>
+<td style="text-align:right;">
+2.908013
+</td>
+<td style="text-align:right;">
+1.0110189
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.852659
+</td>
+<td style="text-align:right;">
+5.600195
+</td>
+<td style="text-align:right;">
+3.028089
+</td>
+<td style="text-align:right;">
+3.177438
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201705
+</td>
+<td style="text-align:right;">
+2.588671
+</td>
+<td style="text-align:right;">
+2.467132
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.9603176
+</td>
+<td style="text-align:right;">
+4.416696
+</td>
+<td style="text-align:right;">
+5.084910
+</td>
+<td style="text-align:right;">
+3.070494
+</td>
+<td style="text-align:right;">
+3.077746
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201706
+</td>
+<td style="text-align:right;">
+2.538351
+</td>
+<td style="text-align:right;">
+2.775065
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+4.830334
+</td>
+<td style="text-align:right;">
+2.993377
+</td>
+<td style="text-align:right;">
+3.499542
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201707
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.143766
+</td>
+<td style="text-align:right;">
+4.912187
+</td>
+<td style="text-align:right;">
+3.001880
+</td>
+<td style="text-align:right;">
+3.177373
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201708
+</td>
+<td style="text-align:right;">
+2.490645
+</td>
+<td style="text-align:right;">
+2.623311
+</td>
+<td style="text-align:right;">
+1.0262393
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+4.636709
+</td>
+<td style="text-align:right;">
+2.964123
+</td>
+<td style="text-align:right;">
+3.033085
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201709
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.804799
+</td>
+<td style="text-align:right;">
+1.0760593
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.353259
+</td>
+<td style="text-align:right;">
+4.955311
+</td>
+<td style="text-align:right;">
+3.002994
+</td>
+<td style="text-align:right;">
+3.101659
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201710
+</td>
+<td style="text-align:right;">
+2.613696
+</td>
+<td style="text-align:right;">
+2.812191
+</td>
+<td style="text-align:right;">
+1.0275226
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.734380
+</td>
+<td style="text-align:right;">
+4.906164
+</td>
+<td style="text-align:right;">
+3.021131
+</td>
+<td style="text-align:right;">
+3.035650
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201711
+</td>
+<td style="text-align:right;">
+2.606111
+</td>
+<td style="text-align:right;">
+2.775065
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.076428
+</td>
+<td style="text-align:right;">
+5.123124
+</td>
+<td style="text-align:right;">
+3.015359
+</td>
+<td style="text-align:right;">
+3.354707
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201712
+</td>
+<td style="text-align:right;">
+2.824348
+</td>
+<td style="text-align:right;">
+2.894165
+</td>
+<td style="text-align:right;">
+1.0139530
+</td>
+<td style="text-align:right;">
+1.0489619
+</td>
+<td style="text-align:right;">
+4.812058
+</td>
+<td style="text-align:right;">
+5.423985
+</td>
+<td style="text-align:right;">
+3.090315
+</td>
+<td style="text-align:right;">
+3.383863
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201801
+</td>
+<td style="text-align:right;">
+2.711993
+</td>
+<td style="text-align:right;">
+2.793575
+</td>
+<td style="text-align:right;">
+1.2215939
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.611607
+</td>
+<td style="text-align:right;">
+4.955596
+</td>
+<td style="text-align:right;">
+3.042407
+</td>
+<td style="text-align:right;">
+3.354264
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201802
+</td>
+<td style="text-align:right;">
+2.831908
+</td>
+<td style="text-align:right;">
+2.884280
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.0760911
+</td>
+<td style="text-align:right;">
+4.000004
+</td>
+<td style="text-align:right;">
+4.753406
+</td>
+<td style="text-align:right;">
+3.019136
+</td>
+<td style="text-align:right;">
+3.139175
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201803
+</td>
+<td style="text-align:right;">
+2.752288
+</td>
+<td style="text-align:right;">
+2.908013
+</td>
+<td style="text-align:right;">
+1.2612020
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+4.732663
+</td>
+<td style="text-align:right;">
+3.064530
+</td>
+<td style="text-align:right;">
+3.133537
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201804
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+2.969947
+</td>
+<td style="text-align:right;">
+1.3182645
+</td>
+<td style="text-align:right;">
+1.0141683
+</td>
+<td style="text-align:right;">
+4.752013
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+3.055087
+</td>
+<td style="text-align:right;">
+3.526599
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201805
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+2.961960
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.272973
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+3.065584
+</td>
+<td style="text-align:right;">
+3.610773
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201806
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.2879126
+</td>
+<td style="text-align:right;">
+1.0968928
+</td>
+<td style="text-align:right;">
+5.195765
+</td>
+<td style="text-align:right;">
+5.433788
+</td>
+<td style="text-align:right;">
+3.061135
+</td>
+<td style="text-align:right;">
+3.801067
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201807
+</td>
+<td style="text-align:right;">
+2.982717
+</td>
+<td style="text-align:right;">
+2.883912
+</td>
+<td style="text-align:right;">
+1.1878090
+</td>
+<td style="text-align:right;">
+1.0497167
+</td>
+<td style="text-align:right;">
+4.917837
+</td>
+<td style="text-align:right;">
+5.207691
+</td>
+<td style="text-align:right;">
+3.094729
+</td>
+<td style="text-align:right;">
+3.711997
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201808
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.2786471
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+5.162554
+</td>
+<td style="text-align:right;">
+3.068000
+</td>
+<td style="text-align:right;">
+3.196795
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201809
+</td>
+<td style="text-align:right;">
+2.995079
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.3001620
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.022497
+</td>
+<td style="text-align:right;">
+5.323853
+</td>
+<td style="text-align:right;">
+3.113970
+</td>
+<td style="text-align:right;">
+3.087066
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201810
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.1975554
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+5.272973
+</td>
+<td style="text-align:right;">
+3.036429
+</td>
+<td style="text-align:right;">
+3.465295
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201811
+</td>
+<td style="text-align:right;">
+2.969947
+</td>
+<td style="text-align:right;">
+2.883912
+</td>
+<td style="text-align:right;">
+1.1878090
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.075049
+</td>
+<td style="text-align:right;">
+5.000339
+</td>
+<td style="text-align:right;">
+3.056169
+</td>
+<td style="text-align:right;">
+3.058216
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201812
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.3542874
+</td>
+<td style="text-align:right;">
+1.2046406
+</td>
+<td style="text-align:right;">
+5.098937
+</td>
+<td style="text-align:right;">
+5.000339
+</td>
+<td style="text-align:right;">
+3.033847
+</td>
+<td style="text-align:right;">
+3.076178
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201901
+</td>
+<td style="text-align:right;">
+2.969947
+</td>
+<td style="text-align:right;">
+2.969947
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.1906530
+</td>
+<td style="text-align:right;">
+5.143975
+</td>
+<td style="text-align:right;">
+5.306211
+</td>
+<td style="text-align:right;">
+3.060074
+</td>
+<td style="text-align:right;">
+3.143794
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201902
+</td>
+<td style="text-align:right;">
+2.793575
+</td>
+<td style="text-align:right;">
+2.768439
+</td>
+<td style="text-align:right;">
+1.1976033
+</td>
+<td style="text-align:right;">
+1.0572500
+</td>
+<td style="text-align:right;">
+4.381966
+</td>
+<td style="text-align:right;">
+4.700791
+</td>
+<td style="text-align:right;">
+3.014273
+</td>
+<td style="text-align:right;">
+3.045013
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201903
+</td>
+<td style="text-align:right;">
+2.816437
+</td>
+<td style="text-align:right;">
+2.864411
+</td>
+<td style="text-align:right;">
+1.2880070
+</td>
+<td style="text-align:right;">
+1.0133870
+</td>
+<td style="text-align:right;">
+4.583594
+</td>
+<td style="text-align:right;">
+4.450937
+</td>
+<td style="text-align:right;">
+3.002415
+</td>
+<td style="text-align:right;">
+3.080776
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201904
+</td>
+<td style="text-align:right;">
+2.598124
+</td>
+<td style="text-align:right;">
+2.693518
+</td>
+<td style="text-align:right;">
+1.1111110
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.035463
+</td>
+<td style="text-align:right;">
+4.546977
+</td>
+<td style="text-align:right;">
+3.009228
+</td>
+<td style="text-align:right;">
+3.039631
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201905
+</td>
+<td style="text-align:right;">
+2.453082
+</td>
+<td style="text-align:right;">
+2.593332
+</td>
+<td style="text-align:right;">
+1.0304210
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+3.999662
+</td>
+<td style="text-align:right;">
+4.583594
+</td>
+<td style="text-align:right;">
+2.987517
+</td>
+<td style="text-align:right;">
+3.028864
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201906
+</td>
+<td style="text-align:right;">
+2.670152
+</td>
+<td style="text-align:right;">
+2.662437
+</td>
+<td style="text-align:right;">
+1.0365318
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.872115
+</td>
+<td style="text-align:right;">
+4.891215
+</td>
+<td style="text-align:right;">
+3.029801
+</td>
+<td style="text-align:right;">
+3.081023
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201907
+</td>
+<td style="text-align:right;">
+2.590599
+</td>
+<td style="text-align:right;">
+2.579366
+</td>
+<td style="text-align:right;">
+1.0031077
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.534411
+</td>
+<td style="text-align:right;">
+4.937747
+</td>
+<td style="text-align:right;">
+2.939522
+</td>
+<td style="text-align:right;">
+3.022346
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201908
+</td>
+<td style="text-align:right;">
+2.414449
+</td>
+<td style="text-align:right;">
+2.501432
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.374343
+</td>
+<td style="text-align:right;">
+4.828501
+</td>
+<td style="text-align:right;">
+2.912732
+</td>
+<td style="text-align:right;">
+2.983591
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201909
+</td>
+<td style="text-align:right;">
+2.483634
+</td>
+<td style="text-align:right;">
+2.374794
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.7932609
+</td>
+<td style="text-align:right;">
+4.140936
+</td>
+<td style="text-align:right;">
+4.320539
+</td>
+<td style="text-align:right;">
+2.968139
+</td>
+<td style="text-align:right;">
+3.005824
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201910
+</td>
+<td style="text-align:right;">
+2.330186
+</td>
+<td style="text-align:right;">
+2.378875
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+3.819017
+</td>
+<td style="text-align:right;">
+4.450937
+</td>
+<td style="text-align:right;">
+2.975578
+</td>
+<td style="text-align:right;">
+3.019154
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201911
+</td>
+<td style="text-align:right;">
+2.347553
+</td>
+<td style="text-align:right;">
+2.521351
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+4.348736
+</td>
+<td style="text-align:right;">
+2.958856
+</td>
+<td style="text-align:right;">
+3.011095
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+201912
+</td>
+<td style="text-align:right;">
+2.527644
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+1.0190988
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.500498
+</td>
+<td style="text-align:right;">
+4.906164
+</td>
+<td style="text-align:right;">
+2.998355
+</td>
+<td style="text-align:right;">
+3.033857
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202001
+</td>
+<td style="text-align:right;">
+2.495654
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+1.0754316
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.319292
+</td>
+<td style="text-align:right;">
+4.642408
+</td>
+<td style="text-align:right;">
+2.978672
+</td>
+<td style="text-align:right;">
+3.074896
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202002
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.588671
+</td>
+<td style="text-align:right;">
+1.1703846
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+4.068836
+</td>
+<td style="text-align:right;">
+4.381966
+</td>
+<td style="text-align:right;">
+2.968435
+</td>
+<td style="text-align:right;">
+3.148808
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202003
+</td>
+<td style="text-align:right;">
+2.537525
+</td>
+<td style="text-align:right;">
+2.399339
+</td>
+<td style="text-align:right;">
+0.2304544
+</td>
+<td style="text-align:right;">
+0.5961290
+</td>
+<td style="text-align:right;">
+5.310169
+</td>
+<td style="text-align:right;">
+5.011864
+</td>
+<td style="text-align:right;">
+2.976225
+</td>
+<td style="text-align:right;">
+3.006708
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202004
+</td>
+<td style="text-align:right;">
+2.623311
+</td>
+<td style="text-align:right;">
+2.623311
+</td>
+<td style="text-align:right;">
+0.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+5.657888
+</td>
+<td style="text-align:right;">
+3.015135
+</td>
+<td style="text-align:right;">
+3.149133
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202005
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+2.610335
+</td>
+<td style="text-align:right;">
+0.4530818
+</td>
+<td style="text-align:right;">
+0.6104578
+</td>
+<td style="text-align:right;">
+6.414917
+</td>
+<td style="text-align:right;">
+5.730984
+</td>
+<td style="text-align:right;">
+4.064553
+</td>
+<td style="text-align:right;">
+3.322808
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202006
+</td>
+<td style="text-align:right;">
+2.681402
+</td>
+<td style="text-align:right;">
+2.473736
+</td>
+<td style="text-align:right;">
+0.7317622
+</td>
+<td style="text-align:right;">
+0.9928851
+</td>
+<td style="text-align:right;">
+5.688994
+</td>
+<td style="text-align:right;">
+5.086316
+</td>
+<td style="text-align:right;">
+3.411253
+</td>
+<td style="text-align:right;">
+3.065711
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202007
+</td>
+<td style="text-align:right;">
+2.887446
+</td>
+<td style="text-align:right;">
+2.731703
+</td>
+<td style="text-align:right;">
+0.8862122
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+5.500000
+</td>
+<td style="text-align:right;">
+3.144694
+</td>
+<td style="text-align:right;">
+3.259721
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202008
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+5.760430
+</td>
+<td style="text-align:right;">
+3.803460
+</td>
+<td style="text-align:right;">
+3.180833
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202009
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+2.742111
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+0.9135693
+</td>
+<td style="text-align:right;">
+5.874006
+</td>
+<td style="text-align:right;">
+5.344923
+</td>
+<td style="text-align:right;">
+3.441661
+</td>
+<td style="text-align:right;">
+3.251740
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202010
+</td>
+<td style="text-align:right;">
+2.836102
+</td>
+<td style="text-align:right;">
+2.702108
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+5.191454
+</td>
+<td style="text-align:right;">
+3.416837
+</td>
+<td style="text-align:right;">
+3.437079
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202011
+</td>
+<td style="text-align:right;">
+2.962508
+</td>
+<td style="text-align:right;">
+2.819740
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+5.944291
+</td>
+<td style="text-align:right;">
+5.774719
+</td>
+<td style="text-align:right;">
+3.494121
+</td>
+<td style="text-align:right;">
+3.376649
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202012
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+2.980844
+</td>
+<td style="text-align:right;">
+1.2811244
+</td>
+<td style="text-align:right;">
+1.0000000
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+5.904644
+</td>
+<td style="text-align:right;">
+4.307177
+</td>
+<td style="text-align:right;">
+3.199938
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202101
+</td>
+<td style="text-align:right;">
+3.046670
+</td>
+<td style="text-align:right;">
+3.028186
+</td>
+<td style="text-align:right;">
+1.5581499
+</td>
+<td style="text-align:right;">
+1.1878090
+</td>
+<td style="text-align:right;">
+6.754469
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+4.548024
+</td>
+<td style="text-align:right;">
+4.016052
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202102
+</td>
+<td style="text-align:right;">
+3.090884
+</td>
+<td style="text-align:right;">
+3.000000
+</td>
+<td style="text-align:right;">
+1.5469180
+</td>
+<td style="text-align:right;">
+1.1869305
+</td>
+<td style="text-align:right;">
+6.146096
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+4.578317
+</td>
+<td style="text-align:right;">
+4.374958
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202103
+</td>
+<td style="text-align:right;">
+3.244256
+</td>
+<td style="text-align:right;">
+3.092952
+</td>
+<td style="text-align:right;">
+1.8534898
+</td>
+<td style="text-align:right;">
+1.4624749
+</td>
+<td style="text-align:right;">
+6.280352
+</td>
+<td style="text-align:right;">
+6.297847
+</td>
+<td style="text-align:right;">
+4.920812
+</td>
+<td style="text-align:right;">
+4.674566
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202104
+</td>
+<td style="text-align:right;">
+3.360180
+</td>
+<td style="text-align:right;">
+3.098045
+</td>
+<td style="text-align:right;">
+1.9892329
+</td>
+<td style="text-align:right;">
+1.4624749
+</td>
+<td style="text-align:right;">
+6.235626
+</td>
+<td style="text-align:right;">
+6.310134
+</td>
+<td style="text-align:right;">
+4.620441
+</td>
+<td style="text-align:right;">
+4.307381
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202105
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+3.569710
+</td>
+<td style="text-align:right;">
+2.3525007
+</td>
+<td style="text-align:right;">
+1.8115404
+</td>
+<td style="text-align:right;">
+8.200266
+</td>
+<td style="text-align:right;">
+6.645209
+</td>
+<td style="text-align:right;">
+5.261723
+</td>
+<td style="text-align:right;">
+4.963713
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202106
+</td>
+<td style="text-align:right;">
+4.801745
+</td>
+<td style="text-align:right;">
+3.546918
+</td>
+<td style="text-align:right;">
+2.4637444
+</td>
+<td style="text-align:right;">
+1.3498780
+</td>
+<td style="text-align:right;">
+8.529976
+</td>
+<td style="text-align:right;">
+6.973494
+</td>
+<td style="text-align:right;">
+5.481582
+</td>
+<td style="text-align:right;">
+4.751600
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202107
+</td>
+<td style="text-align:right;">
+4.842451
+</td>
+<td style="text-align:right;">
+3.711669
+</td>
+<td style="text-align:right;">
+2.5060110
+</td>
+<td style="text-align:right;">
+1.5811223
+</td>
+<td style="text-align:right;">
+8.452378
+</td>
+<td style="text-align:right;">
+8.000000
+</td>
+<td style="text-align:right;">
+5.410090
+</td>
+<td style="text-align:right;">
+4.857979
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202108
+</td>
+<td style="text-align:right;">
+5.179827
+</td>
+<td style="text-align:right;">
+3.999662
+</td>
+<td style="text-align:right;">
+2.7170422
+</td>
+<td style="text-align:right;">
+1.3798504
+</td>
+<td style="text-align:right;">
+8.729171
+</td>
+<td style="text-align:right;">
+7.763283
+</td>
+<td style="text-align:right;">
+5.816178
+</td>
+<td style="text-align:right;">
+4.947668
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202109
+</td>
+<td style="text-align:right;">
+5.310169
+</td>
+<td style="text-align:right;">
+4.193985
+</td>
+<td style="text-align:right;">
+2.6700342
+</td>
+<td style="text-align:right;">
+1.7182721
+</td>
+<td style="text-align:right;">
+8.713920
+</td>
+<td style="text-align:right;">
+7.656233
+</td>
+<td style="text-align:right;">
+5.522046
+</td>
+<td style="text-align:right;">
+4.965563
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202110
+</td>
+<td style="text-align:right;">
+5.653467
+</td>
+<td style="text-align:right;">
+4.211177
+</td>
+<td style="text-align:right;">
+2.6414132
+</td>
+<td style="text-align:right;">
+1.4647722
+</td>
+<td style="text-align:right;">
+9.265794
+</td>
+<td style="text-align:right;">
+8.385000
+</td>
+<td style="text-align:right;">
+6.816117
+</td>
+<td style="text-align:right;">
+5.031971
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202111
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+4.011200
+</td>
+<td style="text-align:right;">
+3.0154593
+</td>
+<td style="text-align:right;">
+1.0130244
+</td>
+<td style="text-align:right;">
+9.733616
+</td>
+<td style="text-align:right;">
+8.000000
+</td>
+<td style="text-align:right;">
+7.233366
+</td>
+<td style="text-align:right;">
+5.177737
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202112
+</td>
+<td style="text-align:right;">
+5.990274
+</td>
+<td style="text-align:right;">
+4.000000
+</td>
+<td style="text-align:right;">
+3.0000000
+</td>
+<td style="text-align:right;">
+1.0285025
+</td>
+<td style="text-align:right;">
+9.283830
+</td>
+<td style="text-align:right;">
+7.785626
+</td>
+<td style="text-align:right;">
+7.025210
+</td>
+<td style="text-align:right;">
+4.854648
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202201
+</td>
+<td style="text-align:right;">
+5.788440
+</td>
+<td style="text-align:right;">
+3.477248
+</td>
+<td style="text-align:right;">
+2.6233110
+</td>
+<td style="text-align:right;">
+0.1733402
+</td>
+<td style="text-align:right;">
+9.298556
+</td>
+<td style="text-align:right;">
+6.793561
+</td>
+<td style="text-align:right;">
+7.118849
+</td>
+<td style="text-align:right;">
+4.476177
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+202202
+</td>
+<td style="text-align:right;">
+6.000000
+</td>
+<td style="text-align:right;">
+3.774802
+</td>
+<td style="text-align:right;">
+3.0095823
+</td>
+<td style="text-align:right;">
+0.5622389
+</td>
+<td style="text-align:right;">
+9.661465
+</td>
+<td style="text-align:right;">
+7.141932
+</td>
+<td style="text-align:right;">
+7.452888
+</td>
+<td style="text-align:right;">
+4.724739
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Now let me format the dates properly to treat these data as a time series.</p>
+<pre class="r"><code>Inflation.Expectations %&lt;&gt;%
+  rename(date = 1) %&gt;% 
+  mutate(date = yearmonth(parse_date_time(date, orders = &quot;%Y%m&quot;)))</code></pre>
+<p>That’s pretty much all that is required to visualize them. Let’s have a look. I will use the <code>fpp3</code> library and <code>autoplot()</code>.</p>
+<pre class="r"><code>library(fpp3)</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────── fpp3 0.4.0 ──</code></pre>
+<pre><code>## ✓ tsibbledata 0.3.0     ✓ fable       0.3.1
+## ✓ feasts      0.2.2</code></pre>
+<pre><code>## ── Conflicts ───────────────────────────────────────────────── fpp3_conflicts ──
+## x lubridate::date()        masks base::date()
+## x magrittr::extract()      masks tidyr::extract()
+## x dplyr::filter()          masks stats::filter()
+## x kableExtra::group_rows() masks dplyr::group_rows()
+## x tsibble::intersect()     masks base::intersect()
+## x tsibble::interval()      masks lubridate::interval()
+## x dplyr::lag()             masks stats::lag()
+## x magrittr::set_names()    masks purrr::set_names()
+## x tsibble::setdiff()       masks base::setdiff()
+## x tsibble::union()         masks base::union()</code></pre>
+<pre class="r"><code>Inflation.Expectations %&gt;% 
+  as_tsibble(index=date) %&gt;% 
+  autoplot(`Median three-year ahead expected inflation rate`) + 
+  geom_line(aes(y=Inflation.Expectations$`Median one-year ahead expected inflation rate`, color=&quot;red&quot;)) +
+  hrbrthemes::theme_ipsum() + guides(color = &quot;none&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Now let me pretty the plot.</p>
+<pre class="r"><code>Inflation.Expectations %&gt;% 
+  select(1:3) %&gt;% 
+  pivot_longer(c(2:3)) %&gt;%
+  mutate(Variable = name) %&gt;%
+  ggplot(aes(x=date, y=value, color=Variable)) +
+  geom_line(size=2) +
+  scale_color_viridis_d(option=&quot;C&quot;) +
+  hrbrthemes::theme_ft_rc() +
+  theme(legend.position = &quot;bottom&quot;) +
+  labs(y=&quot;Inflation Expectations&quot;, 
+       color=&quot;&quot;,
+       title=&quot;New York Fed Inflation Expectations&quot;,
+       caption = &quot;data: https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&quot;)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
