@@ -8,9 +8,14 @@ categories:
 tags: []
 ---
 
+
 ## The Data
 
-```{r, include=FALSE, eval=FALSE}
+Robert Husseman is running to represent Oregon District 21 in the Oregon House of Representatives. He has a platform that focuses on housing and livability in the state by making sensible allocations of public resources to public problems. He has an MBA; he was my student and his head and heart and very much in the right place to serve Oregon well.
+
+His campaign has a voter list for the Democratic voters in Oregon 21. He shared access to this. Let me load them up from a saved Excel spreadsheet derived from a Google sheet.
+
+```{r, include=FALSE}
 library(readxl)
 RHCamp <- read_excel("~/Desktop/RHCamp.xlsx", 
     col_types = c("numeric", "text", "text", 
@@ -23,27 +28,25 @@ RHCamp <- read_excel("~/Desktop/RHCamp.xlsx",
         "text", "text", "numeric", "numeric", 
         "numeric", "numeric", "numeric", 
         "numeric"))
+library(tidyverse)
 ```
-
 
 ## Geocoding
 
-I ran across a package called `tidygeocoder` to do the heavy lifting.  Here is what I have to work with.
+I ran across a package called `tidygeocoder` to do the heavy lifting. Here is what I have to work with.
 
-```{r, message=FALSE, warning=FALSE}
-library(tidyverse)
+```{r}
 library(tidygeocoder)
-# names(RHCamp)
+names(RHCamp)
 ```
+
 ## A Great Thing about R
 
-There is a vignette explaining the usage. 
+There is a vignette explaining the usage.
 
-```
-https://cran.r-project.org/web/packages/tidygeocoder/vignettes/tidygeocoder.html
-```
+    https://cran.r-project.org/web/packages/tidygeocoder/vignettes/tidygeocoder.html
 
-My use case is pretty easy though there is a lot. I want to try this with just the addresses.  I have loaded the `tidyverse` and now I want to peel off just the data that I need in order to geocode it, and then process it with the Census geocoder.  This results in 9443 queries.
+My use case is pretty easy though there is a lot. I want to try this with just the addresses. I have loaded the `tidyverse` and now I want to peel off just the data that I need in order to geocode it, and then process it with the Census geocoder. This results in 9443 queries.
 
 ```{r, eval=FALSE}
 GeoMe <- RHCamp %>% select(VOTER_ID, RES_ADDRESS_1, CITY, STATE) %>% geocode(street = RES_ADDRESS_1, city=CITY, state=STATE, method="census")
@@ -51,19 +54,44 @@ NewData <- GeoMe %>% left_join(., RHCamp)
 save(NewData, file="~/Desktop/NewDataRH.RData")
 ```
 
-This takes quite a long time to run [667.1 seconds].  When it is complete, I will want to figure out how to map them in a way that is best fit for assisting a campaign.  This seems like a good use for `leaflet`.  Rather than taking 10 minutes or so to compile each time, I saved them off.  I am loading them from a local file in the first line.
+This takes quite a long time to run \[667.1 seconds\]. When it is complete, I will want to figure out how to map them in a way that is best fit for assisting a campaign. This seems like a good use for `leaflet`. Rather than taking 10 minutes or so to compile each time, I saved them off. I am loading them from a local file in the first line.
 
 ## Leaflet Mapping
 
 ```{r}
-library(here)
-load("data/NewDataRH.RData")
-library(leaflet)
-# meanlat <- data.frame(MeanLat = mean(GeoMe$lat), MeanLon = mean(GeoMe$long))
-# m <- leaflet() %>% setView(lng = meanlat$MeanLon, lat = meanlat$MeanLat, zoom = 12)
-# m %>% addTiles()
-leaflet(data = NewData) %>% addTiles() %>%
-    addCircleMarkers(~long, ~lat, fillOpacity = 0.1, stroke=FALSE, radius=1.6)
+load("~/Desktop/NewDataRH.RData")
 ```
 
-That works.
+The `leaflet` package uses very powerful mapping tools that will be perfect for this use case because the maps have easy zoom features.
+
+```{r}
+library(leaflet)
+NewData %>% mutate(labMy = paste0(FIRST_NAME,LAST_NAME,RES_ADDRESS_1,sep="\n")) %>%
+  leaflet(data = .) %>% 
+  addTiles() %>%
+  addCircleMarkers(~long, ~lat, label = ~labMy, fillOpacity = 0.1, stroke=FALSE, radius=1.6)
+```
+
+That works but it isn't quite right.  Turns out that I will have to mess with html to get the labels quite right.
+
+So, of course, I went to `stackoverflow`.
+
+## Building Better Labels
+
+I found a post on how to do this.
+
+```
+https://stackoverflow.com/questions/43144596/r-and-leaflet-how-to-arrange-label-text-across-multiple-lines
+```
+
+The key piece of code seems to be:
+
+```{r}
+labs <- lapply(seq(nrow(NewData)), function(i) {
+  paste0( '<p>', NewData[i,"RES_ADDRESS_1"],'</p>' )
+})
+NewData %>%
+  leaflet(data = .) %>% 
+  addTiles() %>%
+  addCircleMarkers(~long, ~lat, label = lapply(labs, htmltools::HTML), fillOpacity = 0.15, stroke=FALSE, radius=1.6)
+```
