@@ -21,7 +21,7 @@ tags: []
 
 <div id="the-data" class="section level2">
 <h2>The Data</h2>
-<p>Robert Husseman is running to represent Oregon District 21 in the Oregon House of Representatives. He has a platform that focuses on housing and livability in the state by making sensible allocations of public resources to public problems. He has an MBA; he was my student and his head and heart and very much in the right place to serve Oregon well.</p>
+<p>Robert Husseman <a href="https://twitter.com/RHusseman/"><span class="citation">@RHusseman</span> on Twitter</a> is running to represent Oregon District 21 in the Oregon House of Representatives. He has a platform that focuses on housing and livability in the state by making sensible allocations of public resources to public problems. He has an MBA; he was my student and his head and heart are very much in the right place to serve Oregon well.</p>
 <p>His campaign has a voter list for the Democratic voters in Oregon 21. He shared access to this. Let me load them up from a saved Excel spreadsheet derived from a Google sheet.</p>
 </div>
 <div id="geocoding" class="section level2">
@@ -46,13 +46,13 @@ names(RHCamp)</code></pre>
 </div>
 <div id="a-great-thing-about-r" class="section level2">
 <h2>A Great Thing about R</h2>
-<p>There is a vignette explaining the usage.</p>
-<pre><code>https://cran.r-project.org/web/packages/tidygeocoder/vignettes/tidygeocoder.html</code></pre>
-<p>My use case is pretty easy though there is a lot. I want to try this with just the addresses. I have loaded the <code>tidyverse</code> and now I want to peel off just the data that I need in order to geocode it, and then process it with the Census geocoder. This results in 9443 queries.</p>
+<p>There is <a href="https://cran.r-project.org/web/packages/tidygeocoder/vignettes/tidygeocoder.html">a vignette explaining the usage.</a></p>
+<p>My use case is pretty easy though there is a lot of data. I want to try this with just the addresses. I have loaded the <code>tidyverse</code> and now I want to peel off just the data that I need in order to geocode it, and then process it with the Census geocoder. This results in 9443 queries.</p>
 <pre class="r"><code>GeoMe &lt;- RHCamp %&gt;% select(VOTER_ID, RES_ADDRESS_1, CITY, STATE) %&gt;% geocode(street = RES_ADDRESS_1, city=CITY, state=STATE, method=&quot;census&quot;)
 NewData &lt;- GeoMe %&gt;% left_join(., RHCamp)
 save(NewData, file=&quot;~/Desktop/NewDataRH.RData&quot;)</code></pre>
-<p>This takes quite a long time to run <span class="math display">\[667.1 seconds\]</span>. When it is complete, I will want to figure out how to map them in a way that is best fit for assisting a campaign. This seems like a good use for <code>leaflet</code>. Rather than taking 10 minutes or so to compile each time, I saved them off. I am loading them from a local file in the first line.</p>
+<p>This takes quite a long time to run – 667.1 seconds.</p>
+<p>When it is complete, I will want to figure out how to map them in a way that is best fit for assisting a campaign. This seems like a good use for <code>leaflet</code>. Rather than taking 10 minutes or so to compile each time, I saved them off. I am loading them from a local file in the first line.</p>
 </div>
 <div id="leaflet-mapping" class="section level2">
 <h2>Leaflet Mapping</h2>
@@ -72,8 +72,7 @@ NewData %&gt;% mutate(labMy = paste0(FIRST_NAME,LAST_NAME,RES_ADDRESS_1,sep=&quo
 </div>
 <div id="building-better-labels" class="section level2">
 <h2>Building Better Labels</h2>
-<p>I found a post on how to do this.</p>
-<pre><code>https://stackoverflow.com/questions/43144596/r-and-leaflet-how-to-arrange-label-text-across-multiple-lines</code></pre>
+<p><a href="https://stackoverflow.com/questions/43144596/r-and-leaflet-how-to-arrange-label-text-across-multiple-lines">I found a post on how to do this.</a></p>
 <p>The key piece of code seems to be:</p>
 <pre class="r"><code>labs &lt;- lapply(seq(nrow(NewData)), function(i) {
   paste0( &#39;&lt;p&gt;&#39;, NewData[i,&quot;RES_ADDRESS_1&quot;],&#39;&lt;/p&gt;&#39; )
