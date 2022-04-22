@@ -40,7 +40,7 @@ top_move_in <- marion_flows %>%
   filter(!is.na(GEOID2), variable == "MOVEDIN") %>% 
   slice_max(n = 25, order_by = estimate) %>% 
   mutate(
-    width = estimate / 500,
+    width = log(estimate),
     tooltip = paste0(
       scales::comma(estimate * 5, 1),
       " people moved from ", str_remove(FULL2_NAME, "Metro Area"),
