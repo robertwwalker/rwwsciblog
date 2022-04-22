@@ -11,6 +11,11 @@ tags:
   - R
 ---
 
+```{r setup, include=FALSE}
+library(mapdeck)
+source("/Users/rww/MapBox.R")
+```
+
 
 The `tidycensus` package is really neat.  There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Marion County Oregon.  It is the [vignette on other datasets](https://walker-data.com/tidycensus/articles/other-datasets.html).
 
@@ -31,7 +36,6 @@ marion_flows <- get_flows(
 I want to directly as I can borrow this.
 
 ```{r}
-library(mapdeck)
 top_move_in <- marion_flows %>% 
   filter(!is.na(GEOID2), variable == "MOVEDIN") %>% 
   slice_max(n = 25, order_by = estimate) %>% 
@@ -45,9 +49,11 @@ top_move_in <- marion_flows %>%
     )
 ```
 
-```{r, eval=FALSE}
+```{r, out.width="100%"}
+library(htmlwidgets)
+# md <- 
 top_move_in %>% 
-  mapdeck(style = mapdeck_style("dark"), pitch = 45) %>% 
+  mapdeck(pitch = 45) %>% 
   add_arc(
     origin = "centroid1",
     destination = "centroid2",
@@ -56,5 +62,6 @@ top_move_in %>%
     highlight_colour = "#8c43facc",
     tooltip = "tooltip"
   )
+#frameWidget(md)
 ```
 
