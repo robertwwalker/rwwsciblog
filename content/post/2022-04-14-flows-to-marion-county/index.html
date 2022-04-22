@@ -1,0 +1,55 @@
+---
+title: Flows to Marion County
+author: RWW
+date: '2022-04-14'
+slug: []
+categories:
+  - ggplot
+  - Maps
+tags:
+  - Maps
+  - R
+---
+
+
+
+<p>The <code>tidycensus</code> package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Marion County Oregon. It is the <a href="https://walker-data.com/tidycensus/articles/other-datasets.html">vignette on other datasets</a>.</p>
+<pre class="r"><code>library(tidycensus)
+library(tidyverse)
+library(tigris)
+options(tigris_use_cache = TRUE)
+marion_flows &lt;- get_flows(
+  geography = &quot;county&quot;,
+  state = &quot;OR&quot;,
+  county = &quot;Marion&quot;,
+  year = 2018,
+  geometry = TRUE
+  )</code></pre>
+<p>I want to directly as I can borrow this.</p>
+<pre class="r"><code>library(mapdeck)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;mapdeck&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tibble&#39;:
+## 
+##     add_column</code></pre>
+<pre class="r"><code>top_move_in &lt;- marion_flows %&gt;% 
+  filter(!is.na(GEOID2), variable == &quot;MOVEDIN&quot;) %&gt;% 
+  slice_max(n = 25, order_by = estimate) %&gt;% 
+  mutate(
+    width = estimate / 500,
+    tooltip = paste0(
+      scales::comma(estimate * 5, 1),
+      &quot; people moved from &quot;, str_remove(FULL2_NAME, &quot;Metro Area&quot;),
+      &quot; to &quot;, str_remove(FULL1_NAME, &quot;Metro Area&quot;), &quot; between 2014 and 2018&quot;
+      )
+    )</code></pre>
+<pre class="r"><code>top_move_in %&gt;% 
+  mapdeck(style = mapdeck_style(&quot;dark&quot;), pitch = 45) %&gt;% 
+  add_arc(
+    origin = &quot;centroid1&quot;,
+    destination = &quot;centroid2&quot;,
+    stroke_width = &quot;width&quot;,
+    auto_highlight = TRUE,
+    highlight_colour = &quot;#8c43facc&quot;,
+    tooltip = &quot;tooltip&quot;
+  )</code></pre>
