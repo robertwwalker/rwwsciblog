@@ -6,10 +6,124 @@
     <description>Recent content on rww-science: the blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 23 Aug 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://rww-science.website/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>A Pigeon Becomes a Barplot</title>
+      <link>https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/</link>
+      <pubDate>Fri, 22 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/</guid>
+      <description>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</description>
+    </item>
+    
+    <item>
+      <title>Flows to Hidalgo County</title>
+      <link>https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/</link>
+      <pubDate>Fri, 22 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/</guid>
+      <description>The tidycensus package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Hidalgo County Texas. The key information on how to do it is in the vignette on other datasets.
+library(tidycensus) library(tidyverse) library(tigris) options(tigris_use_cache = TRUE) hidalgo_flows &amp;lt;- get_flows( geography = &amp;quot;county&amp;quot;, state = &amp;quot;TX&amp;quot;, county = &amp;quot;Hidalgo&amp;quot;, year = 2018, geometry = TRUE ) First, to grab the flows of people.</description>
+    </item>
+    
+    <item>
+      <title>Mapping Voters</title>
+      <link>https://rww-science.website/post/2022-04-20-mapping-voters/</link>
+      <pubDate>Wed, 20 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-04-20-mapping-voters/</guid>
+      <description>The Data Robert Husseman @RHusseman on Twitter is running to represent Oregon District 21 in the Oregon House of Representatives. He has a platform that focuses on housing and livability in the state by making sensible allocations of public resources to public problems. He has an MBA; he was my student and his head and heart are very much in the right place to serve Oregon well.</description>
+    </item>
+    
+    <item>
+      <title>Flows to Marion County</title>
+      <link>https://rww-science.website/post/2022-04-14-flows-to-marion-county/</link>
+      <pubDate>Thu, 14 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-04-14-flows-to-marion-county/</guid>
+      <description>The tidycensus package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Marion County Oregon. It is the vignette on other datasets.
+library(tidycensus) library(tidyverse) library(tigris) options(tigris_use_cache = TRUE) marion_flows &amp;lt;- get_flows( geography = &amp;quot;county&amp;quot;, state = &amp;quot;OR&amp;quot;, county = &amp;quot;Marion&amp;quot;, year = 2018, geometry = TRUE ) I want to directly as I can borrow this.</description>
+    </item>
+    
+    <item>
+      <title>Cleaning Messy National Weather Service Data for Portland</title>
+      <link>https://rww-science.website/post/nws-monthly-joins/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/nws-monthly-joins/</guid>
+      <description>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+NWS &amp;lt;- read.csv(url(&amp;quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&amp;quot;)) head(NWS, 10) %&amp;gt;% kable() %&amp;gt;% kable_styling() %&amp;gt;% scroll_box(width = &amp;quot;100%&amp;quot;, height = &amp;quot;500px&amp;quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</description>
+    </item>
+    
+    <item>
+      <title>Inflation Expectations</title>
+      <link>https://rww-science.website/post/inflation-expectations/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/inflation-expectations/</guid>
+      <description>The Federal Reserve Bank of New York provides interesting data on inflation expectations. I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years. But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.
+library(tidyverse) library(lubridate); library(tsibble) library(readxl); library(magrittr) library(kableExtra) url &amp;lt;- &amp;quot;https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&amp;quot; destfile &amp;lt;- &amp;quot;frbny_sce_data.xlsx&amp;quot; curl::curl_download(url, destfile) Inflation.</description>
+    </item>
+    
+    <item>
+      <title>National Weather Service Portland, Part II</title>
+      <link>https://rww-science.website/post/nws-monthly-part-ii/</link>
+      <pubDate>Sat, 19 Mar 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/nws-monthly-part-ii/</guid>
+      <description>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+NWS &amp;lt;- read.csv(url(&amp;quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&amp;quot;)) head(NWS, 10) %&amp;gt;% kable() %&amp;gt;% kable_styling() %&amp;gt;% scroll_box(width = &amp;quot;100%&amp;quot;, height = &amp;quot;500px&amp;quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</description>
+    </item>
+    
+    <item>
+      <title>Getting to Yes</title>
+      <link>https://rww-science.website/post/2022-01-31-getting-to-yes/</link>
+      <pubDate>Mon, 31 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-01-31-getting-to-yes/</guid>
+      <description>Getting to Yes Let’s have a brief look at Getting to Yes.
+ What are the most common words? library(tidyverse) library(tidytext) library(wordcloud) load(&amp;quot;data/SharedGTY.RData&amp;quot;) GTY.WM &amp;lt;- Getting.To.Yes.TDF %&amp;gt;% unnest_tokens(word, text) tidy_book &amp;lt;- GTY.WM %&amp;gt;% anti_join(stop_words) # The barplot tidy_book %&amp;gt;% count(word, sort = TRUE) %&amp;gt;% filter(n &amp;gt; 50) %&amp;gt;% mutate(word = reorder(word, n)) %&amp;gt;% ggplot(aes(word, n)) + geom_col() + xlab(NULL) + coord_flip()  A Wordcloud? # Make the wordcloud tidy_book %&amp;gt;% count(word) %&amp;gt;% with(wordcloud(word, n, max.</description>
+    </item>
+    
+    <item>
+      <title>pigeons and palettes</title>
+      <link>https://rww-science.website/post/2022-01-28-pigeons-and-palettes/</link>
+      <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-01-28-pigeons-and-palettes/</guid>
+      <description>In Class I mentioned the Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. First, I have to get the color palette.
+ imgpalr R has a package called imgpalr that will extract colors from an image.</description>
+    </item>
+    
+    <item>
+      <title>Top 5 Team Player Valuations</title>
+      <link>https://rww-science.website/post/2022-01-28-top-5-team-player-valuations/</link>
+      <pubDate>Fri, 28 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-01-28-top-5-team-player-valuations/</guid>
+      <description>Data There is a ton of data in the worldfootballR package; the github for the package is linked here. This particular analysis uses data from transfermarkt. I am going to grab player market values for the top five European leagues.
+library(tidyverse); library(here) library(worldfootballR) options(scipen=9) Big_5_player_values &amp;lt;- get_player_market_values(country_name = c(&amp;quot;England&amp;quot;, &amp;quot;Spain&amp;quot;, &amp;quot;France&amp;quot;, &amp;quot;Italy&amp;quot;, &amp;quot;Germany&amp;quot;), start_year = 2021) ## Warning: Expected 4 pieces. Missing pieces filled with `NA` in 2660 rows [1, 2, ## 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, .</description>
+    </item>
+    
+    <item>
+      <title>Trademarks from the Oregon Secretary of State</title>
+      <link>https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/</link>
+      <pubDate>Wed, 26 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/</guid>
+      <description>Oregon’s Open Data Portal The Oregon Open Data Portal has a bunch of easily accessible public use data. One of the first listings today was trademarks issued by the Oregon Secretary of State. Let’s grab that data.
+OTM &amp;lt;- read.socrata(&amp;#39;https://data.oregon.gov/resource/ny3n-dx3v.json&amp;#39;) head(OTM) ## registration_number registration_date ## 1 102 1968-03-15 ## 2 103 1968-03-15 ## 3 272 1970-10-26 ## 4 3606 1935-02-01 ## 5 3957 1936-04-21 ## 6 4020 1936-08-29 ## trademark_description ## 1 &amp;quot;SR&amp;quot; MONOGRAM ## 2 &amp;quot;SUNRIVER&amp;quot; ## 3 G.</description>
+    </item>
     
     <item>
       <title>Parameterized RMarkdown is Amazing</title>
@@ -29,7 +143,7 @@ We will need to add a bit of metadata to the top. The key component is the param
       
       <guid>https://rww-science.website/post/2021-08-21-arch-garch-fun/</guid>
       <description>NKE First, let me use tidyquant to acquire the data.
-library(tidyquant); library(tidyverse) NKE &amp;lt;- tq_get(&amp;quot;NKE&amp;quot;, from=&amp;quot;2019-01-01&amp;quot;) NKE ## # A tibble: 666 × 8 ## symbol date open high low close volume adjusted ## &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 72.3 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 71.0 ## 3 NKE 2019-01-04 73.4 75.1 73.</description>
+library(tidyquant); library(tidyverse) NKE &amp;lt;- tq_get(&amp;quot;NKE&amp;quot;, from=&amp;quot;2019-01-01&amp;quot;) NKE ## # A tibble: 918 × 8 ## symbol date open high low close volume adjusted ## &amp;lt;chr&amp;gt; &amp;lt;date&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 71.7 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 70.4 ## 3 NKE 2019-01-04 73.4 75.1 73.1 74.</description>
     </item>
     
     <item>
@@ -255,7 +369,7 @@ Chicago Board Of Exchange (CBOE) makes data available regularly. To judge the cu
       <pubDate>Mon, 24 Feb 2020 00:00:00 +0000</pubDate>
       
       <guid>https://rww-science.website/post/quick-and-dirty-fredr/</guid>
-      <description>Some Data from FREDrDownloading the FRED data on national debt as a percentage of GDP. I first want to examine the US data and will then turn to some comparisons. fredr makes it markable asy to do! I will use two core tools from fredr. First, fredr_series_search allows one to enter search text and retrieve the responsive series given that search text. They can be sorted in particular ways, two such options are shown below.</description>
+      <description>Some Data from FREDr Downloading the FRED data on national debt as a percentage of GDP. I first want to examine the US data and will then turn to some comparisons. fredr makes it markable asy to do! I will use two core tools from fredr. First, fredr_series_search allows one to enter search text and retrieve the responsive series given that search text.</description>
     </item>
     
     <item>

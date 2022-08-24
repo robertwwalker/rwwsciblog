@@ -104,18 +104,20 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">August 23, 2021</span>
+        <span class="date">April 22, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
         
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -130,114 +132,106 @@ We will need to add a bit of metadata to the top. The key component is the param
     <article>
         <header>
             
-            <span class="date">May 1, 2020</span>
+            <span class="date">April 26, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/">Non-Profits in Oregon: Socrata is Cool</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/">slider is a magical way of creating moving averages</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>Socrata: The Open Data PortalI did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals. The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted.</p>
+        <p>Nike’s Stock # Load libraries library(tidyquant) library(tidyverse) library(fpp3) With those libraries, I should have what I need. Let me get Nike’s stock from 2015.
+# Get Nike stock data Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;) Nike.Stocks %&gt;% as_tsibble(index=date) %&gt;% autoplot(adjusted) + labs(y=&quot;Adjusted Closing Price&quot;, title=&quot;NKE since 2015&quot;) Now I want to create monthly data. I will the yearmonth type from lubridate. By default, tidyquant uses yearmon which is different.
+# Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 25, 2020</span>
+            <span class="date">March 16, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/gdpr-violations/">GDPR Violations</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/">tabulizer Rocks</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/gdpr-violations/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>R MarkdownI love this intro photo from the tidyTuesday page.
-This week’s tidyTuesday data cover violations of the GDPR (General Data Protection Regulations) regulatory regime for data privacy in the European Union. The Wikipedia entry on GDPR is fairly extensive. The dataset is large and suggests some interesting regulatory arbitrage. Let’s have a look at the data. First, let’s load them.
-gdpr_violations &lt;- readr::read_tsv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-04-21/gdpr_violations.tsv&#39;)## ## ── Column specification ────────────────────────────────────────────────────────## cols(## id = col_double(),## picture = col_character(),## name = col_character(),## price = col_double(),## authority = col_character(),## date = col_character(),## controller = col_character(),## article_violated = col_character(),## type = col_character(),## source = col_character(),## summary = col_character()## )gdpr_text &lt;- readr::read_tsv(&#39;https://raw.</p>
+        <p>Voter Turnout in OregonOregon’s voter turnout data is published by the Oregon Secretary of State’s office. You can find a direct link to the .pdf here. How hard is to recover a .pdf table? Let’s see. I am going to work with tabulizer.
+library(tabulizer)library(dplyr)The key function for this will be extract_tables; with knowledge of that let’s see if it just automagically works.
+library(kableExtra)location &lt;- &#39;https://sos.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/gdpr-violations/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 3, 2020</span>
+            <span class="date">March 4, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/a-geofacet-of-credit-quality/">A GeoFacet of Credit Quality</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/">tidyTuesday on Superbowl Commercials</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/a-geofacet-of-credit-quality/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>In previous work with Skip Krueger, we conceptualized bond ratings as a multiple rater problem and extracted measure of state level creditworthiness. I had always had it on my list to do something like this and recently ran across a package called geofacet that makes it simply to easy to do. The end result should parse out state level credit risk and showcase the time series of credit risk for each of the states.</p>
+        <p>The tidyTuesday data for the week of March 4, 2021 represent 247 rows of Superbowl advertisements coded on a few dimensions by fivethirtyeight. The original article uses 233 and there are a few with at least some missing features in the dataset. The idea was to use binary evaluations of patriotic, funny, uses sex, and a host of other characteristics to describe the universe of Super Bowl ads. One thing that stands out is the difference between Budweiser and Bud Light.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/a-geofacet-of-credit-quality/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 1, 2020</span>
+            <span class="date">February 22, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/">A Quick tidyTuesday on Beer, Breweries, and Ingredients</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/">tt: Employment and Earnings</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>Beer DistributionThe #tidyTuesday for March 31, 2020 is on beer. The essential elements and a method for pulling the data are shown:
-Imgur
-A Comment on Scraping .pdfThe Tweet
-The details on how the data were obtained are a nice overview of scraping .pdf files. The code for doing it is at the bottom of the page. @thomasmock has done a great job commenting his way through it.</p>
+        <p>As a continuation of the #DuBoisChallenge, this week’s tidyTuesday presents employment by industry, sex, race, and occupation. There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS. Let’s see what we have.
+library(tidyverse)library(fpp3)library(magrittr)employed &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv&#39;)earn &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv&#39;)employed %&lt;&gt;% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))Let me try to plot something.
+employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n) + guides(color=FALSE)To be continued….</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/a-quick-tidytuesday-on-beer-breweries-and-ingredients/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 30, 2020</span>
+            <span class="date">February 8, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/new-york-times-data-on-covid/">New York Times Data on COVID</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/">TT: Wealth and Income</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/new-york-times-data-on-covid/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The New York Times has a wonderful compilation of United States on the novel coronavirus. The data are organized as a panel for US counties and have been continuously collected and updated since March of 2020. For US data, it is as authoritative a source as I am aware of and it provides a nice basis for visualizing various aspects of the pandemic. This commentary was originally provided in late March of 2020.</p>
+        <p>tidyTuesday-Screenshot
+tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported here. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the ten datasets.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/new-york-times-data-on-covid/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 25, 2020</span>
+            <span class="date">November 30, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/">COVID in the US and the World</a></h2>
+            <h2><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="image fit"><img src="" alt="" /></a>
+        <a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="image fit"><img src="" alt="" /></a>
         
         
-        <p>The Johns Hopkins dashboardThis is what Johns Hopkins has provided as a dashboard using ARCGIS. They have essentially layered out the data into national and subnational data and then used the arcgis dashboard to cycle through them.
-The dataThere are a few different types of data available. I am relying on the same sources that Johns Hopkins is using for the county level incident data.</p>
+        <p>tl;drIn September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
+The DataI will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -437,6 +431,52 @@ Imgur
                         5 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
                 
 
             

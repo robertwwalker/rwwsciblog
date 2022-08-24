@@ -1,0 +1,368 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Trademarks from the Oregon Secretary of State &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">January 26, 2022</span>
+                                
+                                <h1>Trademarks from the Oregon Secretary of State</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="oregons-open-data-portal" class="section level1">
+<h1>Oregon’s Open Data Portal</h1>
+<p>The Oregon Open Data Portal has a bunch of easily accessible public use data. One of the first listings today was trademarks issued by the Oregon Secretary of State. Let’s grab that data.</p>
+<pre class="r"><code>OTM &lt;- read.socrata(&#39;https://data.oregon.gov/resource/ny3n-dx3v.json&#39;)
+head(OTM)</code></pre>
+<pre><code>##   registration_number registration_date
+## 1                 102        1968-03-15
+## 2                 103        1968-03-15
+## 3                 272        1970-10-26
+## 4                3606        1935-02-01
+## 5                3957        1936-04-21
+## 6                4020        1936-08-29
+##                                                   trademark_description
+## 1                                                        &quot;SR&quot;  MONOGRAM
+## 2                                                            &quot;SUNRIVER&quot;
+## 3 G.I.  TYPE CHARACTER  OF A  MAN WITH A JARHEAD - TAKE OFF OF A MARINE
+## 4                                                               &quot;PYREX&quot;
+## 5                                                             &quot;CORNING&quot;
+## 6                                                          &quot;MOLY-KROME&quot;
+##                    correspondent_name                  address1        city
+## 1 SUNRIVER RESORT LIMITED PARTNERSHIP 11777 SAN VICENTE STE 900 LOS ANGELES
+## 2 SUNRIVER RESORT LIMITED PARTNERSHIP 11777 SAN VICENTE STE 900 LOS ANGELES
+## 3                    ROBERT C WICKMAN         720 MENLO DRIVE N       SALEM
+## 4       MICHELE N KEEFER-MEHLENBACHER      CORNING INCORPORATED     CORNING
+## 5       MICHELE N KEEFER-MEHLENBACHER      CORNING INCORPORATED     CORNING
+## 6   PACIFIC MACHINERY &amp; TOOL STEEL CO          3445 NW LUZON ST    PORTLAND
+##   state   zip
+## 1    CA 90049
+## 2    CA 90049
+## 3    OR 97303
+## 4    NY 14831
+## 5    NY 14831
+## 6    OR 97210
+##                                                                                                                    url
+## 1  http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A102+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+## 2  http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A103+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+## 3  http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A272+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+## 4 http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A3606+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+## 5 http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A3957+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+## 6 http://records.sos.state.or.us/ORSOSWebDrawer/Record?q=recTitle%3A4020+And+recContainer%3ACRF/2&amp;sortBy=recCreatedOn-
+##    address2
+## 1      &lt;NA&gt;
+## 2      &lt;NA&gt;
+## 3      &lt;NA&gt;
+## 4 SP-TI-3-1
+## 5 SP-TI-3-1
+## 6      &lt;NA&gt;</code></pre>
+<p>I want to plot the copyrights by state of holder. Let’s look at that variable.</p>
+<pre class="r"><code>library(janitor) # for tabyl</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>OTM %&gt;% tabyl(state)</code></pre>
+<pre><code>##     state    n      percent valid_percent
+##        0R    1 0.0002203128  0.0002208968
+##        AK    1 0.0002203128  0.0002208968
+##        AL    2 0.0004406257  0.0004417937
+##        AZ    3 0.0006609385  0.0006626905
+##        CA  166 0.0365719321  0.0366688756
+##        CO   30 0.0066093853  0.0066269052
+##        CT    2 0.0004406257  0.0004417937
+##        DC   21 0.0046265697  0.0046388337
+##        FL   20 0.0044062569  0.0044179368
+##        GA    9 0.0019828156  0.0019880716
+##        HI    3 0.0006609385  0.0006626905
+##        IA    4 0.0008812514  0.0008835874
+##        ID   24 0.0052875083  0.0053015242
+##        IL   24 0.0052875083  0.0053015242
+##        KS    2 0.0004406257  0.0004417937
+##        LA    4 0.0008812514  0.0008835874
+##        MA    8 0.0017625028  0.0017671747
+##        MI   12 0.0026437541  0.0026507621
+##        MN   11 0.0024234413  0.0024298653
+##        MO    6 0.0013218771  0.0013253810
+##        MT    5 0.0011015642  0.0011044842
+##        NC    7 0.0015421899  0.0015462779
+##        ND    1 0.0002203128  0.0002208968
+##        NE    2 0.0004406257  0.0004417937
+##        NF    1 0.0002203128  0.0002208968
+##        NH    1 0.0002203128  0.0002208968
+##        NJ   14 0.0030843798  0.0030925558
+##        NM    5 0.0011015642  0.0011044842
+##        NV    3 0.0006609385  0.0006626905
+##        NY   29 0.0063890725  0.0064060084
+##         O    1 0.0002203128  0.0002208968
+##        OH   15 0.0033046927  0.0033134526
+##        OR 3801 0.8374091210  0.8396288933
+##  OR 97205    1 0.0002203128  0.0002208968
+##  OR 97530    1 0.0002203128  0.0002208968
+##      OROR    1 0.0002203128  0.0002208968
+##       ORQ    1 0.0002203128  0.0002208968
+##        PA   11 0.0024234413  0.0024298653
+##        TX   21 0.0046265697  0.0046388337
+##        UT   11 0.0024234413  0.0024298653
+##        VA    8 0.0017625028  0.0017671747
+##        WA  232 0.0511125799  0.0512480672
+##        WI    2 0.0004406257  0.0004417937
+##      &lt;NA&gt;   12 0.0026437541            NA</code></pre>
+<p>There are a few to clean up. I will use recode to do that for many of them and split out the junk text from those that have some.</p>
+<pre class="r"><code>( OTM %&gt;% 
+  mutate(state = recode(state, 
+                        `0R` = &quot;OR&quot;, 
+                        `O` = &quot;OR&quot;, 
+                        `OROR` = &quot;OR&quot;, 
+                        `ORQ` = &quot;OR&quot;)) %&gt;% 
+  mutate(state2 = str_split(state, &quot; &quot;, simplify=TRUE)) %&gt;% 
+  filter(state2!=&quot;NA&quot;) %&gt;% 
+  janitor::tabyl(state2) -&gt; ORTM.Data )</code></pre>
+<pre><code>##  state2    n      percent
+##      AK    1 0.0002208968
+##      AL    2 0.0004417937
+##      AZ    3 0.0006626905
+##      CA  166 0.0366688756
+##      CO   30 0.0066269052
+##      CT    2 0.0004417937
+##      DC   21 0.0046388337
+##      FL   20 0.0044179368
+##      GA    9 0.0019880716
+##      HI    3 0.0006626905
+##      IA    4 0.0008835874
+##      ID   24 0.0053015242
+##      IL   24 0.0053015242
+##      KS    2 0.0004417937
+##      LA    4 0.0008835874
+##      MA    8 0.0017671747
+##      MI   12 0.0026507621
+##      MN   11 0.0024298653
+##      MO    6 0.0013253810
+##      MT    5 0.0011044842
+##      NC    7 0.0015462779
+##      ND    1 0.0002208968
+##      NE    2 0.0004417937
+##      NF    1 0.0002208968
+##      NH    1 0.0002208968
+##      NJ   14 0.0030925558
+##      NM    5 0.0011044842
+##      NV    3 0.0006626905
+##      NY   29 0.0064060084
+##      OH   15 0.0033134526
+##      OR 3807 0.8409542744
+##      PA   11 0.0024298653
+##      TX   21 0.0046388337
+##      UT   11 0.0024298653
+##      VA    8 0.0017671747
+##      WA  232 0.0512480672
+##      WI    2 0.0004417937</code></pre>
+<p>That should get me what I need. Now to plot it, sorted from most to least.</p>
+<pre class="r"><code>ORTM.Data %&gt;% ggplot() + 
+  aes(x=fct_reorder(state2, n), y=n, fill=state2) + 
+  geom_col() + 
+  guides(fill=&quot;none&quot;) +
+  coord_flip() + 
+  labs(title=&quot;Trademarks Issued by OR SOS&quot;, x=&quot;State&quot;, y=&#39;Trademarks&#39;, caption=&quot;https://data.oregon.gov/resource/ny3n-dx3v.json&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

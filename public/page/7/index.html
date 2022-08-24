@@ -104,18 +104,20 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">August 23, 2021</span>
+        <span class="date">April 22, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
         
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -130,115 +132,111 @@ We will need to add a bit of metadata to the top. The key component is the param
     <article>
         <header>
             
-            <span class="date">November 16, 2019</span>
+            <span class="date">February 18, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/the-generation-squeeze/">The Generation Squeeze</a></h2>
+            <h2><a href="https://rww-science.website/post/r-for-driving-directions/">R for Driving Directions?</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/r-for-driving-directions/" class="image fit"><img src="" alt="" /></a>
         
-        <p>Hashtag OKBoomerThe generational banter that has followed the use of #OKBoomer reminded me of an interesting feature of US population data. I believe it to be true that Generation X has never and will never be the largest generation of Americans. There are tons of Millenials and Baby Boomers alike, though the rate of decline in the latter means that the former are about to surpass them. Or perhaps they have.</p>
+        
+        <p>Driving Directions from RThere is no reason that maps with driving directions cannot be produced in R. Given the directions api from Google, it should be doable. As it happens, I was surprised how easy it was. Let me try to map a simple A to B location. First, to the locations; I will specify two. It is possible to geolocate addresses for this also, I happened to have the GPS coordinates in hand.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/the-generation-squeeze/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/r-for-driving-directions/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">November 15, 2019</span>
+            <span class="date">February 18, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/building-a-blogdown/">Building a Blogdown</a></h2>
+            <h2><a href="https://rww-science.website/post/the-carbon-footprint-of-food-produced-for-consumption/">The Carbon Footprint of Food Produced for Consumption</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/the-carbon-footprint-of-food-produced-for-consumption/" class="image fit"><img src="" alt="" /></a>
         
-        <p>Pre-TalkSlides
-Set the RStudio to install blogdown.
-install.packages(&quot;blogdown&quot;)and to get a working local version of Hugo, the static site generator at the heart of this,
-blogdown::install_hugo()MotivationCredit where credit is due; Alison Hill motivated all of this with her wealth of resources. Indeed, I redesigned the flow for today because of her brilliant R-Ladies Canberra seminar [I found the resource links on Twitter and the idea is</p>
+        
+        <p>tidyTuesday on the Carbon Footprint of Feeding the PlanetThe tidyTuesday for this week relies on data scraped from the Food and Agricultural Organization of the United Nations. The blog post for obtaining the data can be found on r-tastic. The scraping exercise is nice and easy to follow and explored a case of cleaning up a very messy data structure. I took this exercise as practice for using pivot_wider and pivot_longer.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/building-a-blogdown/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/the-carbon-footprint-of-food-produced-for-consumption/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 23, 2019</span>
+            <span class="date">January 31, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/tribute-to-griffin-park/">Tribute to Griffin Park</a></h2>
+            <h2><a href="https://rww-science.website/post/mapping-san-francisco-trees/">Mapping San Francisco Trees</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/mapping-san-francisco-trees/" class="image fit"><img src="" alt="" /></a>
         
-        <p>Ode to Griffin Park Griffin Park&rsquo;s famous four corners make it the only football ground in England with four pubs on the four corners surrounding the ground.
-Here&rsquo;s a link to the curated twitter thread.
-In the Beginning
-The Griffin
-To the Brook
-The Brook
-Sussex Best at the Brook
-The Garden
-Up New Road
-The New Road Gate at Griffin Park
-The New Inn
-Doom Bar
-Rules on the Main &ndash; Ealing &ndash; Road</p>
+        
+        <p>Trees in San FranciscoThis week’s data cover trees in San Francisco.
+sf_trees &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-01-28/sf_trees.csv&#39;)library(tidyverse); library(ggmap); library(skimr)skim(sf_trees)Table 1: Data summaryNamesf_treesNumber of rows192987Number of columns12_______________________Column type frequency:character6Date1numeric5________________________Group variablesNoneVariable type: character
+skim_variablen_missingcomplete_rateminmaxemptyn_uniquewhitespacelegal_status541.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/tribute-to-griffin-park/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/mapping-san-francisco-trees/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 10, 2019</span>
+            <span class="date">January 31, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/fariss-human-rights-data-with-animation/">Fariss Human Rights Data with Animation</a></h2>
+            <h2><a href="https://rww-science.website/post/updating-hugo-and-academic/">Updating Hugo and Academic</a></h2>
         </header>
         
+        <a href="https://rww-science.website/post/updating-hugo-and-academic/" class="image fit"><img src="" alt="" /></a>
         
-        <p>Chris Fariss has some really neat data on international human rights that are really interesting to visualize for insight into the development of human rights over time. The data arise from measurement models applied to a variety of underlying indicators and they are presented in rather easy to work with forms. The basic structure is panel data. Let’s see what we have.
-Fariss DataIs neat and complete.</p>
+        
+        <p>Updating Hugo:It’s Changed Alot…Many key features of hugo have been in a state of flux since I began this blogdown a few years ago. It was time to update hugo and the academic theme that I have built around and customized. A number of things broke.
+The config.toml and the likeIn my original website, there was only one configuation file. Now it has split into four parts; for blogdown, config.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/fariss-human-rights-data-with-animation/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/updating-hugo-and-academic/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 10, 2019</span>
+            <span class="date">January 18, 2020</span>
             
-            <h2><a href="https://rww-science.website/post/generative-art/">Generative aRt</a></h2>
+            <h2><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/">a quick tidyTuesday on Passwords</a></h2>
         </header>
         
         
-        <p>mathartA cool package for math generated art that I just discovered. Here is the install code for it
-install.packages(c(&quot;devtools&quot;, &quot;mapproj&quot;, &quot;tidyverse&quot;, &quot;ggforce&quot;, &quot;Rcpp&quot;))devtools::install_github(&quot;marcusvolz/mathart&quot;)devtools::install_github(&quot;marcusvolz/ggart&quot;)devtools::install_github(&quot;gsimchoni/kandinsky&quot;)Load some librarieslibrary(mathart)library(ggart)library(ggforce)library(Rcpp)library(tidyverse)Generate some Art?This is quite fun to do.
-set.seed(12341)terminals &lt;- data.frame(x = runif(10, 0, 10000), y = runif(10, 0, 10000))df &lt;- 1:10000 %&gt;%map_df(~weiszfeld(terminals, c(points$x[.], points$y[.])), .id = &quot;id&quot;)p &lt;- ggplot() +geom_point(aes(x, y), points, size = 1, alpha = 0.</p>
+        <p>First, I wanted to acquire the distribution of letters and then play with that. I embedded the result here. The second step is to import the tidyTuesday data.
+library(tidyverse)Letter.Freq &lt;- data.frame(stringsAsFactors=FALSE,Letter = c(&quot;E&quot;, &quot;T&quot;, &quot;A&quot;, &quot;O&quot;, &quot;I&quot;, &quot;N&quot;, &quot;S&quot;, &quot;R&quot;, &quot;H&quot;, &quot;D&quot;, &quot;L&quot;, &quot;U&quot;,&quot;C&quot;, &quot;M&quot;, &quot;F&quot;, &quot;Y&quot;, &quot;W&quot;, &quot;G&quot;, &quot;P&quot;, &quot;B&quot;, &quot;V&quot;,&quot;K&quot;, &quot;X&quot;, &quot;Q&quot;, &quot;J&quot;, &quot;Z&quot;),Frequency = c(12.02, 9.1, 8.12, 7.68, 7.31, 6.95, 6.28, 6.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/generative-art/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 9, 2019</span>
+            <span class="date">December 19, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/simple-oregon-county-mapping/">Simple Oregon County Mapping</a></h2>
+            <h2><a href="https://rww-science.website/post/simple-point-maps-in-r/">Simple Point Maps in R</a></h2>
         </header>
         
         
-        <p>Some Data for the MapI want to get some data to place on the map. I found a website with population and population change data for Oregon in .csv format. I cannot direct download it from R, instead I have to button download it and import it.
-library(tidyverse)## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4## ✓ tibble 3.0.6 ✓ dplyr 1.</p>
+        <p>Mapping Points in RMy goal is a streamlined and self-contained freeware map maker with points denoting addresses. It is a three step process that involves:
+Get a map.
+Geocode the addresses into latitude and longitude.
+Combine the the two with a first map layer and a second layer on top that contains the points.From there, it is pretty easy to get fancy using ggplotly to put relevant text hovers into place.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/simple-oregon-county-mapping/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/simple-point-maps-in-r/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -503,6 +501,46 @@ library(tidyverse)## ── Attaching packages ──────────�
                         9 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
                 
 
             

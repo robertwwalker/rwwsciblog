@@ -126,18 +126,20 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">August 23, 2021</span>
+        <span class="date">April 22, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
         
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -152,104 +154,101 @@ We will need to add a bit of metadata to the top. The key component is the param
     <article>
         <header>
             
-            <span class="date">August 21, 2021</span>
+            <span class="date">April 22, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/">ARCH and GARCH Models</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/">Flows to Hidalgo County</a></h2>
         </header>
         
         
-        <p>NKE First, let me use tidyquant to acquire the data.
-library(tidyquant); library(tidyverse) NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;) NKE ## # A tibble: 666 × 8 ## symbol date open high low close volume adjusted ## &lt;chr&gt; &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 72.3 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 71.0 ## 3 NKE 2019-01-04 73.4 75.1 73.</p>
+        <p>The tidycensus package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Hidalgo County Texas. The key information on how to do it is in the vignette on other datasets.
+library(tidycensus) library(tidyverse) library(tigris) options(tigris_use_cache = TRUE) hidalgo_flows &lt;- get_flows( geography = &quot;county&quot;, state = &quot;TX&quot;, county = &quot;Hidalgo&quot;, year = 2018, geometry = TRUE ) First, to grab the flows of people.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 26, 2021</span>
+            <span class="date">April 20, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/">slider is a magical way of creating moving averages</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-04-20-mapping-voters/">Mapping Voters</a></h2>
         </header>
         
         
-        <p>Nike’s Stock # Load libraries library(tidyquant) library(tidyverse) library(fpp3) With those libraries, I should have what I need. Let me get Nike’s stock from 2015.
-# Get Nike stock data Nike.Stocks &lt;- tq_get(&quot;NKE&quot;, from=&quot;2015-01-01&quot;) Nike.Stocks %&gt;% as_tsibble(index=date) %&gt;% autoplot(adjusted) + labs(y=&quot;Adjusted Closing Price&quot;, title=&quot;NKE since 2015&quot;) Now I want to create monthly data. I will the yearmonth type from lubridate. By default, tidyquant uses yearmon which is different.
-# Create nike returns, need tq_transmute because we are taking daily data and turning it into monthly.</p>
+        <p>The Data Robert Husseman @RHusseman on Twitter is running to represent Oregon District 21 in the Oregon House of Representatives. He has a platform that focuses on housing and livability in the state by making sensible allocations of public resources to public problems. He has an MBA; he was my student and his head and heart are very much in the right place to serve Oregon well.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-04-26-slider-is-a-magical-way-of-creating-moving-averages/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-04-20-mapping-voters/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 16, 2021</span>
+            <span class="date">April 14, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/">tabulizer Rocks</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-04-14-flows-to-marion-county/">Flows to Marion County</a></h2>
         </header>
         
         
-        <p>Voter Turnout in OregonOregon’s voter turnout data is published by the Oregon Secretary of State’s office. You can find a direct link to the .pdf here. How hard is to recover a .pdf table? Let’s see. I am going to work with tabulizer.
-library(tabulizer)library(dplyr)The key function for this will be extract_tables; with knowledge of that let’s see if it just automagically works.
-library(kableExtra)location &lt;- &#39;https://sos.</p>
+        <p>The tidycensus package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Marion County Oregon. It is the vignette on other datasets.
+library(tidycensus) library(tidyverse) library(tigris) options(tigris_use_cache = TRUE) marion_flows &lt;- get_flows( geography = &quot;county&quot;, state = &quot;OR&quot;, county = &quot;Marion&quot;, year = 2018, geometry = TRUE ) I want to directly as I can borrow this.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-03-16-tabulizer-rocks/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-04-14-flows-to-marion-county/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">March 4, 2021</span>
+            <span class="date">March 19, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/">tidyTuesday on Superbowl Commercials</a></h2>
+            <h2><a href="https://rww-science.website/post/nws-monthly-joins/">Cleaning Messy National Weather Service Data for Portland</a></h2>
         </header>
         
         
-        <p>The tidyTuesday data for the week of March 4, 2021 represent 247 rows of Superbowl advertisements coded on a few dimensions by fivethirtyeight. The original article uses 233 and there are a few with at least some missing features in the dataset. The idea was to use binary evaluations of patriotic, funny, uses sex, and a host of other characteristics to describe the universe of Super Bowl ads. One thing that stands out is the difference between Budweiser and Bud Light.</p>
+        <p>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;)) head(NWS, 10) %&gt;% kable() %&gt;% kable_styling() %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/nws-monthly-joins/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 22, 2021</span>
+            <span class="date">March 19, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/">tt: Employment and Earnings</a></h2>
+            <h2><a href="https://rww-science.website/post/inflation-expectations/">Inflation Expectations</a></h2>
         </header>
         
         
-        <p>As a continuation of the #DuBoisChallenge, this week’s tidyTuesday presents employment by industry, sex, race, and occupation. There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS. Let’s see what we have.
-library(tidyverse)library(fpp3)library(magrittr)employed &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv&#39;)earn &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv&#39;)employed %&lt;&gt;% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))Let me try to plot something.
-employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n) + guides(color=FALSE)To be continued….</p>
+        <p>The Federal Reserve Bank of New York provides interesting data on inflation expectations. I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years. But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.
+library(tidyverse) library(lubridate); library(tsibble) library(readxl); library(magrittr) library(kableExtra) url &lt;- &quot;https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&quot; destfile &lt;- &quot;frbny_sce_data.xlsx&quot; curl::curl_download(url, destfile) Inflation.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/inflation-expectations/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">February 8, 2021</span>
+            <span class="date">March 19, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/">TT: Wealth and Income</a></h2>
+            <h2><a href="https://rww-science.website/post/nws-monthly-part-ii/">National Weather Service Portland, Part II</a></h2>
         </header>
         
         
-        <p>tidyTuesday-Screenshot
-tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported here. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the ten datasets.</p>
+        <p>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;)) head(NWS, 10) %&gt;% kable() %&gt;% kable_styling() %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/nws-monthly-part-ii/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -443,6 +442,52 @@ employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n)
                         5 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
                 
 
             

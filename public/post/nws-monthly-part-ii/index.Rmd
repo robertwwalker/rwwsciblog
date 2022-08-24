@@ -1,0 +1,160 @@
+---
+title: National Weather Service Portland, Part II
+author: RWW
+date: '2022-03-18'
+slug: nws-monthly-part-ii
+categories:
+  - ggplot
+  - tidyverse
+  - time series
+tags:
+  - time series
+  - tidyverse
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning=FALSE, message=FALSE)
+library(tidyverse)
+library(lubridate)
+library(hrbrthemes)
+library(kableExtra)
+library(magrittr)
+library(fpp3)
+```
+
+## Loading NWS Data
+
+I first will try to load it without any intervention to see what it looks like.  As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+
+```{r}
+NWS <- read.csv(url("https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv"))
+head(NWS, 10) %>% kable() %>%
+    kable_styling() %>%
+    scroll_box(width = "100%", height = "500px")
+```
+
+The column names are stored in the seventh row; to properly import this.  In addition, there are two missing value codes: `M` and `-` that will have to be accounted for.  I will use `skip` to skip the first 6 rows and declare two distinct values to be encoded as missing.  Let's see what we get.
+
+```{r}
+NWS <- read.csv(url("https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv"), skip=6, na.strings = c("M","-"))
+head(NWS, 10)
+```
+
+Two other things are of note.  The first one is that R really doesn't like columns to be named as numbers so we have an `X` in front of the numeric days.  The second is that the column denoting which variable the rows represent is now `X`.  Let me rename `X` to be `Variable`.
+
+
+```{r}
+NWS <- read.csv(url("https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv"), skip=6, na.strings = c("M","-")) %>% 
+  rename(Variable = X)
+str(NWS)
+```
+
+It is disappointing that everything is stored as `character` type.  That will prove advantageous in one respect because there is some `/A` garbage embedded in two of the variables (SN and PR).  Here, I will ask R to find all columns that are stored as character and ask it to remove the string.
+
+```{r}
+NWS <- NWS %>% mutate(across(where(is.character), ~str_remove(.x, "/A")))
+```
+
+Now, we will have to fix the values `T` in the precipitation and snow variables [which are currently stored in repeated rows].  Nevertheless, this should give me what I need to create the monthly data.
+
+### Daily Data
+
+The daily data will necessarily not involve the column of Totals/Averages that we used for the monthly data so let us eliminate it.
+
+```{r}
+NWS.Daily <- NWS %>% select(-AVG.or.Total)
+```
+
+Now I want to rename the columns with names X1, X2, ..., X31 to `Day.1` to `Day.31` for clarity.  It is largely inconsequential, it would work on the X's but I prefer nicely labeled intermediate steps.
+
+```{r}
+names(NWS.Daily) <- c("YR","MO","Variable",paste0("Day.",1:31))
+```
+
+The next step is to tidy the data.  First, let me use `pivot_longer` on every column that starts with `Day.` putting the variable names in `Day` and variable values in `value`.
+
+```{r}
+NWS.Daily.Base <- NWS.Daily %>% 
+  pivot_longer(., cols=starts_with("Day."), names_to = "Day", values_to = "value")
+head(NWS.Daily.Base)
+```
+
+Now I want to turn the days into numbers [they are character above] and then use `pivot_wider` to get the four variables into unique columns, recode trace [T] where they exist to numbers that are half the size of the smallest values, turn them into numbers, and create a date.
+
+```{r}
+NWS.Daily.Base %<>%  mutate(Day = str_remove(Day, "Day.")) %>%  
+  pivot_wider(., names_from = "Variable", values_from = "value") 
+NWS.Daily <- NWS.Daily.Base %>% mutate(PR = recode(PR, T = "O.005"), SN = recode(SN, T = "O.005")) %>% 
+  mutate(TX = as.numeric(TX), TN = as.numeric(TN), PR = as.numeric(PR), SN = as.numeric(SN), 
+         date = as.Date(paste(MO,Day,YR,sep="-"), format="%m-%d-%Y")
+         )
+NWS.Daily.Clean <- NWS.Daily %>% filter(!is.na(date))
+head(NWS.Daily.Clean)
+```
+
+This is exactly what I needed.
+
+# Some Plots
+
+
+# By Day?
+
+```{r}
+NWS.Daily.Clean %>% ggplot() + aes(x=date, y=PR) + geom_point(alpha=0.1) + theme_ipsum_rc() + labs(title="Daily Precipitation")
+```
+
+This is really pretty terrible.  This is going to need a good bit of work.  My first go is going to be to create a moving average that can smooth out the look.  I will use a 14-day moving average.
+
+```{r}
+NWS.Daily.Clean %>% 
+  arrange(date) %>% 
+  mutate(Rolling.Average = zoo::rollmean(PR, 7, fill=NA)) %>%
+  ggplot(., aes(x=date, y=PR)) + geom_point(alpha=0.05, size=0.5) + geom_line(aes(x=date, y=Rolling.Average), inherit.aes=FALSE, color="red") + theme_ipsum_rc() + labs(title="Daily Precipitation")
+```
+
+
+## Time Series Plots
+
+### Daily
+
+```{r}
+NWS.Daily.Clean <- NWS.Daily.Clean %>% as_tsibble(., index=date)
+NWS.Daily.Clean %>% filter(date > "2010-01-01") %>% autoplot(TX) + labs(title="Daily High Temperatures in Portland, Oregon", caption = "Data from NWS", x = "Date", y="High Temperature (deg F)")
+```
+
+## Seasonal Plots
+
+### Daily
+
+```{r}
+NWS.Daily.Clean %>% filter(date > "2015-01-01") %>% gg_season(TX, labels = "both")
+```
+
+## Subseries Plots
+
+### Daily
+
+Daily subseries plots are a mess because there are 31 and I am not sure that there would be much instructive anyway as daily variation in temperature is quite noisy.
+
+```{r}
+NWS.Daily.Clean %>% gg_subseries(TX, period="weeks")
+```
+
+# Autocorrelation
+
+To what degree are observations separated by k time periods correlated.
+
+$$r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
+ {\sum\limits_{t=1}^T (y_{t}-\bar{y})^2}$$
+where $T$ is the length of the time series. The autocorrelation coefficients make up the autocorrelation function or ACF.
+
+The autocorrelation coefficients for the monthly high temperatures can be computed using the ACF() function.
+
+
+### Daily: ACF
+
+```{r}
+NWS.Daily.Clean %>% ACF(TX) %>% autoplot()
+```
+
+

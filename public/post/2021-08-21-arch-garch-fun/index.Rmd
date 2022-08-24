@@ -30,7 +30,7 @@ summary(urca::ur.kpss(NKEAC$adjusted, type = "mu"))
 summary(urca::ur.kpss(NKEAC$adjusted, type = "tau"))
 ```
 
-So the  process seems to clearly contain a unit-root, statistically.  Let's have a look.
+So the process seems to clearly contain a unit-root, statistically.  Let's have a look.
 
 ### Visualizing Adjusted Close
 
@@ -80,13 +80,11 @@ So the returns have a slightly positive and marginally significant constant.  Ni
 
 Let's start with a representation of an AR(p) process.
 
-$$
-R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t}
-$$
+$$R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t}$$
 
 where 
 
-$$ \mathbb{E}[\epsilon_{t}] =  0 $$ 
+$$\mathbb{E}[\epsilon_{t}] =  0$$ 
 
 and 
 
@@ -97,9 +95,7 @@ where $R_{t}$ represent the returns at time $t$, $\mu$ is the mean of the statio
 ## ARCH(m)
 
 The ARCH(m) process of Engel (1982) describes the square of $\epsilon_{t}$ to follow an AR(m) process such that
-$$
-\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}
-$$
+$$\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}$$
 with $\omega$ as white noise.  The $\epsilon$ are errors in forecasting $R$; the same restriction on the roots will apply from before.  The unconditional variance is still a constant described now by $\frac{\xi}{1-a_{1}-a_{2}-\ldots-a_{m}}$.
 
 There are a few implementations of the basic test for ARCH effects.  Let's have a look at one through six lags.  I am not going to tidy this.

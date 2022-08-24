@@ -1,0 +1,1408 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>National Weather Service Portland, Part II &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">March 19, 2022</span>
+                                
+                                <h1>National Weather Service Portland, Part II</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/nws-monthly-part-ii/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/nws-monthly-part-ii/index_files/kePrint/kePrint.js"></script>
+<link href="https://rww-science.website/post/nws-monthly-part-ii/index_files/lightable/lightable.css" rel="stylesheet" />
+
+
+<div id="loading-nws-data" class="section level2">
+<h2>Loading NWS Data</h2>
+<p>I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;))
+head(NWS, 10) %&gt;% kable() %&gt;%
+    kable_styling() %&gt;%
+    scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)</code></pre>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:500px; overflow-x: scroll; width:100%; ">
+<table class="table" style="margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+Daily.Temperature.and.Precipitation.Data
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.1
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.2
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.3
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.4
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.5
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.6
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.7
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.8
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.9
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.10
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.11
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.12
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.13
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.14
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.15
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.16
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.17
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.18
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.19
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.20
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.21
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.22
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.23
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.24
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.25
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.26
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.27
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.28
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.29
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.30
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.31
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.32
+</th>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+X.33
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Portland, Oregon Airport
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Data Starts:
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+13 Oct 1940
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+END Year:
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+2019
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+TX is Maximum Temperature (deg F), TX is Minimum Temperature (deg F), PR is Precipitation (inches), SN is Snowfall (inches)
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+Example: High Temperature 23 October 1940 is 58 while low was 53 deg.
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+YR
+</td>
+<td style="text-align:left;">
+MO
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+1
+</td>
+<td style="text-align:left;">
+2
+</td>
+<td style="text-align:left;">
+3
+</td>
+<td style="text-align:left;">
+4
+</td>
+<td style="text-align:left;">
+5
+</td>
+<td style="text-align:left;">
+6
+</td>
+<td style="text-align:left;">
+7
+</td>
+<td style="text-align:left;">
+8
+</td>
+<td style="text-align:left;">
+9
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+11
+</td>
+<td style="text-align:left;">
+12
+</td>
+<td style="text-align:left;">
+13
+</td>
+<td style="text-align:left;">
+14
+</td>
+<td style="text-align:left;">
+15
+</td>
+<td style="text-align:left;">
+16
+</td>
+<td style="text-align:left;">
+17
+</td>
+<td style="text-align:left;">
+18
+</td>
+<td style="text-align:left;">
+19
+</td>
+<td style="text-align:left;">
+20
+</td>
+<td style="text-align:left;">
+21
+</td>
+<td style="text-align:left;">
+22
+</td>
+<td style="text-align:left;">
+23
+</td>
+<td style="text-align:left;">
+24
+</td>
+<td style="text-align:left;">
+25
+</td>
+<td style="text-align:left;">
+26
+</td>
+<td style="text-align:left;">
+27
+</td>
+<td style="text-align:left;">
+28
+</td>
+<td style="text-align:left;">
+29
+</td>
+<td style="text-align:left;">
+30
+</td>
+<td style="text-align:left;">
+31
+</td>
+<td style="text-align:left;">
+AVG or Total
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+TX
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+75
+</td>
+<td style="text-align:left;">
+70
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+72
+</td>
+<td style="text-align:left;">
+78
+</td>
+<td style="text-align:left;">
+78
+</td>
+<td style="text-align:left;">
+64
+</td>
+<td style="text-align:left;">
+63
+</td>
+<td style="text-align:left;">
+61
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+56
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+52
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+TN
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+57
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+52
+</td>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+58
+</td>
+<td style="text-align:left;">
+59
+</td>
+<td style="text-align:left;">
+54
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+53
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+41
+</td>
+<td style="text-align:left;">
+38
+</td>
+<td style="text-align:left;">
+37
+</td>
+<td style="text-align:left;">
+45
+</td>
+<td style="text-align:left;">
+48
+</td>
+<td style="text-align:left;">
+50
+</td>
+<td style="text-align:left;">
+46
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+PR
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+0.01
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.13
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.14
+</td>
+<td style="text-align:left;">
+0.05
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0.63
+</td>
+<td style="text-align:left;">
+1.03
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+T
+</td>
+<td style="text-align:left;">
+0.18
+</td>
+<td style="text-align:left;">
+0.58
+</td>
+<td style="text-align:left;">
+0.5
+</td>
+<td style="text-align:left;">
+0.25
+</td>
+<td style="text-align:left;">
+M
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1940
+</td>
+<td style="text-align:left;">
+10
+</td>
+<td style="text-align:left;">
+SN
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+M
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The column names are stored in the seventh row; to properly import this. In addition, there are two missing value codes: <code>M</code> and <code>-</code> that will have to be accounted for. I will use <code>skip</code> to skip the first 6 rows and declare two distinct values to be encoded as missing. Let’s see what we get.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;), skip=6, na.strings = c(&quot;M&quot;,&quot;-&quot;))
+head(NWS, 10)</code></pre>
+<pre><code>##      YR MO  X   X1   X2   X3   X4   X5   X6   X7   X8   X9  X10  X11  X12  X13
+## 1  1940 10 TX &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   75
+## 2  1940 10 TN &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;   57
+## 3  1940 10 PR &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; 0.01
+## 4  1940 10 SN &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt; &lt;NA&gt;    0
+## 5  1940 11 TX   52   53   47   55   51   58   56   50   48   47   46   45   45
+## 6  1940 11 TN   40   38   36   32   42   46   46   42   35   34   35   33   34
+## 7  1940 11 PR 0.17 0.02    T    0 0.07 0.28 0.85 0.29 0.02 0.01 0.01    0    0
+## 8  1940 11 SN    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 9  1940 12 TX   51   53   52   51   56   54   50   51   48   50   46   45   43
+## 10 1940 12 TN   42   40   42   42   44   37   34   35   32   26   34   28   27
+##    X14 X15 X16  X17  X18 X19  X20  X21 X22  X23  X24 X25 X26  X27  X28  X29 X30
+## 1   70  64  72   72   78  78   64   63  61   58   57  57  57   56   53   59  59
+## 2   53  52  50   58   58  59   54   48  41   53   48  41  38   37   45   48  50
+## 3    T   T   0 0.13    0   T 0.14 0.05   0 0.63 1.03   0   0    T 0.18 0.58 0.5
+## 4    0   0   0    0    0   0    0    0   0    0    0   0   0    0    0    0   0
+## 5   47  53  49   46   49  46   49   50  44   42   44  51  44   45   59   57  45
+## 6   33  28  27   36   30  29   36   33  28   37   35  37  36   38   43   40  39
+## 7    0   0   0 0.29 0.01   0 0.37    T   0 0.12 0.62   0   0 0.51 0.89    T   T
+## 8    0   0   0    0    0   0    0    0   0    0    0   0   0    0    0    0   0
+## 9   40  39  39   41   41  45   46   62  60   56   53  54  45   50   51   43  44
+## 10  25  29  33   35   34  35   41   39  39   42   42  42  40   38   36   35  37
+##     X31 AVG.or.Total
+## 1    52         &lt;NA&gt;
+## 2    46         &lt;NA&gt;
+## 3  0.25         &lt;NA&gt;
+## 4     0            0
+## 5  &lt;NA&gt;         49.1
+## 6  &lt;NA&gt;         35.9
+## 7  &lt;NA&gt;         4.53
+## 8  &lt;NA&gt;            0
+## 9    45         48.5
+## 10   32           36</code></pre>
+<p>Two other things are of note. The first one is that R really doesn’t like columns to be named as numbers so we have an <code>X</code> in front of the numeric days. The second is that the column denoting which variable the rows represent is now <code>X</code>. Let me rename <code>X</code> to be <code>Variable</code>.</p>
+<pre class="r"><code>NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;), skip=6, na.strings = c(&quot;M&quot;,&quot;-&quot;)) %&gt;% 
+  rename(Variable = X)
+str(NWS)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    3808 obs. of  35 variables:
+##  $ YR          : int  1940 1940 1940 1940 1940 1940 1940 1940 1940 1940 ...
+##  $ MO          : int  10 10 10 10 11 11 11 11 12 12 ...
+##  $ Variable    : chr  &quot;TX&quot; &quot;TN&quot; &quot;PR&quot; &quot;SN&quot; ...
+##  $ X1          : chr  NA NA NA NA ...
+##  $ X2          : chr  NA NA NA NA ...
+##  $ X3          : chr  NA NA NA NA ...
+##  $ X4          : chr  NA NA NA NA ...
+##  $ X5          : chr  NA NA NA NA ...
+##  $ X6          : chr  NA NA NA NA ...
+##  $ X7          : chr  NA NA NA NA ...
+##  $ X8          : chr  NA NA NA NA ...
+##  $ X9          : chr  NA NA NA NA ...
+##  $ X10         : chr  NA NA NA NA ...
+##  $ X11         : chr  NA NA NA NA ...
+##  $ X12         : chr  NA NA NA NA ...
+##  $ X13         : chr  &quot;75&quot; &quot;57&quot; &quot;0.01&quot; &quot;0&quot; ...
+##  $ X14         : chr  &quot;70&quot; &quot;53&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X15         : chr  &quot;64&quot; &quot;52&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X16         : chr  &quot;72&quot; &quot;50&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X17         : chr  &quot;72&quot; &quot;58&quot; &quot;0.13&quot; &quot;0&quot; ...
+##  $ X18         : chr  &quot;78&quot; &quot;58&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X19         : chr  &quot;78&quot; &quot;59&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X20         : chr  &quot;64&quot; &quot;54&quot; &quot;0.14&quot; &quot;0&quot; ...
+##  $ X21         : chr  &quot;63&quot; &quot;48&quot; &quot;0.05&quot; &quot;0&quot; ...
+##  $ X22         : chr  &quot;61&quot; &quot;41&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X23         : chr  &quot;58&quot; &quot;53&quot; &quot;0.63&quot; &quot;0&quot; ...
+##  $ X24         : chr  &quot;57&quot; &quot;48&quot; &quot;1.03&quot; &quot;0&quot; ...
+##  $ X25         : chr  &quot;57&quot; &quot;41&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X26         : chr  &quot;57&quot; &quot;38&quot; &quot;0&quot; &quot;0&quot; ...
+##  $ X27         : chr  &quot;56&quot; &quot;37&quot; &quot;T&quot; &quot;0&quot; ...
+##  $ X28         : chr  &quot;53&quot; &quot;45&quot; &quot;0.18&quot; &quot;0&quot; ...
+##  $ X29         : chr  &quot;59&quot; &quot;48&quot; &quot;0.58&quot; &quot;0&quot; ...
+##  $ X30         : chr  &quot;59&quot; &quot;50&quot; &quot;0.5&quot; &quot;0&quot; ...
+##  $ X31         : chr  &quot;52&quot; &quot;46&quot; &quot;0.25&quot; &quot;0&quot; ...
+##  $ AVG.or.Total: chr  NA NA NA &quot;0&quot; ...</code></pre>
+<p>It is disappointing that everything is stored as <code>character</code> type. That will prove advantageous in one respect because there is some <code>/A</code> garbage embedded in two of the variables (SN and PR). Here, I will ask R to find all columns that are stored as character and ask it to remove the string.</p>
+<pre class="r"><code>NWS &lt;- NWS %&gt;% mutate(across(where(is.character), ~str_remove(.x, &quot;/A&quot;)))</code></pre>
+<p>Now, we will have to fix the values <code>T</code> in the precipitation and snow variables [which are currently stored in repeated rows]. Nevertheless, this should give me what I need to create the monthly data.</p>
+<div id="daily-data" class="section level3">
+<h3>Daily Data</h3>
+<p>The daily data will necessarily not involve the column of Totals/Averages that we used for the monthly data so let us eliminate it.</p>
+<pre class="r"><code>NWS.Daily &lt;- NWS %&gt;% select(-AVG.or.Total)</code></pre>
+<p>Now I want to rename the columns with names X1, X2, …, X31 to <code>Day.1</code> to <code>Day.31</code> for clarity. It is largely inconsequential, it would work on the X’s but I prefer nicely labeled intermediate steps.</p>
+<pre class="r"><code>names(NWS.Daily) &lt;- c(&quot;YR&quot;,&quot;MO&quot;,&quot;Variable&quot;,paste0(&quot;Day.&quot;,1:31))</code></pre>
+<p>The next step is to tidy the data. First, let me use <code>pivot_longer</code> on every column that starts with <code>Day.</code> putting the variable names in <code>Day</code> and variable values in <code>value</code>.</p>
+<pre class="r"><code>NWS.Daily.Base &lt;- NWS.Daily %&gt;% 
+  pivot_longer(., cols=starts_with(&quot;Day.&quot;), names_to = &quot;Day&quot;, values_to = &quot;value&quot;)
+head(NWS.Daily.Base)</code></pre>
+<pre><code>## # A tibble: 6 × 5
+##      YR    MO Variable Day   value
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;
+## 1  1940    10 TX       Day.1 &lt;NA&gt; 
+## 2  1940    10 TX       Day.2 &lt;NA&gt; 
+## 3  1940    10 TX       Day.3 &lt;NA&gt; 
+## 4  1940    10 TX       Day.4 &lt;NA&gt; 
+## 5  1940    10 TX       Day.5 &lt;NA&gt; 
+## 6  1940    10 TX       Day.6 &lt;NA&gt;</code></pre>
+<p>Now I want to turn the days into numbers [they are character above] and then use <code>pivot_wider</code> to get the four variables into unique columns, recode trace [T] where they exist to numbers that are half the size of the smallest values, turn them into numbers, and create a date.</p>
+<pre class="r"><code>NWS.Daily.Base %&lt;&gt;%  mutate(Day = str_remove(Day, &quot;Day.&quot;)) %&gt;%  
+  pivot_wider(., names_from = &quot;Variable&quot;, values_from = &quot;value&quot;) 
+NWS.Daily &lt;- NWS.Daily.Base %&gt;% mutate(PR = recode(PR, T = &quot;O.005&quot;), SN = recode(SN, T = &quot;O.005&quot;)) %&gt;% 
+  mutate(TX = as.numeric(TX), TN = as.numeric(TN), PR = as.numeric(PR), SN = as.numeric(SN), 
+         date = as.Date(paste(MO,Day,YR,sep=&quot;-&quot;), format=&quot;%m-%d-%Y&quot;)
+         )
+NWS.Daily.Clean &lt;- NWS.Daily %&gt;% filter(!is.na(date))
+head(NWS.Daily.Clean)</code></pre>
+<pre><code>## # A tibble: 6 × 8
+##      YR    MO Day      TX    TN    PR    SN date      
+##   &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;date&gt;    
+## 1  1940    10 1        NA    NA    NA    NA 1940-10-01
+## 2  1940    10 2        NA    NA    NA    NA 1940-10-02
+## 3  1940    10 3        NA    NA    NA    NA 1940-10-03
+## 4  1940    10 4        NA    NA    NA    NA 1940-10-04
+## 5  1940    10 5        NA    NA    NA    NA 1940-10-05
+## 6  1940    10 6        NA    NA    NA    NA 1940-10-06</code></pre>
+<p>This is exactly what I needed.</p>
+</div>
+</div>
+<div id="some-plots" class="section level1">
+<h1>Some Plots</h1>
+</div>
+<div id="by-day" class="section level1">
+<h1>By Day?</h1>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% ggplot() + aes(x=date, y=PR) + geom_point(alpha=0.1) + theme_ipsum_rc() + labs(title=&quot;Daily Precipitation&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>This is really pretty terrible. This is going to need a good bit of work. My first go is going to be to create a moving average that can smooth out the look. I will use a 14-day moving average.</p>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% 
+  arrange(date) %&gt;% 
+  mutate(Rolling.Average = zoo::rollmean(PR, 7, fill=NA)) %&gt;%
+  ggplot(., aes(x=date, y=PR)) + geom_point(alpha=0.05, size=0.5) + geom_line(aes(x=date, y=Rolling.Average), inherit.aes=FALSE, color=&quot;red&quot;) + theme_ipsum_rc() + labs(title=&quot;Daily Precipitation&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div id="time-series-plots" class="section level2">
+<h2>Time Series Plots</h2>
+<div id="daily" class="section level3">
+<h3>Daily</h3>
+<pre class="r"><code>NWS.Daily.Clean &lt;- NWS.Daily.Clean %&gt;% as_tsibble(., index=date)
+NWS.Daily.Clean %&gt;% filter(date &gt; &quot;2010-01-01&quot;) %&gt;% autoplot(TX) + labs(title=&quot;Daily High Temperatures in Portland, Oregon&quot;, caption = &quot;Data from NWS&quot;, x = &quot;Date&quot;, y=&quot;High Temperature (deg F)&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+</div>
+</div>
+<div id="seasonal-plots" class="section level2">
+<h2>Seasonal Plots</h2>
+<div id="daily-1" class="section level3">
+<h3>Daily</h3>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% filter(date &gt; &quot;2015-01-01&quot;) %&gt;% gg_season(TX, labels = &quot;both&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+</div>
+</div>
+<div id="subseries-plots" class="section level2">
+<h2>Subseries Plots</h2>
+<div id="daily-2" class="section level3">
+<h3>Daily</h3>
+<p>Daily subseries plots are a mess because there are 31 and I am not sure that there would be much instructive anyway as daily variation in temperature is quite noisy.</p>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% gg_subseries(TX, period=&quot;weeks&quot;)</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+</div>
+</div>
+</div>
+<div id="autocorrelation" class="section level1">
+<h1>Autocorrelation</h1>
+<p>To what degree are observations separated by k time periods correlated.</p>
+<p><span class="math display">\[r_{k} = \frac{\sum\limits_{t=k+1}^T (y_{t}-\bar{y})(y_{t-k}-\bar{y})}
+{\sum\limits_{t=1}^T (y_{t}-\bar{y})^2}\]</span>
+where <span class="math inline">\(T\)</span> is the length of the time series. The autocorrelation coefficients make up the autocorrelation function or ACF.</p>
+<p>The autocorrelation coefficients for the monthly high temperatures can be computed using the ACF() function.</p>
+<div id="daily-acf" class="section level3">
+<h3>Daily: ACF</h3>
+<pre class="r"><code>NWS.Daily.Clean %&gt;% ACF(TX) %&gt;% autoplot()</code></pre>
+<p><img src="https://rww-science.website/post/nws-monthly-part-ii/index_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+</div>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

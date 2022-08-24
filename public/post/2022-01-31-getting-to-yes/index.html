@@ -1,0 +1,326 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Getting to Yes &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">January 31, 2022</span>
+                                
+                                <h1>Getting to Yes</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/header-attrs/header-attrs.js"></script>
+<script src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/htmlwidgets/htmlwidgets.js"></script>
+<link href="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/wordcloud2/wordcloud.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/wordcloud2/wordcloud2-all.js"></script>
+<script src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/wordcloud2/hover.js"></script>
+<script src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/wordcloud2-binding/wordcloud2.js"></script>
+
+
+<div id="getting-to-yes" class="section level2">
+<h2>Getting to Yes</h2>
+<p>Let’s have a brief look at <code>Getting to Yes</code>.</p>
+</div>
+<div id="what-are-the-most-common-words" class="section level2">
+<h2>What are the most common words?</h2>
+<pre class="r"><code>library(tidyverse)
+library(tidytext)
+library(wordcloud)
+load(&quot;data/SharedGTY.RData&quot;)
+GTY.WM &lt;- Getting.To.Yes.TDF %&gt;% 
+    unnest_tokens(word, text)
+tidy_book &lt;- GTY.WM %&gt;%
+    anti_join(stop_words)
+# The barplot
+tidy_book %&gt;%
+   count(word, sort = TRUE) %&gt;%
+   filter(n &gt; 50) %&gt;%
+   mutate(word = reorder(word, n)) %&gt;%
+   ggplot(aes(word, n)) +
+   geom_col() +
+   xlab(NULL) +
+   coord_flip()</code></pre>
+<p><img src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/figure-html/textP1-1.png" width="672" /></p>
+</div>
+<div id="a-wordcloud" class="section level2">
+<h2>A Wordcloud?</h2>
+<pre class="r"><code># Make the wordcloud
+tidy_book %&gt;%
+   count(word) %&gt;%
+   with(wordcloud(word, n, max.words = 100))</code></pre>
+<p><img src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code># Stems in lieu of words</code></pre>
+</div>
+<div id="networks-of-words" class="section level2">
+<h2>Networks of Words</h2>
+<pre class="r"><code># Networks of words
+library(igraph)
+library(ggraph)
+library(widyr)
+count_bigrams &lt;- function(dataset) {
+  dataset %&gt;%
+    unnest_tokens(bigram, text, token = &quot;ngrams&quot;, n = 2) %&gt;%
+    separate(bigram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;) %&gt;%
+    filter(!word1 %in% stop_words$word,
+           !word2 %in% stop_words$word) %&gt;%
+    count(word1, word2, sort = TRUE)
+}
+word_cooccurences &lt;- count_bigrams(Getting.To.Yes.TDF)
+set.seed(2016)
+word_cooccurences %&gt;%
+  filter(n &gt;= 10) %&gt;%
+  graph_from_data_frame() %&gt;%
+  ggraph(layout = &quot;fr&quot;) +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n)) +
+  geom_node_point(color = &quot;plum4&quot;, size = 5) +
+  geom_node_text(aes(label = name), vjust = 1.8) +
+  ggtitle(expression(paste(&quot;Word Network in&quot;, 
+                           italic(&quot;Getting to Yes&quot;)))) +
+  theme_void()</code></pre>
+<p><img src="https://rww-science.website/post/2022-01-31-getting-to-yes/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Other ways to plot them.</p>
+<pre class="r"><code>## More complicated breaks: pairs
+GTY.PM &lt;- Getting.To.Yes.TDF %&gt;% 
+  unnest_tokens(ngram, text, token = &quot;ngrams&quot;, n = 2)
+bigrams_separated &lt;- GTY.PM %&gt;%
+  separate(ngram, c(&quot;word1&quot;, &quot;word2&quot;), sep = &quot; &quot;)
+
+bigrams_filtered &lt;- bigrams_separated %&gt;%
+  filter(!word1 %in% stop_words$word) %&gt;%
+  filter(!word2 %in% stop_words$word)
+
+# new bigram counts:
+bigram_counts &lt;- bigrams_filtered %&gt;% 
+  count(word1, word2, sort = TRUE)
+
+bigrams_united &lt;- bigrams_filtered %&gt;%
+  unite(bigram, word1, word2, sep = &quot; &quot;)
+
+my.df &lt;- data.frame(table(bigrams_united$bigram))
+my.df &lt;- my.df[order(my.df$Freq, decreasing=TRUE),]
+my.df &lt;- my.df[c(2:100),]
+head(my.df)</code></pre>
+<pre><code>##                        Var1 Freq
+## 2727  positional bargaining   44
+## 2841 principled negotiation   36
+## 2398     objective criteria   30
+## 451             bottom line   25
+## 3014        reach agreement   20
+## 2264      negotiating power   16</code></pre>
+<pre class="r"><code>bigram_counts</code></pre>
+<pre><code>## # A tibble: 4,089 × 3
+##    word1       word2           n
+##    &lt;chr&gt;       &lt;chr&gt;       &lt;int&gt;
+##  1 &lt;NA&gt;        &lt;NA&gt;          215
+##  2 positional  bargaining     44
+##  3 principled  negotiation    36
+##  4 objective   criteria       30
+##  5 bottom      line           25
+##  6 reach       agreement      20
+##  7 negotiating power          16
+##  8 negotiation power          14
+##  9 inventing   options        13
+## 10 mutual      gain           11
+## # … with 4,079 more rows</code></pre>
+<pre class="r"><code>library(wordcloud2)
+wordcloud2(my.df, color=&quot;random-light&quot;, backgroundColor = &quot;black&quot;, size = 0.4)</code></pre>
+<div id="htmlwidget-1" style="width:672px;height:480px;" class="wordcloud2 html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"word":["positional bargaining","principled negotiation","objective criteria","bottom line","reach agreement","negotiating power","negotiation power","inventing options","mutual gain","makes sense","negotiated agreement","reaching agreement","brainstorming session","negotiation jujitsu","text procedure","framework agreement","objective standards","invent options","william ury","wise agreement","deep seabed","fair solution","negotiating game","northern ireland","people tend","rent control","roger fisher","soviet union","bad guy","child support","circle chart","dirty tricks","external standards","fair price","hard positional","harvard law","law school","negotiating process","negotiation project","ongoing relationship","principled negotiator","real estate","single answer","time spent","trip wire","analysis turnbull","bruce patton","company policy","generate options","ground rules","guy bad","hardhearted partner","harvard negotiation","independent standards","insurance adjuster","insurance company","labor management","legal maximum","million dollars","mining companies","mutually satisfactory","practical questions","promising ideas","proposed agreement","radio station","rent paid","seabed mining","side's batna","substantive issues","vice versa","2 separate","3 focus","4 invent","5 insist","acceptable agreement","bargaining position","basic human","business books","coal mine","conflict management","construction company","creative options","criticism rule","deliberate deception","difficult people","extreme position","fading opportunity","fair procedures","fair standard","fair standards","final offer","firm position","fixed pie","frank turnbull","fresh air","guy routine","hard bargainer","husband's lawyer","initial fee"],"freq":[44,36,30,25,20,16,14,13,11,10,10,10,9,9,9,8,8,7,7,7,6,6,6,6,6,6,6,6,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3],"fontFamily":"Segoe UI","fontWeight":"bold","color":"random-light","minSize":0,"weightFactor":1.63636363636364,"backgroundColor":"black","gridSize":0,"minRotation":-0.785398163397448,"maxRotation":0.785398163397448,"shuffle":true,"rotateRatio":0.4,"shape":"circle","ellipticity":0.65,"figBase64":null,"hover":null},"evals":[],"jsHooks":{"render":[{"code":"function(el,x){\n                        console.log(123);\n                        if(!iii){\n                          window.location.reload();\n                          iii = False;\n\n                        }\n  }","data":null}]}}</script>
+</div>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -104,18 +104,20 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">August 23, 2021</span>
+        <span class="date">April 22, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
         
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -130,109 +132,105 @@ We will need to add a bit of metadata to the top. The key component is the param
     <article>
         <header>
             
-            <span class="date">November 30, 2020</span>
+            <span class="date">January 31, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-01-31-getting-to-yes/">Getting to Yes</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>tl;drIn September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The DataI will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        <p>Getting to Yes Let’s have a brief look at Getting to Yes.
+ What are the most common words? library(tidyverse) library(tidytext) library(wordcloud) load(&quot;data/SharedGTY.RData&quot;) GTY.WM &lt;- Getting.To.Yes.TDF %&gt;% unnest_tokens(word, text) tidy_book &lt;- GTY.WM %&gt;% anti_join(stop_words) # The barplot tidy_book %&gt;% count(word, sort = TRUE) %&gt;% filter(n &gt; 50) %&gt;% mutate(word = reorder(word, n)) %&gt;% ggplot(aes(word, n)) + geom_col() + xlab(NULL) + coord_flip()  A Wordcloud? # Make the wordcloud tidy_book %&gt;% count(word) %&gt;% with(wordcloud(word, n, max.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-01-31-getting-to-yes/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">November 25, 2020</span>
+            <span class="date">January 28, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/">Socrata is amazingly handy for open data</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-01-28-pigeons-and-palettes/">pigeons and palettes</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The Socrata package makes it easy to access API calls built around SODA for open data access. If you try to skip the Socrata part, you usually only get a fraction of the available data. Socrata is intended to make open access data easier to manage and many government entities in the US use it as the portal to public data access. The R package makes interfacing with it much easier.</p>
+        <p>In Class I mentioned the Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. First, I have to get the color palette.
+ imgpalr R has a package called imgpalr that will extract colors from an image.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/socrata-is-amazingly-handy-for-open-data/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-01-28-pigeons-and-palettes/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 19, 2020</span>
+            <span class="date">January 28, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/datasaurus-dozen/">Datasaurus Dozen</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-01-28-top-5-team-player-valuations/">Top 5 Team Player Valuations</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/datasaurus-dozen/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>The datasaurus dozenThe datasaurus dozen is a fantastic teaching resource for examining the importance of data visualization. Let’s have a look. The basic idea is that all thirteen (datasaurus plus 12) contain nearly identical means and standard deviations though they do vary if the five number summaries are deployed. The scatterplots that are derived from data with similar x-y summaries is a useful reminder that data science is about patterns, not just statistics.</p>
+        <p>Data There is a ton of data in the worldfootballR package; the github for the package is linked here. This particular analysis uses data from transfermarkt. I am going to grab player market values for the top five European leagues.
+library(tidyverse); library(here) library(worldfootballR) options(scipen=9) Big_5_player_values &lt;- get_player_market_values(country_name = c(&quot;England&quot;, &quot;Spain&quot;, &quot;France&quot;, &quot;Italy&quot;, &quot;Germany&quot;), start_year = 2021) ## Warning: Expected 4 pieces. Missing pieces filled with `NA` in 2660 rows [1, 2, ## 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, .</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/datasaurus-dozen/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-01-28-top-5-team-player-valuations/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 19, 2020</span>
+            <span class="date">January 26, 2022</span>
             
-            <h2><a href="https://rww-science.website/post/beyonce-words/">TT: Beyoncé and Taylor Swift Lyrics</a></h2>
+            <h2><a href="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/">Trademarks from the Oregon Secretary of State</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/beyonce-words/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>tidyTuesday: Beyoncé and Taylor Swift LyricstidyTuesday for the final week of September 2020 is based on the music of Beyoncé and Taylor Swift. To be honest, I do not know either artist well so I will pick Beyoncé and look at her lyrics. The raw data are organized as a rather typical text file though there is some underlying tidyness to the rows and songs as embedded data to work with.</p>
+        <p>Oregon’s Open Data Portal The Oregon Open Data Portal has a bunch of easily accessible public use data. One of the first listings today was trademarks issued by the Oregon Secretary of State. Let’s grab that data.
+OTM &lt;- read.socrata(&#39;https://data.oregon.gov/resource/ny3n-dx3v.json&#39;) head(OTM) ## registration_number registration_date ## 1 102 1968-03-15 ## 2 103 1968-03-15 ## 3 272 1970-10-26 ## 4 3606 1935-02-01 ## 5 3957 1936-04-21 ## 6 4020 1936-08-29 ## trademark_description ## 1 &quot;SR&quot; MONOGRAM ## 2 &quot;SUNRIVER&quot; ## 3 G.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/beyonce-words/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">September 15, 2020</span>
+            <span class="date">August 23, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/spending-on-kids/">tT: Spending on Kids</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/spending-on-kids/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>Spending on KidsThe Urban Institute has a collection of data on government spending on children. The tidyTuesday page links to some of their commentary and to an article from Governing on the subject. The data are rich and interesting and are conveniently packaged into the tidykids package for R. My goal is to combine geofacets with animation to produce an animation of education spending over time by US states and territories.</p>
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/spending-on-kids/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">May 28, 2020</span>
+            <span class="date">August 21, 2021</span>
             
-            <h2><a href="https://rww-science.website/post/tidytuesday-cocktails/">Cocktails</a></h2>
+            <h2><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/">ARCH and GARCH Models</a></h2>
         </header>
         
-        <a href="https://rww-science.website/post/tidytuesday-cocktails/" class="image fit"><img src="" alt="" /></a>
         
-        
-        <p>This week’s tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources. Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin. That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients. With that in mind, let turn to the data.</p>
+        <p>NKE First, let me use tidyquant to acquire the data.
+library(tidyquant); library(tidyverse) NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;) NKE ## # A tibble: 918 × 8 ## symbol date open high low close volume adjusted ## &lt;chr&gt; &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 71.7 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 70.4 ## 3 NKE 2019-01-04 73.4 75.1 73.1 74.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/tidytuesday-cocktails/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -432,6 +430,52 @@ The DataI will use the wonderful gmailr package to access my gmail. You need a 
                         5 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+                        
+
+                    
+                    
+                    
+
+                
+                
+
+                
                 
 
             

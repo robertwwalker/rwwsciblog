@@ -35,7 +35,7 @@ In September of 2018, I began to track email solicitations by the Trump Campaign
 I will use the wonderful `gmailr` package to access my gmail.  You need a key and an id that the vignette gives guidance on.  I invoke those elsewhere to keep the tokens safe.  First, let me grab all the solicitations; I identify them by the domain in from *rnchq.com*.
 
 ```{r, message=FALSE, warning=FALSE}
-my.messages <- gm_messages("rnchq.com OR donaldjtrump.com", 5000)
+my.messages <- gm_messages("rnchq.com OR donaldjtrump.com", 10000)
 get_emails <- function(message_ids) {
 results <- list()
 for (message_id in message_ids) {

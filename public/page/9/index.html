@@ -104,18 +104,20 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">August 23, 2021</span>
+        <span class="date">April 22, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
         
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -130,104 +132,116 @@ We will need to add a bit of metadata to the top. The key component is the param
     <article>
         <header>
             
-            <span class="date">December 19, 2018</span>
+            <span class="date">November 15, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/trump-s-tweets-part-ii/">Trump&#39;s Tweets, Part II</a></h2>
+            <h2><a href="https://rww-science.website/post/building-a-blogdown/">Building a Blogdown</a></h2>
         </header>
         
         
-        <p>Trump’s ToneA cool post on sentiment analysis can be found here. I will now get at the time series characteristics of his tweets and the sentiment stuff. This plays off of a previous post.
-I start by loading the tmls object that I created in the previous post. To capture constant content over time, there I describe how to download and break up the timeline.
-Trump’s Overall TweetingWhat does it look like?</p>
+        <p>Pre-TalkSlides
+Set the RStudio to install blogdown.
+install.packages(&quot;blogdown&quot;)and to get a working local version of Hugo, the static site generator at the heart of this,
+blogdown::install_hugo()MotivationCredit where credit is due; Alison Hill motivated all of this with her wealth of resources. Indeed, I redesigned the flow for today because of her brilliant R-Ladies Canberra seminar [I found the resource links on Twitter and the idea is</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/trump-s-tweets-part-ii/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/building-a-blogdown/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">December 18, 2018</span>
+            <span class="date">October 23, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/trump-tweet-word-clouds/">Trump Tweet Word Clouds</a></h2>
+            <h2><a href="https://rww-science.website/post/tribute-to-griffin-park/">Tribute to Griffin Park</a></h2>
         </header>
         
         
-        <p>Mining Twitter DataIs rather easy. You have to arrange a developer account with Twitter and set up an app. After that, Twitter gives you access to a consumer key and secret and an access token and access secret. My tool of choice for this is rtweet because it automagically processes tweet elements and makes them easy to slice and dice. I also played with twitteR but it was harder to work with for what I wanted.</p>
+        <p>Ode to Griffin Park Griffin Park&rsquo;s famous four corners make it the only football ground in England with four pubs on the four corners surrounding the ground.
+Here&rsquo;s a link to the curated twitter thread.
+In the Beginning
+The Griffin
+To the Brook
+The Brook
+Sussex Best at the Brook
+The Garden
+Up New Road
+The New Road Gate at Griffin Park
+The New Inn
+Doom Bar
+Rules on the Main &ndash; Ealing &ndash; Road</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/trump-tweet-word-clouds/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/tribute-to-griffin-park/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">October 17, 2018</span>
+            <span class="date">October 10, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/">tidyTuesday meets the Economics of Majors</a></h2>
+            <h2><a href="https://rww-science.website/post/fariss-human-rights-data-with-animation/">Fariss Human Rights Data with Animation</a></h2>
         </header>
         
         
-        <p>This week’s tidyTuesday focuses on degrees and majors and their deployment in the labor market. The original data came from 538. A description of sources and measures. The tidyTesday writeup is here.
-library(tidyverse)options(scipen=6)library(extrafont)font_import()## Importing fonts may take a few minutes, depending on the number of fonts and the speed of the system.## Continue? [y/n]Major.Employment &lt;- read.csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2018/2018-10-16/recent-grads.csv&quot;)library(skimr)skim(Major.Employment)Table 1: Data summaryNameMajor.</p>
+        <p>Chris Fariss has some really neat data on international human rights that are really interesting to visualize for insight into the development of human rights over time. The data arise from measurement models applied to a variety of underlying indicators and they are presented in rather easy to work with forms. The basic structure is panel data. Let’s see what we have.
+Fariss DataIs neat and complete.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/tidytuesday-meets-the-economics-of-majors/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/fariss-human-rights-data-with-animation/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">May 9, 2018</span>
+            <span class="date">October 10, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/tidytuesday-coffee-chains/">tidyTuesday: coffee chains</a></h2>
+            <h2><a href="https://rww-science.website/post/generative-art/">Generative aRt</a></h2>
         </header>
         
         
-        <p>The tidyTuesday for this week is coffee chain locationsFor this week:1. The basic link to the #tidyTuesday shows an original article for Week 6.
-First, let’s import the data; it is a single Excel spreadsheet. The page notes that starbucks, Tim Horton, and Dunkin Donuts have raw data available.
-library(readxl)library(tidyverse)## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4## ✓ tibble 3.</p>
+        <p>mathartA cool package for math generated art that I just discovered. Here is the install code for it
+install.packages(c(&quot;devtools&quot;, &quot;mapproj&quot;, &quot;tidyverse&quot;, &quot;ggforce&quot;, &quot;Rcpp&quot;))devtools::install_github(&quot;marcusvolz/mathart&quot;)devtools::install_github(&quot;marcusvolz/ggart&quot;)devtools::install_github(&quot;gsimchoni/kandinsky&quot;)Load some librarieslibrary(mathart)library(ggart)library(ggforce)library(Rcpp)library(tidyverse)Generate some Art?This is quite fun to do.
+set.seed(12341)terminals &lt;- data.frame(x = runif(10, 0, 10000), y = runif(10, 0, 10000))df &lt;- 1:10000 %&gt;%map_df(~weiszfeld(terminals, c(points$x[.], points$y[.])), .id = &quot;id&quot;)p &lt;- ggplot() +geom_point(aes(x, y), points, size = 1, alpha = 0.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/tidytuesday-coffee-chains/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/generative-art/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 18, 2018</span>
+            <span class="date">October 9, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/tidytuesday-takes-on-global-mortality/">Global mortality tidyTuesday</a></h2>
+            <h2><a href="https://rww-science.website/post/simple-oregon-county-mapping/">Simple Oregon County Mapping</a></h2>
         </header>
         
         
-        <p>tidyTuesday on Global MortalityThe three generic challenge graphics involve two global summaries, a raw count by type and a percentage by type. The individual county breakdowns are recorded for a predetermined year below. This can all be seen in the original. For whatever reason, I cannot open this data remotely.
-Here is this week’s tidyTuesday.
-library(skimr)library(tidyverse)library(rlang)# global_mortality &lt;- readRDS(&quot;../../data/global_mortality.rds&quot;)global_mortality &lt;- readRDS(url(&quot;https://github.com/robertwwalker/academic-mymod/raw/master/data/global_mortality.rds&quot;))skim(global_mortality)Table 1: Data summaryNameglobal_mortalityNumber of rows6156Number of columns35_______________________Column type frequency:character2numeric33________________________Group variablesNoneVariable type: character</p>
+        <p>Some Data for the MapI want to get some data to place on the map. I found a website with population and population change data for Oregon in .csv format. I cannot direct download it from R, instead I have to button download it and import it.
+library(tidyverse)## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4## ✓ tibble 3.0.6 ✓ dplyr 1.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/tidytuesday-takes-on-global-mortality/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/simple-oregon-county-mapping/" class="button">Read More...</a></li>
         </ul>
     </article>
     
     <article>
         <header>
             
-            <span class="date">April 8, 2018</span>
+            <span class="date">October 9, 2019</span>
             
-            <h2><a href="https://rww-science.website/post/scraping-epl-salary-data/">Scraping EPL Salary Data</a></h2>
+            <h2><a href="https://rww-science.website/post/the-economist-s-visualization-errors/">The Economist&#39;s Visualization Errors</a></h2>
         </header>
         
         
-        <p>EPL ScrapingIn a previous post, I scraped some NFL data and learned the structure of Sportrac. Now, I want to scrape the available data on the EPL. The EPL data is organized in a few distinct but potentially linked tables. The basic structure is organized around team folders. Let me begin by isolating those URLs.
-library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/epl/&quot;read.base &lt;- read_html(base_url)team.URL &lt;- read.base %&gt;% html_nodes(&quot;.</p>
+        <p>The Economist’s Errors and Credit Where Credit is DueThe Economist is serious about their use of data visualization and they have occasionally owned up to errors in their visualizations. They can be deceptive, uninformative, confusing, excessively busy, and present a host of other barriers to clean communication. Their blog post on their errors is great.
+I have drawn the following example from a #tidyTuesday earlier this year that explores this.</p>
         
         <ul class="actions">
-            <li><a href="https://rww-science.website/post/scraping-epl-salary-data/" class="button">Read More...</a></li>
+            <li><a href="https://rww-science.website/post/the-economist-s-visualization-errors/" class="button">Read More...</a></li>
         </ul>
     </article>
     
@@ -285,9 +299,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -307,9 +319,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -329,9 +339,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -351,9 +359,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -373,9 +379,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -395,9 +399,7 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
 
-                    
                     
 
                 
@@ -416,12 +418,10 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
                     
 
-                        
                         
                             
                         
 
-                    
                     
 
                 
@@ -447,11 +447,9 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -477,11 +475,9 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -507,11 +503,9 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -537,11 +531,9 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                     
 
                         
-                        
                             
                         
 
-                    
                     
 
                 
@@ -554,6 +546,46 @@ library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/ep
                         11 
                     </a>
                 </li>
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
+                
+
+            
+                
+
+                
+                
+
+                    
+                    
+                    
+
+                        
+
+                    
+
+                
+                
+
+                
                 
 
             

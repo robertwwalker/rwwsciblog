@@ -1,0 +1,266 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Flows to Marion County &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">April 14, 2022</span>
+                                
+                                <h1>Flows to Marion County</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapdeck-binding/mapdeck.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mpadeck_functions/mapdeck_functions.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/deckgl/deckgl.min.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/legend/legend.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/title/title.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapdeck_location/mapdeck_location.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapdeck_colours/mapdeck_colours.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapdeck_coordinates/mapdeck_coordinates.js"></script>
+<link href="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapboxgl/mapbox-gl.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapboxgl/mapbox-gl.js"></script>
+<link href="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mapdeck/mapdeck.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/mpadeck-binding/mapdeck.js"></script>
+<script src="https://rww-science.website/post/2022-04-14-flows-to-marion-county/index_files/arc/arc.js"></script>
+
+
+<p>The <code>tidycensus</code> package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Marion County Oregon. It is the <a href="https://walker-data.com/tidycensus/articles/other-datasets.html">vignette on other datasets</a>.</p>
+<pre class="r"><code>library(tidycensus)
+library(tidyverse)
+library(tigris)
+options(tigris_use_cache = TRUE)
+marion_flows &lt;- get_flows(
+  geography = &quot;county&quot;,
+  state = &quot;OR&quot;,
+  county = &quot;Marion&quot;,
+  year = 2018,
+  geometry = TRUE
+  )</code></pre>
+<p>I want to directly as I can borrow this.</p>
+<pre class="r"><code>top_move_in &lt;- marion_flows %&gt;% 
+  filter(!is.na(GEOID2), variable == &quot;MOVEDIN&quot;) %&gt;% 
+  slice_max(n = 25, order_by = estimate) %&gt;% 
+  mutate(
+    width = log(estimate),
+    tooltip = paste0(
+      scales::comma(estimate * 5, 1),
+      &quot; people moved from &quot;, str_remove(FULL2_NAME, &quot;Metro Area&quot;),
+      &quot; to &quot;, str_remove(FULL1_NAME, &quot;Metro Area&quot;), &quot; between 2014 and 2018&quot;
+      )
+    )</code></pre>
+<pre class="r"><code>library(htmlwidgets)
+# md &lt;- 
+top_move_in %&gt;% 
+  mapdeck(pitch = 45) %&gt;% 
+  add_arc(
+    origin = &quot;centroid1&quot;,
+    destination = &quot;centroid2&quot;,
+    stroke_width = &quot;width&quot;,
+    auto_highlight = TRUE,
+    highlight_colour = &quot;#8c43facc&quot;,
+    tooltip = &quot;tooltip&quot;
+  )</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;jsonify&#39;:
+##   method     from    
+##   print.json jsonlite</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="mapdeck html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"access_token":"pk.eyJ1Ijoicnd3YWxrZXJ3dSIsImEiOiJjbDJhc3JlMGQwODB2M2lvMmllbWJuOGt4In0.-KVR5u9mqwilbFNHwoQsWA","style":"mapbox://styles/mapbox/streets-v9","pitch":45,"zoom":0,"location":[0,0],"bearing":0,"max_zoom":20,"min_zoom":0,"max_pitch":60,"min_pitch":0,"show_view_state":false,"repeat_view":false,"calls":[{"functions":"add_arc_geo","args":["mapdeck",[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"15,965 people moved from Polk County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":8.068716192714782},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.413364,44.903477]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"8,945 people moved from Clackamas County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":7.489412083508719},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.220939,45.188157]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"5,920 people moved from Linn County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":7.076653815443951},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.53419,44.488569]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"5,745 people moved from Washington County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":7.046647277848756},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.098491,45.560075]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"5,595 people moved from Multnomah County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":7.020190708311925},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.415339,45.546867]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"4,225 people moved from Lane County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":6.739336627357174},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.87655,43.941552]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"3,920 people moved from Clark County, Washington to Marion County, Oregon between 2014 and 2018","stroke_width":6.664409020350408},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.482587,45.779266]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"2,345 people moved from Jackson County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":6.150602768446279},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.728431,42.432149]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"2,135 people moved from Umatilla County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":6.056784013228625},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-118.736833,45.591895]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,955 people moved from Benton County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.968707559985366},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.429309,44.491759]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,780 people moved from Yamhill County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.87493073085203},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.308149,45.2326]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,545 people moved from Maricopa County, Arizona to Marion County, Oregon between 2014 and 2018","stroke_width":5.733341276897746},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-112.491233,33.348834]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,430 people moved from Deschutes County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.655991810819852},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-121.227892,43.914883]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,255 people moved from Klamath County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.5254529391317839},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-121.650125,42.686342]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,130 people moved from Malheur County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.420534999272286},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-117.623069,43.193409]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,070 people moved from King County, Washington to Marion County, Oregon between 2014 and 2018","stroke_width":5.365976015021851},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-121.835829,47.490843]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,065 people moved from San Bernardino County, California to Marion County, Oregon between 2014 and 2018","stroke_width":5.3612921657094259},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-116.178456,34.841435]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"855 people moved from Lincoln County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.14166355650266},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.907699,44.645675]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"835 people moved from Maui County, Hawaii to Marion County, Oregon between 2014 and 2018","stroke_width":5.117993812416755},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-156.380744,20.767115]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"835 people moved from Josephine County, Oregon to Marion County, Oregon between 2014 and 2018","stroke_width":5.117993812416755},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-123.55558,42.36546]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"830 people moved from Los Angeles County, California to Marion County, Oregon between 2014 and 2018","stroke_width":5.111987788356544},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-118.233851,34.332991]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"830 people moved from Pierce County, Washington to Marion County, Oregon between 2014 and 2018","stroke_width":5.111987788356544},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-122.137349,47.037643]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"790 people moved from Santa Rosa County, Florida to Marion County, Oregon between 2014 and 2018","stroke_width":5.062595033026967},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-87.018449,30.692904]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"700 people moved from Orange County, California to Marion County, Oregon between 2014 and 2018","stroke_width":4.941642422609304},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-117.776166,33.676911]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"700 people moved from Ventura County, California to Marion County, Oregon between 2014 and 2018","stroke_width":4.941642422609304},"geometry":{"origin":{"type":"Point","coordinates":[-122.584726,44.90319]},"destination":{"type":"Point","coordinates":[-119.090386,34.446489]}}}],"arc-defaultLayerId",true,"#8c43facc",[],[[-156.3807444161862,20.76711458631755],[-87.01844941781592,47.4908427132556]],true,false,null,null]}]},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#frameWidget(md)</code></pre>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

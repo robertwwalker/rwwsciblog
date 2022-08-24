@@ -1,0 +1,265 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Flows to Hidalgo County &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">April 22, 2022</span>
+                                
+                                <h1>Flows to Hidalgo County</h1>
+                                <p></p>
+                            </header>
+                            
+                            
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/htmlwidgets/htmlwidgets.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapdeck-binding/mapdeck.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mpadeck_functions/mapdeck_functions.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/deckgl/deckgl.min.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/legend/legend.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/title/title.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapdeck_location/mapdeck_location.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapdeck_colours/mapdeck_colours.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapdeck_coordinates/mapdeck_coordinates.js"></script>
+<link href="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapboxgl/mapbox-gl.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapboxgl/mapbox-gl.js"></script>
+<link href="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mapdeck/mapdeck.css" rel="stylesheet" />
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/mpadeck-binding/mapdeck.js"></script>
+<script src="https://rww-science.website/post/2022-04-22-flows-to-hidalgo-county/index_files/arc/arc.js"></script>
+
+
+<p>The <code>tidycensus</code> package is really neat. There is an example in the vignettes that tracks flows of people by county that I wanted to recreate for Hidalgo County Texas. The key information on how to do it is in the <a href="https://walker-data.com/tidycensus/articles/other-datasets.html">vignette on other datasets</a>.</p>
+<pre class="r"><code>library(tidycensus)
+library(tidyverse)
+library(tigris)
+options(tigris_use_cache = TRUE)
+hidalgo_flows &lt;- get_flows(
+  geography = &quot;county&quot;,
+  state = &quot;TX&quot;,
+  county = &quot;Hidalgo&quot;,
+  year = 2018,
+  geometry = TRUE
+  )</code></pre>
+<p>First, to grab the flows of people.</p>
+<pre class="r"><code>top_move_in &lt;- hidalgo_flows %&gt;% 
+  filter(!is.na(GEOID2), variable == &quot;MOVEDIN&quot;) %&gt;% 
+  slice_max(n = 25, order_by = estimate) %&gt;% 
+  mutate(
+    width = log(estimate),
+    tooltip = paste0(
+      scales::comma(estimate * 5, 1),
+      &quot; people moved from &quot;, FULL2_NAME,
+      &quot; to &quot;, FULL1_NAME, &quot; between 2014 and 2018&quot;
+      )
+    )</code></pre>
+<pre class="r"><code>library(htmlwidgets)
+# md &lt;- 
+top_move_in %&gt;% 
+  mapdeck(pitch = 45) %&gt;% 
+  add_arc(
+    origin = &quot;centroid1&quot;,
+    destination = &quot;centroid2&quot;,
+    stroke_width = &quot;width&quot;,
+    auto_highlight = TRUE,
+    highlight_colour = &quot;#8c43facc&quot;,
+    tooltip = &quot;tooltip&quot;
+  )</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;jsonify&#39;:
+##   method     from    
+##   print.json jsonlite</code></pre>
+<div id="htmlwidget-1" style="width:100%;height:480px;" class="mapdeck html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1">{"x":{"access_token":"pk.eyJ1Ijoicnd3YWxrZXJ3dSIsImEiOiJjbDJhc3JlMGQwODB2M2lvMmllbWJuOGt4In0.-KVR5u9mqwilbFNHwoQsWA","style":"mapbox://styles/mapbox/streets-v9","pitch":45,"zoom":0,"location":[0,0],"bearing":0,"max_zoom":20,"min_zoom":0,"max_pitch":60,"min_pitch":0,"show_view_state":false,"repeat_view":false,"calls":[{"functions":"add_arc_geo","args":["mapdeck",[{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"10,120 people moved from Harris County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":7.6128310304073569},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-95.39234,29.857278]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"9,185 people moved from Cameron County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":7.515889085215125},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.45286,26.151501]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"5,735 people moved from Bexar County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":7.044905117129371},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-98.520023,29.448959]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"4,775 people moved from Starr County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":6.86171134048073},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-98.7384,26.562153]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"2,660 people moved from Travis County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":6.2766434893416449},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.781953,30.33469]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"2,465 people moved from Tarrant County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":6.20050917404269},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.291237,32.771556]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"2,395 people moved from Dallas County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":6.171700597410915},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-96.777875,32.766631]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,355 people moved from Nueces County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.602118820879701},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.516317,27.735062]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,275 people moved from Montgomery County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.541263545158426},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-95.503009,30.30021]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,240 people moved from Webb County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.5134287461649829},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-99.331565,27.761062]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,190 people moved from Yakima County, Washington to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.472270673671475},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-120.738703,46.456846]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"1,035 people moved from Williamson County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.332718793265369},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.600763,30.648037]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"770 people moved from Muscogee County, Georgia to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.0369526024136299},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-84.877041,32.509961]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"770 people moved from Cook County, Illinois to Hidalgo County, Texas between 2014 and 2018","stroke_width":5.0369526024136299},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-87.64616,41.895397]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"700 people moved from Brazoria County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.941642422609304},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-95.434258,29.167825]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"700 people moved from Walker County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.941642422609304},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-95.572283,30.739046]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"675 people moved from Hays County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.90527477843843},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-98.031068,30.058151]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"650 people moved from Bee County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.867534450455582},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-97.74119,28.417393]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"575 people moved from Jefferson County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.74493212836325},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-94.153439,29.853729]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"575 people moved from Polk County, Texas to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.74493212836325},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-94.830025,30.79272]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"555 people moved from Canyon County, Idaho to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.709530201312334},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-116.709292,43.625134]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"510 people moved from Ottawa County, Michigan to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.624972813284271},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-86.421882,42.948535]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"510 people moved from Grand Haven charter township, Ottawa County, Michigan to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.624972813284271},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-86.186929,42.996025]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"460 people moved from Dane County, Wisconsin to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.5217885770490409},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-89.418324,43.06735]}}},{"type":"Feature","properties":{"stroke_from":"#440154FF","stroke_to":"#440154FF","tilt":0.0,"height":1.0,"tooltip":"460 people moved from Madison city, Dane County, Wisconsin to Hidalgo County, Texas between 2014 and 2018","stroke_width":4.5217885770490409},"geometry":{"origin":{"type":"Point","coordinates":[-98.181071,26.396721]},"destination":{"type":"Point","coordinates":[-89.391546,43.080984]}}}],"arc-defaultLayerId",true,"#8c43facc",[],[[-120.7387031691248,26.151501188622988],[-84.87704106397452,46.45684596398138]],true,false,null,null]}]},"evals":[],"jsHooks":[]}</script>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

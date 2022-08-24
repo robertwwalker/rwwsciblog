@@ -1,0 +1,81 @@
+---
+title: Top 5 Team Player Valuations
+author: RWW
+date: '2022-01-28'
+slug: []
+categories:
+  - dataviz
+  - ggplot
+  - tidyverse
+tags:
+  - tidyverse
+---
+
+## Data
+
+There is a ton of data in the `worldfootballR` package; the github for the package is [linked here](https://github.com/JaseZiv/worldfootballR).  This particular analysis uses data from `transfermarkt`.  I am going to grab player market values for the top five European leagues.
+
+```{r, message=FALSE, eval=TRUE, cache=TRUE}
+library(tidyverse); library(here)
+library(worldfootballR)
+options(scipen=9)
+Big_5_player_values <- get_player_market_values(country_name = c("England", "Spain", "France", "Italy", "Germany"), start_year = 2021)
+save(Big_5_player_values, file=here("content/post/2022-01-28-top-5-team-player-valuations/data","Big5.RData"))
+```
+
+```{r, echo=FALSE, eval=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse); library(here)
+library(worldfootballR)
+options(scipen=9)
+load(here("content/post/2022-01-28-top-5-team-player-valuations/data","Big5.RData"))
+```
+
+
+## A Money Table Function
+
+I want to repeat the same basic plot five times, only selecting a particular league in each iteration.  That is a perfect case to write a function and then invoke it for each league.  I need a function that only takes one argument, the `comp_name` that I want to pull out and plot.  The competition names will then be the inputs.
+
+```{r}
+Plot.Money.Table <- function(value) {
+  Big_5_player_values %>% 
+    group_by(comp_name, squad) %>% 
+    summarise(Team.Value = sum(player_market_value_euro, na.rm=TRUE)/100000000) %>%
+    ungroup() %>%
+    filter(comp_name==value) %>% 
+    ggplot() + 
+    aes(x=fct_reorder(squad, Team.Value), y=Team.Value) + 
+    geom_col() + 
+    coord_flip() + 
+    labs(x="Team", y="Total Value of Players in 100M Euros", title=paste0(value, " Money Table", sep=""), caption="Data from transfermarkt") 
+}
+```
+
+## The English Money Table
+
+```{r}
+Plot.Money.Table("Premier League")
+```
+
+## The Spanish Money Table
+
+```{r}
+Plot.Money.Table("LaLiga")
+```
+
+## The Italian Money Table
+
+```{r}
+Plot.Money.Table("Serie A")
+```
+
+# The Germany Money Table
+
+```{r}
+Plot.Money.Table("Bundesliga")
+```
+
+# The French Money Table
+
+```{r}
+Plot.Money.Table("Ligue 1")
+```
