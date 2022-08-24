@@ -48,7 +48,7 @@ summary(urca::ur.df(NKEAC$adjusted))</code></pre>
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)
 ## z.lag.1     0.0001009  0.0006328   0.160    0.873
-## z.diff.lag -0.0012146  0.0330807  -0.037    0.971
+## z.diff.lag -0.0012145  0.0330807  -0.037    0.971
 ## 
 ## Residual standard error: 2.269 on 914 degrees of freedom
 ## Multiple R-squared:  2.903e-05,  Adjusted R-squared:  -0.002159 
@@ -81,7 +81,7 @@ summary(urca::ur.df(NKEAC$adjusted))</code></pre>
 ## (Intercept)  5.575e-01  3.425e-01   1.628    0.104
 ## z.lag.1     -4.600e-03  4.014e-03  -1.146    0.252
 ## tt           3.295e-05  4.383e-04   0.075    0.940
-## z.diff.lag   1.012e-04  3.320e-02   0.003    0.998
+## z.diff.lag   1.013e-04  3.320e-02   0.003    0.998
 ## 
 ## Residual standard error: 2.267 on 912 degrees of freedom
 ## Multiple R-squared:  0.003104,   Adjusted R-squared:  -0.0001755 
@@ -112,10 +112,10 @@ summary(urca::ur.df(NKEAC$adjusted))</code></pre>
 ## -9.8025 -1.0509 -0.0196  1.0868 20.6135 
 ## 
 ## Coefficients:
-##              Estimate Std. Error t value Pr(&gt;|t|)  
-## (Intercept)  0.546246   0.307556   1.776   0.0761 .
-## z.lag.1     -0.004370   0.002596  -1.684   0.0926 .
-## z.diff.lag  -0.000122   0.033048  -0.004   0.9971  
+##               Estimate Std. Error t value Pr(&gt;|t|)  
+## (Intercept)  0.5462463  0.3075563   1.776   0.0761 .
+## z.lag.1     -0.0043702  0.0025955  -1.684   0.0926 .
+## z.diff.lag  -0.0001219  0.0330476  -0.004   0.9971  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -187,7 +187,7 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.118676 -0.008654  0.000554  0.011048  0.155178 
+## -0.118677 -0.008654  0.000554  0.011048  0.155177 
 ## 
 ## Coefficients:
 ##            Estimate Std. Error t value Pr(&gt;|t|)    
@@ -220,7 +220,7 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.119867 -0.009244 -0.000427  0.009998  0.155033 
+## -0.119867 -0.009244 -0.000428  0.009998  0.155032 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
@@ -236,7 +236,7 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ## F-statistic: 310.6 on 3 and 912 DF,  p-value: &lt; 2.2e-16
 ## 
 ## 
-## Value of test-statistic is: -20.7915 144.0972 216.1457 
+## Value of test-statistic is: -20.7914 144.0971 216.1456 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -257,13 +257,13 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ## 
 ## Residuals:
 ##       Min        1Q    Median        3Q       Max 
-## -0.119360 -0.009343 -0.000130  0.010388  0.154501 
+## -0.119360 -0.009343 -0.000130  0.010387  0.154500 
 ## 
 ## Coefficients:
 ##               Estimate Std. Error t value Pr(&gt;|t|)    
 ## (Intercept)  0.0006866  0.0006828   1.006    0.315    
-## z.lag.1     -0.9742364  0.0469504 -20.750   &lt;2e-16 ***
-## z.diff.lag  -0.0331017  0.0330908  -1.000    0.317    
+## z.lag.1     -0.9742361  0.0469504 -20.750   &lt;2e-16 ***
+## z.diff.lag  -0.0331021  0.0330908  -1.000    0.317    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
@@ -272,7 +272,7 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ## F-statistic: 464.9 on 2 and 913 DF,  p-value: &lt; 2.2e-16
 ## 
 ## 
-## Value of test-statistic is: -20.7503 215.2878 
+## Value of test-statistic is: -20.7503 215.2877 
 ## 
 ## Critical values for test statistics: 
 ##       1pct  5pct 10pct
@@ -316,7 +316,7 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 ##  Box-Ljung test
 ## 
 ## data:  NKER$daily.returns
-## X-squared = 0.052507, df = 1, p-value = 0.8188</code></pre>
+## X-squared = 0.052508, df = 1, p-value = 0.8188</code></pre>
 <pre class="r"><code>NKER %&gt;% as_tsibble(index=tday) %&gt;% model(ARIMA(daily.returns)) %&gt;% report()</code></pre>
 <pre><code>## Series: daily.returns 
 ## Model: ARIMA(0,0,0) 
@@ -329,16 +329,22 @@ NKER %&gt;% as_tsibble(index=tday) %&gt;% autoplot(daily.returns)</code></pre>
 <div id="models" class="section level1">
 <h1>Models</h1>
 <p>Let’s start with a representation of an AR(p) process.</p>
-<p><span class="math display">\[R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t}\]</span></p>
+<p><span class="math display">\[R_{t} = \mu_{R} + \phi_{1}R_{t-1} + \phi_{2}R_{t-2} + \ldots + \phi_{p}R_{t-p} + \epsilon_{t} \]</span></p>
 <p>where</p>
-<p><span class="math display">\[\mathbb{E}[\epsilon_{t}] =  0\]</span></p>
+<p><span class="math display">\[
+\mathbb{E}[\epsilon_{t}] =  0
+\]</span></p>
 <p>and</p>
-<p><span class="math display">\[\mathbb{E}[\epsilon \epsilon^{\prime}] = \sigma^{2} \cdot I_{T}\]</span></p>
-<p>where <span class="math inline">\(R_{t}\)</span> represent the returns at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\mu\)</span> is the mean of the stationary process generating <span class="math inline">\(R_{t}\)</span> and <span class="math inline">\(\epsilon\)</span> is a white noise error term. Note the stationarity of <span class="math inline">\(R_t\)</span> is arises so long as the roots of <span class="math inline">\(1 - \phi_{1}z + \phi_{2}z^2 + \ldots + \phi_{p}z^{p} = 0\)</span>. Note that the unconditional variance is constant.</p>
+<p><span class="math display">\[
+\mathbb{E}[\epsilon \epsilon^{\prime}] = \sigma^{2} \cdot I_{T}
+\]</span></p>
+<p>where <span class="math inline">\(R_{t}\)</span> represent the returns at time <span class="math inline">\(t\)</span>, <span class="math inline">\(\mu\)</span> is the mean of the stationary process generating <span class="math inline">\(R_{t}\)</span> and <span class="math inline">\(\epsilon\)</span> is a white noise error term. Note the stationarity of <span class="math inline">\(R_t\)</span> is arises so long as the roots of <span class="math inline">\(1 - \phi_{1}z + \phi_{2}z^2 + \ldots + \phi_{p}z^{p} = 0\)</span> and that the unconditional variance is constant.</p>
 <div id="archm" class="section level2">
 <h2>ARCH(m)</h2>
 <p>The ARCH(m) process of Engel (1982) describes the square of <span class="math inline">\(\epsilon_{t}\)</span> to follow an AR(m) process such that
-<span class="math display">\[\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}\]</span>
+<span class="math display">\[
+\epsilon_{t}^{2} = \xi + a_{1}\epsilon_{t-1}^{2} + a_{2}\epsilon_{t-2}^{2} + \ldots + a_{m}\epsilon_{t-m}^{2} + \omega_{t}
+\]</span>
 with <span class="math inline">\(\omega\)</span> as white noise. The <span class="math inline">\(\epsilon\)</span> are errors in forecasting <span class="math inline">\(R\)</span>; the same restriction on the roots will apply from before. The unconditional variance is still a constant described now by <span class="math inline">\(\frac{\xi}{1-a_{1}-a_{2}-\ldots-a_{m}}\)</span>.</p>
 <p>There are a few implementations of the basic test for ARCH effects. Let’s have a look at one through six lags. I am not going to tidy this.</p>
 <pre class="r"><code>1:6 %&gt;% map(function(x) {FinTS::ArchTest(NKER$daily.returns, lags = x)})</code></pre>
@@ -355,7 +361,7 @@ with <span class="math inline">\(\omega\)</span> as white noise. The <span class
 ##  ARCH LM-test; Null hypothesis: no ARCH effects
 ## 
 ## data:  NKER$daily.returns
-## Chi-squared = 66.435, df = 2, p-value = 3.748e-15
+## Chi-squared = 66.435, df = 2, p-value = 3.747e-15
 ## 
 ## 
 ## [[3]]
@@ -363,7 +369,7 @@ with <span class="math inline">\(\omega\)</span> as white noise. The <span class
 ##  ARCH LM-test; Null hypothesis: no ARCH effects
 ## 
 ## data:  NKER$daily.returns
-## Chi-squared = 66.503, df = 3, p-value = 2.392e-14
+## Chi-squared = 66.504, df = 3, p-value = 2.392e-14
 ## 
 ## 
 ## [[4]]
@@ -371,7 +377,7 @@ with <span class="math inline">\(\omega\)</span> as white noise. The <span class
 ##  ARCH LM-test; Null hypothesis: no ARCH effects
 ## 
 ## data:  NKER$daily.returns
-## Chi-squared = 66.65, df = 4, p-value = 1.155e-13
+## Chi-squared = 66.651, df = 4, p-value = 1.155e-13
 ## 
 ## 
 ## [[5]]
@@ -379,7 +385,7 @@ with <span class="math inline">\(\omega\)</span> as white noise. The <span class
 ##  ARCH LM-test; Null hypothesis: no ARCH effects
 ## 
 ## data:  NKER$daily.returns
-## Chi-squared = 72.461, df = 5, p-value = 3.148e-14
+## Chi-squared = 72.462, df = 5, p-value = 3.147e-14
 ## 
 ## 
 ## [[6]]
@@ -387,7 +393,152 @@ with <span class="math inline">\(\omega\)</span> as white noise. The <span class
 ##  ARCH LM-test; Null hypothesis: no ARCH effects
 ## 
 ## data:  NKER$daily.returns
-## Chi-squared = 97.816, df = 6, p-value &lt; 2.2e-16</code></pre>
+## Chi-squared = 97.817, df = 6, p-value &lt; 2.2e-16</code></pre>
 <p>The evidence suggests the presence of ARCH effects. Let’s model them. For this, we need a way to represent these models in a consistent syntax.</p>
+</div>
+<div id="arch" class="section level2">
+<h2>ARCH</h2>
+<pre class="r"><code>options(scipen=7)
+NKER.arch &lt;- tseries::garch(NKER$daily.returns,c(0,1))</code></pre>
+<pre><code>## 
+##  ***** ESTIMATION WITH ANALYTICAL GRADIENT ***** 
+## 
+## 
+##      I     INITIAL X(I)        D(I)
+## 
+##      1     4.037780e-04     1.000e+00
+##      2     5.000000e-02     1.000e+00
+## 
+##     IT   NF      F         RELDF    PRELDF    RELDX   STPPAR   D*STEP   NPRELDF
+##      0    1 -3.126e+03
+##      1    7 -3.127e+03  4.74e-04  7.64e-04  2.8e-04  3.0e+09  2.8e-05  1.16e+06
+##      2    8 -3.128e+03  1.92e-05  2.28e-05  2.7e-04  2.0e+00  2.8e-05  1.60e+01
+##      3   15 -3.144e+03  5.14e-03  8.32e-03  4.5e-01  2.0e+00  8.3e-02  1.59e+01
+##      4   16 -3.149e+03  1.84e-03  1.44e-03  1.8e-01  0.0e+00  5.6e-02  1.44e-03
+##      5   18 -3.154e+03  1.46e-03  1.16e-03  1.9e-01  0.0e+00  8.7e-02  1.16e-03
+##      6   19 -3.155e+03  4.06e-04  2.89e-04  9.0e-02  0.0e+00  5.5e-02  2.89e-04
+##      7   20 -3.156e+03  1.28e-04  1.04e-04  5.8e-02  0.0e+00  4.1e-02  1.04e-04
+##      8   21 -3.156e+03  1.11e-05  9.76e-06  2.1e-02  0.0e+00  1.6e-02  9.76e-06
+##      9   22 -3.156e+03  2.95e-07  2.83e-07  3.5e-03  0.0e+00  2.7e-03  2.83e-07
+##     10   23 -3.156e+03  7.57e-10  7.66e-10  2.0e-04  0.0e+00  1.5e-04  7.66e-10
+##     11   24 -3.156e+03  9.69e-13  1.02e-12  1.1e-06  0.0e+00  8.7e-07  1.02e-12
+## 
+##  ***** RELATIVE FUNCTION CONVERGENCE *****
+## 
+##  FUNCTION    -3.155817e+03   RELDX        1.111e-06
+##  FUNC. EVALS      24         GRAD. EVALS      12
+##  PRELDF       1.018e-12      NPRELDF      1.018e-12
+## 
+##      I      FINAL X(I)        D(I)          G(I)
+## 
+##      1    2.798850e-04     1.000e+00     2.490e-01
+##      2    3.900802e-01     1.000e+00     4.005e-05</code></pre>
+<pre class="r"><code>summary(NKER.arch)</code></pre>
+<pre><code>## 
+## Call:
+## tseries::garch(x = NKER$daily.returns, order = c(0, 1))
+## 
+## Model:
+## GARCH(0,1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -5.71023 -0.45067  0.04028  0.59324  9.19373 
+## 
+## Coefficient(s):
+##       Estimate  Std. Error  t value Pr(&gt;|t|)    
+## a0 0.000279885 0.000006364   43.981   &lt;2e-16 ***
+## a1 0.390080215 0.039840355    9.791   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Diagnostic Tests:
+##  Jarque Bera Test
+## 
+## data:  Residuals
+## X-squared = 3656.1, df = 2, p-value &lt; 2.2e-16
+## 
+## 
+##  Box-Ljung test
+## 
+## data:  Squared.Residuals
+## X-squared = 0.6779, df = 1, p-value = 0.4103</code></pre>
+<p>So the model seems to capture the ARCH part in the <span class="math inline">\(a_{1}\)</span> part as the squared residuals are white noise but the Jarque-Bera test suggests deviations from normality. What about a GARCH process?</p>
+<pre class="r"><code>NKER.garch &lt;- tseries::garch(NKER$daily.returns,c(1,1))</code></pre>
+<pre><code>## 
+##  ***** ESTIMATION WITH ANALYTICAL GRADIENT ***** 
+## 
+## 
+##      I     INITIAL X(I)        D(I)
+## 
+##      1     3.825265e-04     1.000e+00
+##      2     5.000000e-02     1.000e+00
+##      3     5.000000e-02     1.000e+00
+## 
+##     IT   NF      F         RELDF    PRELDF    RELDX   STPPAR   D*STEP   NPRELDF
+##      0    1 -3.128e+03
+##      1    7 -3.130e+03  5.71e-04  9.12e-04  2.9e-04  3.4e+09  2.9e-05  1.53e+06
+##      2    8 -3.130e+03  2.39e-05  2.90e-05  2.8e-04  2.0e+00  2.9e-05  2.04e+01
+##      3   15 -3.148e+03  5.89e-03  8.66e-03  4.3e-01  2.0e+00  7.7e-02  2.02e+01
+##      4   16 -3.156e+03  2.38e-03  2.85e-03  2.8e-01  2.0e+00  7.7e-02  1.85e+00
+##      5   17 -3.162e+03  1.97e-03  2.63e-03  2.2e-01  2.0e+00  7.7e-02  1.39e+00
+##      6   18 -3.169e+03  2.19e-03  2.51e-03  1.5e-01  2.0e+00  7.7e-02  3.04e-01
+##      7   21 -3.188e+03  5.94e-03  7.74e-03  3.5e-01  1.8e+00  3.1e-01  2.04e-01
+##      8   32 -3.192e+03  1.29e-03  3.26e-03  1.8e-05  3.1e+00  2.1e-05  6.86e-03
+##      9   33 -3.192e+03  1.24e-04  9.49e-05  1.8e-05  2.0e+00  2.1e-05  3.05e-03
+##     10   34 -3.192e+03  1.09e-05  1.20e-05  1.8e-05  2.0e+00  2.1e-05  4.26e-03
+##     11   41 -3.194e+03  5.24e-04  7.02e-04  3.9e-02  1.6e+00  4.7e-02  4.12e-03
+##     12   42 -3.194e+03  5.88e-05  9.32e-05  2.5e-02  0.0e+00  3.2e-02  9.32e-05
+##     13   43 -3.194e+03  2.42e-05  2.07e-05  5.5e-03  0.0e+00  8.0e-03  2.07e-05
+##     14   44 -3.194e+03  1.45e-05  8.81e-06  4.0e-03  0.0e+00  5.8e-03  8.81e-06
+##     15   45 -3.195e+03  2.06e-05  1.99e-05  9.2e-03  3.3e-01  1.6e-02  2.14e-05
+##     16   46 -3.195e+03  4.27e-06  4.07e-06  6.0e-03  0.0e+00  9.8e-03  4.07e-06
+##     17   47 -3.195e+03  2.23e-07  2.53e-07  7.2e-04  0.0e+00  9.8e-04  2.53e-07
+##     18   48 -3.195e+03  1.61e-09  7.10e-09  8.6e-05  0.0e+00  1.2e-04  7.10e-09
+##     19   49 -3.195e+03  1.43e-09  2.66e-10  1.4e-05  0.0e+00  2.0e-05  2.66e-10
+##     20   50 -3.195e+03 -1.76e-11  4.81e-14  6.3e-07  0.0e+00  9.5e-07  4.81e-14
+## 
+##  ***** RELATIVE FUNCTION CONVERGENCE *****
+## 
+##  FUNCTION    -3.194540e+03   RELDX        6.275e-07
+##  FUNC. EVALS      50         GRAD. EVALS      20
+##  PRELDF       4.805e-14      NPRELDF      4.805e-14
+## 
+##      I      FINAL X(I)        D(I)          G(I)
+## 
+##      1    5.442536e-05     1.000e+00    -5.739e-01
+##      2    1.978270e-01     1.000e+00    -3.235e-04
+##      3    6.802930e-01     1.000e+00    -6.299e-04</code></pre>
+<pre class="r"><code>summary(NKER.garch)</code></pre>
+<pre><code>## 
+## Call:
+## tseries::garch(x = NKER$daily.returns, order = c(1, 1))
+## 
+## Model:
+## GARCH(1,1)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -4.18910 -0.46830  0.04642  0.59649 10.37362 
+## 
+## Coefficient(s):
+##      Estimate  Std. Error  t value        Pr(&gt;|t|)    
+## a0 0.00005443  0.00000839    6.487 0.0000000000877 ***
+## a1 0.19782696  0.03196108    6.190 0.0000000006031 ***
+## b1 0.68029302  0.04434770   15.340         &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Diagnostic Tests:
+##  Jarque Bera Test
+## 
+## data:  Residuals
+## X-squared = 6926.6, df = 2, p-value &lt; 2.2e-16
+## 
+## 
+##  Box-Ljung test
+## 
+## data:  Squared.Residuals
+## X-squared = 0.23586, df = 1, p-value = 0.6272</code></pre>
 </div>
 </div>
