@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,42 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">May 28, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/tidytuesday-cocktails/">Cocktails</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/tidytuesday-cocktails/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>This week’s tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources. Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin. That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients. With that in mind, let turn to the data.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/tidytuesday-cocktails/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">May 1, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/">Non-Profits in Oregon: Socrata is Cool</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>Socrata: The Open Data PortalI did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals. The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -203,44 +238,6 @@ Imgur
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/new-york-times-data-on-covid/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">March 25, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/">COVID in the US and the World</a></h2>
-        </header>
-        
-        <a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="image fit"><img src="" alt="" /></a>
-        
-        
-        <p>The Johns Hopkins dashboardThis is what Johns Hopkins has provided as a dashboard using ARCGIS. They have essentially layered out the data into national and subnational data and then used the arcgis dashboard to cycle through them.
-The dataThere are a few different types of data available. I am relying on the same sources that Johns Hopkins is using for the county level incident data.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/covid-in-the-us-and-the-world/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">March 24, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/">Visualising COVID-19 in Oregon</a></h2>
-        </header>
-        
-        <a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/" class="image fit"><img src="" alt="" /></a>
-        
-        
-        <p>Oregon COVID dataI now have a few days of data. These data are current as of March 24, 2020. I will present the first version of these visualizations here and then move the auto-update to a different location. A messy first version of the scraping exercise is at the bottom of this post.
-paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;)## [1] &quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID2020-03-24.RData&quot;load(url(paste0(&quot;https://github.com/robertwwalker/rww-science/raw/master/content/R/COVID/data/OregonCOVID&quot;,Sys.Date(),&quot;.RData&quot;)))A base mapLoad the tigris library then grab the map as an sf object; there is a geom_sf that makes them easy to work with.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/covid-19-county-maps-for-oregon/" class="button">Read More...</a></li>
         </ul>
     </article>
     

@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,41 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">March 17, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/stocks-and-gganimate/">Stocks and gganimate</a></h2>
+        </header>
+        
+        
+        <p>tidyquantAutomates a lot of equity research and calculation using tidy concepts. Here, I will first use it to get the components of the S and P 500 and pick out those with weights over 1.25 percent. In the next step, I download the data and finally calculate daily returns and a cumulative wealth index.
+library(tidyquant)library(tidyverse)tq_index(&quot;SP500&quot;) %&gt;% filter(weight &gt; 0.0125) %&gt;% select(symbol,company) -&gt; TickersTickers &lt;- Tickers %&gt;% filter(symbol!</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/stocks-and-gganimate/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 19, 2018</span>
+            
+            <h2><a href="https://rww-science.website/post/trump-s-tweets-part-ii/">Trump&#39;s Tweets, Part II</a></h2>
+        </header>
+        
+        
+        <p>Trump’s ToneA cool post on sentiment analysis can be found here. I will now get at the time series characteristics of his tweets and the sentiment stuff. This plays off of a previous post.
+I start by loading the tmls object that I created in the previous post. To capture constant content over time, there I describe how to download and break up the timeline.
+Trump’s Overall TweetingWhat does it look like?</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/trump-s-tweets-part-ii/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -195,40 +229,6 @@ library(skimr)library(tidyverse)library(rlang)# global_mortality &lt;- readRD
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/tidytuesday-takes-on-global-mortality/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">April 8, 2018</span>
-            
-            <h2><a href="https://rww-science.website/post/scraping-epl-salary-data/">Scraping EPL Salary Data</a></h2>
-        </header>
-        
-        
-        <p>EPL ScrapingIn a previous post, I scraped some NFL data and learned the structure of Sportrac. Now, I want to scrape the available data on the EPL. The EPL data is organized in a few distinct but potentially linked tables. The basic structure is organized around team folders. Let me begin by isolating those URLs.
-library(rvest)library(tidyverse)base_url &lt;- &quot;http://www.spotrac.com/epl/&quot;read.base &lt;- read_html(base_url)team.URL &lt;- read.base %&gt;% html_nodes(&quot;.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/scraping-epl-salary-data/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">April 4, 2018</span>
-            
-            <h2><a href="https://rww-science.website/post/scraping-the-nfl-salary-cap-data-with-python-and-r/">Scraping the NFL Salary Cap Data with Python and R</a></h2>
-        </header>
-        
-        
-        <p>The NFL Data[SporTrac](http://www.sportrac.com] has a wonderful array of financial data on sports. A student going to work for the Seattle Seahawks wanted the NFL salary cap data and I also found data on the English Premier League there. Now I have a source to scrape the data from.
-With a source in hand, the key tool is the SelectorGadget. SelectorGadget is a browser add-in for Chrome that allows us to select text and identify the css or xpath selector to scrape the data.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/scraping-the-nfl-salary-cap-data-with-python-and-r/" class="button">Read More...</a></li>
         </ul>
     </article>
     

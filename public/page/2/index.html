@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,40 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">March 19, 2022</span>
+            
+            <h2><a href="https://rww-science.website/post/inflation-expectations/">Inflation Expectations</a></h2>
+        </header>
+        
+        
+        <p>The Federal Reserve Bank of New York provides interesting data on inflation expectations. I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years. But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.
+library(tidyverse) library(lubridate); library(tsibble) library(readxl); library(magrittr) library(kableExtra) url &lt;- &quot;https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&quot; destfile &lt;- &quot;frbny_sce_data.xlsx&quot; curl::curl_download(url, destfile) Inflation.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/inflation-expectations/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">March 19, 2022</span>
+            
+            <h2><a href="https://rww-science.website/post/nws-monthly-part-ii/">National Weather Service Portland, Part II</a></h2>
+        </header>
+        
+        
+        <p>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
+NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;)) head(NWS, 10) %&gt;% kable() %&gt;% kable_styling() %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/nws-monthly-part-ii/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -196,41 +229,6 @@ OTM &lt;- read.socrata(&#39;https://data.oregon.gov/resource/ny3n-dx3v.json&#39;
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">August 23, 2021</span>
-            
-            <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
-        </header>
-        
-        
-        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
-First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
-We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">August 21, 2021</span>
-            
-            <h2><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/">ARCH and GARCH Models</a></h2>
-        </header>
-        
-        
-        <p>NKE First, let me use tidyquant to acquire the data.
-library(tidyquant); library(tidyverse) NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;) NKE ## # A tibble: 918 × 8 ## symbol date open high low close volume adjusted ## &lt;chr&gt; &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 71.7 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 70.4 ## 3 NKE 2019-01-04 73.4 75.1 73.1 74.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/" class="button">Read More...</a></li>
         </ul>
     </article>
     

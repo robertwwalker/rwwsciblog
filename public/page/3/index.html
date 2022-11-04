@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,41 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">August 23, 2021</span>
+            
+            <h2><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/">Parameterized RMarkdown is Amazing</a></h2>
+        </header>
+        
+        
+        <p>Parameterized R Markdown A while back, I learned that you can parameterize markdown. You can send it something to process as argument. This is amazing. Let me show an example.
+First, I want to build an RMarkdown file. In RStudio, that is File &gt; New file &gt; R Markdown.
+We will need to add a bit of metadata to the top. The key component is the params: argument. I want to pass a ticker with a default option.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2021-08-23-parameterized-rmarkdown-is-amazing/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">August 21, 2021</span>
+            
+            <h2><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/">ARCH and GARCH Models</a></h2>
+        </header>
+        
+        
+        <p>NKE First, let me use tidyquant to acquire the data.
+library(tidyquant); library(tidyverse) NKE &lt;- tq_get(&quot;NKE&quot;, from=&quot;2019-01-01&quot;) NKE ## # A tibble: 918 × 8 ## symbol date open high low close volume adjusted ## &lt;chr&gt; &lt;date&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; ## 1 NKE 2019-01-02 72.8 74.6 72.2 74.1 6762700 71.7 ## 2 NKE 2019-01-03 73.2 73.3 71.2 72.8 8007400 70.4 ## 3 NKE 2019-01-04 73.4 75.1 73.1 74.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2021-08-21-arch-garch-fun/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -196,42 +230,6 @@ employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n)
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">February 8, 2021</span>
-            
-            <h2><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/">TT: Wealth and Income</a></h2>
-        </header>
-        
-        
-        <p>tidyTuesday-Screenshot
-tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported here. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the ten datasets.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">November 30, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
-        </header>
-        
-        <a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="image fit"><img src="" alt="" /></a>
-        
-        
-        <p>tl;drIn September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
-The DataI will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="button">Read More...</a></li>
         </ul>
     </article>
     

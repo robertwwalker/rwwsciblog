@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,44 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">February 24, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/quick-and-dirty-fredr/">Quick and Dirty fredr</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/quick-and-dirty-fredr/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>Some Data from FREDr Downloading the FRED data on national debt as a percentage of GDP. I first want to examine the US data and will then turn to some comparisons. fredr makes it markable asy to do! I will use two core tools from fredr. First, fredr_series_search allows one to enter search text and retrieve the responsive series given that search text.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/quick-and-dirty-fredr/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">February 19, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/trying-to-figure-out-the-new-xbrl/">Trying to Figure Out the New XBRL</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/trying-to-figure-out-the-new-xbrl/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>XBRL ChangedXBRL has undergone and is undergoing some changes. Some filers have already needed to change their filings and others will have to soon. Here is the excerpt.
+XBRL Change
+This has broken many of the existing parsers for new filings. It is time to find a way around this. I have seen links for scraping them from Yahoo! Finance but that is not really what I want.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/trying-to-figure-out-the-new-xbrl/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -201,42 +238,6 @@ sf_trees &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatasc
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/updating-hugo-and-academic/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">January 18, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/">a quick tidyTuesday on Passwords</a></h2>
-        </header>
-        
-        
-        <p>First, I wanted to acquire the distribution of letters and then play with that. I embedded the result here. The second step is to import the tidyTuesday data.
-library(tidyverse)Letter.Freq &lt;- data.frame(stringsAsFactors=FALSE,Letter = c(&quot;E&quot;, &quot;T&quot;, &quot;A&quot;, &quot;O&quot;, &quot;I&quot;, &quot;N&quot;, &quot;S&quot;, &quot;R&quot;, &quot;H&quot;, &quot;D&quot;, &quot;L&quot;, &quot;U&quot;,&quot;C&quot;, &quot;M&quot;, &quot;F&quot;, &quot;Y&quot;, &quot;W&quot;, &quot;G&quot;, &quot;P&quot;, &quot;B&quot;, &quot;V&quot;,&quot;K&quot;, &quot;X&quot;, &quot;Q&quot;, &quot;J&quot;, &quot;Z&quot;),Frequency = c(12.02, 9.1, 8.12, 7.68, 7.31, 6.95, 6.28, 6.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">December 19, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/simple-point-maps-in-r/">Simple Point Maps in R</a></h2>
-        </header>
-        
-        
-        <p>Mapping Points in RMy goal is a streamlined and self-contained freeware map maker with points denoting addresses. It is a three step process that involves:
-Get a map.
-Geocode the addresses into latitude and longitude.
-Combine the the two with a first map layer and a second layer on top that contains the points.From there, it is pretty easy to get fancy using ggplotly to put relevant text hovers into place.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/simple-point-maps-in-r/" class="button">Read More...</a></li>
         </ul>
     </article>
     

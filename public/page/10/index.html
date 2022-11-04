@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,40 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">October 9, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/simple-oregon-county-mapping/">Simple Oregon County Mapping</a></h2>
+        </header>
+        
+        
+        <p>Some Data for the MapI want to get some data to place on the map. I found a website with population and population change data for Oregon in .csv format. I cannot direct download it from R, instead I have to button download it and import it.
+library(tidyverse)## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──## ✓ ggplot2 3.3.3 ✓ purrr 0.3.4## ✓ tibble 3.0.6 ✓ dplyr 1.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/simple-oregon-county-mapping/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">October 9, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/the-economist-s-visualization-errors/">The Economist&#39;s Visualization Errors</a></h2>
+        </header>
+        
+        
+        <p>The Economist’s Errors and Credit Where Credit is DueThe Economist is serious about their use of data visualization and they have occasionally owned up to errors in their visualizations. They can be deceptive, uninformative, confusing, excessively busy, and present a host of other barriers to clean communication. Their blog post on their errors is great.
+I have drawn the following example from a #tidyTuesday earlier this year that explores this.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/the-economist-s-visualization-errors/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -192,41 +225,6 @@ The nflscrapR package is designed to make data on NFL games more easily availabl
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/visualisation-with-archigos-leaders-of-the-world/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">March 17, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/stocks-and-gganimate/">Stocks and gganimate</a></h2>
-        </header>
-        
-        
-        <p>tidyquantAutomates a lot of equity research and calculation using tidy concepts. Here, I will first use it to get the components of the S and P 500 and pick out those with weights over 1.25 percent. In the next step, I download the data and finally calculate daily returns and a cumulative wealth index.
-library(tidyquant)library(tidyverse)tq_index(&quot;SP500&quot;) %&gt;% filter(weight &gt; 0.0125) %&gt;% select(symbol,company) -&gt; TickersTickers &lt;- Tickers %&gt;% filter(symbol!</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/stocks-and-gganimate/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">December 19, 2018</span>
-            
-            <h2><a href="https://rww-science.website/post/trump-s-tweets-part-ii/">Trump&#39;s Tweets, Part II</a></h2>
-        </header>
-        
-        
-        <p>Trump’s ToneA cool post on sentiment analysis can be found here. I will now get at the time series characteristics of his tweets and the sentiment stuff. This plays off of a previous post.
-I start by loading the tmls object that I created in the previous post. To capture constant content over time, there I describe how to download and break up the timeline.
-Trump’s Overall TweetingWhat does it look like?</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/trump-s-tweets-part-ii/" class="button">Read More...</a></li>
         </ul>
     </article>
     

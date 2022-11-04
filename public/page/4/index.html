@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,42 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">February 8, 2021</span>
+            
+            <h2><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/">TT: Wealth and Income</a></h2>
+        </header>
+        
+        
+        <p>tidyTuesday-Screenshot
+tidyTuesday for the week of February 8, 2021 brings data from the US Census and the Urban Institute together to think about income, wealth, and racial inequality in these and other important economic indicators. There is a lot of data that they make available to accompany the nine charts about wealth inequality that they reported here. There is considerable variation in the scope and coverage of the various datasets; I will start by loading the ten datasets.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2021-02-08-tt-wealth-and-income/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">November 30, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/">Analyzing the Trump Campaign&#39;s Solicitations</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>tl;drIn September of 2018, I began to track email solicitations by the Trump Campaign. I have noticed a striking pattern of increasing fundraising activity that started just after the July 4 weekend but I wanted to verify this over the span of the data. In short, something is up.
+The DataI will use the wonderful gmailr package to access my gmail. You need a key and an id that the vignette gives guidance on.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/analyzing-the-trump-campaign-s-solicitations/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -198,42 +233,6 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/spending-on-kids/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">May 28, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/tidytuesday-cocktails/">Cocktails</a></h2>
-        </header>
-        
-        <a href="https://rww-science.website/post/tidytuesday-cocktails/" class="image fit"><img src="" alt="" /></a>
-        
-        
-        <p>This week’s tidyTuesday contains data on cocktails with data from cocktail recipes drawn from two sources. Because one of the datasets comes from Mr. Boston, it is not exactly neutral with respect to alcohols and I am not a particular fan of gin. That said, the data should provide an interesting playground for looking at some frequencies and learning some things about cocktail recipes and ingredients. With that in mind, let turn to the data.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/tidytuesday-cocktails/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">May 1, 2020</span>
-            
-            <h2><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/">Non-Profits in Oregon: Socrata is Cool</a></h2>
-        </header>
-        
-        <a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="image fit"><img src="" alt="" /></a>
-        
-        
-        <p>Socrata: The Open Data PortalI did not previously know much about precisely how open data portals had evolved. Oregon’s is quite nice and I will take the opportunity to map and summarise non-profits throughout the state. I have posted elsewhere about other aspects of Socrata; it is a very neat tool for accessing open data portals. The non-profit data is not extraordinarily rich though there is quite a bit that can be extracted.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/non-profits-in-oregon-socrata-is-cool/" class="button">Read More...</a></li>
         </ul>
     </article>
     

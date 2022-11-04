@@ -6,10 +6,32 @@
     <description>Recent content on rww-science: the blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 22 Apr 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://rww-science.website/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Marveling at map()</title>
+      <link>https://rww-science.website/post/2022-11-04-marveling-at-map/</link>
+      <pubDate>Fri, 04 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-11-04-marveling-at-map/</guid>
+      <description>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &amp;lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&amp;#34;file&amp;#34;,.</description>
+    </item>
+    
+    <item>
+      <title>15 Characters that Made Me Better in the Classroom</title>
+      <link>https://rww-science.website/post/2022-09-22-the-magic-of-multiplex-for-hybrid-teaching/</link>
+      <pubDate>Thu, 22 Sep 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-09-22-the-magic-of-multiplex-for-hybrid-teaching/</guid>
+      <description>&amp;ldquo;You forgot to share your screen,&amp;rdquo; is one of the phrases that I will most closely associate with pandemic-era teaching. But, when deploying code in the classroom, screen sharing is not enough. quarto, reveal.js and multiplex: true have empowered me to be better at my job.
+Many academics faced challenges in the transition to hybrid and fully online education during COVID-19. This post is dedicated to recent developments made easy by RStudio&amp;rsquo;s quarto project that solves three difficult and interrelated problems that frequently arose, and continue to arise, during the ongoing pandemic and in a hybrid teaching world.</description>
+    </item>
     
     <item>
       <title>A Pigeon Becomes a Barplot</title>

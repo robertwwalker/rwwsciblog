@@ -1,0 +1,235 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>15 Characters that Made Me Better in the Classroom &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">September 22, 2022</span>
+                                
+                                <h1>15 Characters that Made Me Better in the Classroom</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p><strong>&ldquo;You forgot to share your screen,&rdquo; is one of the phrases that I will most closely associate with pandemic-era teaching.  But, when deploying code in the classroom, screen sharing is not enough.  <code>quarto</code>, <code>reveal.js</code> and <code>multiplex: true</code> have empowered me to be better at my job.</strong></p>
+<p>Many academics faced challenges in the transition to hybrid and fully online education during COVID-19.  This post is dedicated to recent developments made easy by RStudio&rsquo;s <code>quarto</code> project  that solves three difficult and interrelated problems that frequently arose, and continue to arise, during the ongoing pandemic and in a hybrid teaching world.  In concert, I believe that they have improved my effectiveness in online data science education.  What are the the two main problems?</p>
+<ul>
+<li>Sharing code</li>
+<li>Sharing screens</li>
+</ul>
+<p>There is a third interrelated problem; student access to the code on the screen and this problem is present for both in-person and online learners in the hybrid environment.</p>
+<h1 id="in-steps-quarto-and-magic-happens-with-the-wonders-of-revealjs">In Steps Quarto and Magic Happens with the Wonders of Reveal.js</h1>
+<p>In fifteen keystrokes, <code>quarto</code> has a <strong>literally perfect</strong> solution.</p>
+<p><code>multiplex: true</code></p>
+<h2 id="background">Background</h2>
+<p>I have used Yihui Xie&rsquo;s excellent <code>xaringan</code> package for slides for a few years now.  It really is an amazing tool.  The thing that prompted my original foray into using it was the easy ability to share code in slides.  But with the transition to Zoom during the pandemic and ubiquitously before the pandemic, presenting slides in a classroom or with screen sharing puts a barrier to copying and pasting the provided code.</p>
+<p>The barrier for in-person learners is that the code is on the projector screen, <strong>not their screen</strong>.  Zoom&rsquo;s screen share presents a very similar problem, the code is on their screen, but <strong>it is an image rather than copy-pasteable text</strong>.</p>
+<h2 id="the-quarto-solution">The Quarto Solution</h2>
+<p>With fifteen magic keystrokes, the barriers to code access disappear.  Moreover, they have the magnificent side effect of rendering the initial problem moot.  Whether or not one shares the screen, the content of the screen share is available to all learners, in-person or hybrid, with only a browser window open.</p>
+<p><code>multiplex: true</code></p>
+<h2 id="the-details">The Details</h2>
+<p>My goal in the classroom is make the process interactive.  To a management school academic with the goal of teaching future managers how to glean insights from data, I need code to both give the computer instructions on how to manipulate and display the data that is the source of those insights and to provide the scaffolding for transferring the deployed methods to other problems.  I suspect these twin aims are shared by those in the social and natural sciences, management, geography, public health, and all of the disciplines where data science is not the end but instead informs some application in combination with subject-area expertise.</p>
+<h3 id="the-dark-ages-powerpoint">The Dark Ages: Powerpoint</h3>
+<p>Long ago, my tool of choice was Microsoft&rsquo;s <code>Powerpoint</code>.  Don&rsquo;t judge.  In management schools and in industry, Powerpoint is ubiquitous as presentation software and for white paper creation &ndash; decks that violate basically every principle of effective presentation.  It is familiar.  It does a job.  But everything becomes <code>curly-quotes</code> without care and this is a nightmare for writing code.  Moreover, the workflows involve a lot of unnecessary labor.</p>
+<h3 id="rmarkdown-and-the-middle-ages"><code>RMarkdown</code> and The Middle Ages</h3>
+<p>With <code>RMarkdown</code>, <code>\(\LaTeX\)</code> beamer presentations in .pdf format and various versions of .html slides became possible and this saved me a lot of manual copying and pasting.  With <code>xaringan</code> by Yihui Xie, nice formatting boxes for code and the magic of various innovations in .html became possible.  I still love <code>xaringan</code> and for presentations where the audience is not actively engaged in recreating output, <code>xaringan</code> is still my favorite.  Indeed, if I could figure out how to get <code>xaringan</code> to do what <code>multiplex</code> can, I would still use it.</p>
+<p>The core limitation, as a presenter, of all of the aforementioned implementations of slides in <code>RMarkdown</code> is that the audience needs to follow along with the presenter to obtain the code and to deploy it.  No matter how detailed or careful one is, the slides don&rsquo;t just move themselves.</p>
+<h3 id="modernity-and-multiplexing">Modernity and Multiplexing</h3>
+<p>The pandemic brought new challenges though they were not dissimilar from old challenges. In the hybrid format or in the classroom with a projector or television, the problem remains.  The slides don&rsquo;t move themselves.  Though online learners are far closer to the presentation than are those sitting in the auditorium, there is still a barrier to access.  Neither the computer screen nor the projector screen is accessible in the sense that the code is rendered on that screen as an image rather than as manipulable text.  With quarto and reveal.js, my job and the experience of my students have been vastly improved.</p>
+
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+    <script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

@@ -126,20 +126,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -150,6 +149,43 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">September 22, 2022</span>
+            
+            <h2><a href="https://rww-science.website/post/2022-09-22-the-magic-of-multiplex-for-hybrid-teaching/">15 Characters that Made Me Better in the Classroom</a></h2>
+        </header>
+        
+        
+        <p>&ldquo;You forgot to share your screen,&rdquo; is one of the phrases that I will most closely associate with pandemic-era teaching. But, when deploying code in the classroom, screen sharing is not enough. quarto, reveal.js and multiplex: true have empowered me to be better at my job.
+Many academics faced challenges in the transition to hybrid and fully online education during COVID-19. This post is dedicated to recent developments made easy by RStudio&rsquo;s quarto project that solves three difficult and interrelated problems that frequently arose, and continue to arise, during the ongoing pandemic and in a hybrid teaching world.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2022-09-22-the-magic-of-multiplex-for-hybrid-teaching/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">April 22, 2022</span>
+            
+            <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        </header>
+        
+        
+        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
+Pigeon
+ I want to color something with colors from that pigeon. It has an amazing array of colors.
+TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
+ The Palette First, I have to get the color palette.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -215,40 +251,6 @@ NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/nws-monthly-joins/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">March 19, 2022</span>
-            
-            <h2><a href="https://rww-science.website/post/inflation-expectations/">Inflation Expectations</a></h2>
-        </header>
-        
-        
-        <p>The Federal Reserve Bank of New York provides interesting data on inflation expectations. I was first interested in this because it appears as though the survey respondents have consistently overestimated inflation expectations over the last few years. But now, in a time of heightened concern about inflation, it is worthwhile to revisit the data.
-library(tidyverse) library(lubridate); library(tsibble) library(readxl); library(magrittr) library(kableExtra) url &lt;- &quot;https://www.newyorkfed.org/medialibrary/interactives/sce/sce/downloads/data/frbny-sce-data.xlsx&quot; destfile &lt;- &quot;frbny_sce_data.xlsx&quot; curl::curl_download(url, destfile) Inflation.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/inflation-expectations/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">March 19, 2022</span>
-            
-            <h2><a href="https://rww-science.website/post/nws-monthly-part-ii/">National Weather Service Portland, Part II</a></h2>
-        </header>
-        
-        
-        <p>Loading NWS Data I first will try to load it without any intervention to see what it looks like. As we will see, it is quite messy in a few easy ways and a few that are a bit more tricky.
-NWS &lt;- read.csv(url(&quot;https://www.weather.gov/source/pqr/climate/webdata/Portland_dailyclimatedata.csv&quot;)) head(NWS, 10) %&gt;% kable() %&gt;% kable_styling() %&gt;% scroll_box(width = &quot;100%&quot;, height = &quot;500px&quot;)   Daily.Temperature.and.Precipitation.Data  X  X.1  X.2  X.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/nws-monthly-part-ii/" class="button">Read More...</a></li>
         </ul>
     </article>
     

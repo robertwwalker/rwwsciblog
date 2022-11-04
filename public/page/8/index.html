@@ -104,20 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">April 22, 2022</span>
+        <span class="date">November 4, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/">A Pigeon Becomes a Barplot</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
         
-        <p>A Pigeon It really is an amazing pigeon. Apologies that I haven’t a photo credit for it; I found it one day on twitter as it went viral. It is a New York City pigeon.
-Pigeon
- I want to color something with colors from that pigeon. It has an amazing array of colors.
-TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
- The Palette First, I have to get the color palette.</p>
+        <p>I want to learn about map and begin to replace my use of apply for everything.
+Goal: import a directory full of csv files.
+Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
+library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-04-22-a-pigeon-becomes-a-barplot/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -128,6 +127,42 @@ TLDR: Extract colors from pigeon photo to palette. Then use palette in ggplot.
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">January 18, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/">a quick tidyTuesday on Passwords</a></h2>
+        </header>
+        
+        
+        <p>First, I wanted to acquire the distribution of letters and then play with that. I embedded the result here. The second step is to import the tidyTuesday data.
+library(tidyverse)Letter.Freq &lt;- data.frame(stringsAsFactors=FALSE,Letter = c(&quot;E&quot;, &quot;T&quot;, &quot;A&quot;, &quot;O&quot;, &quot;I&quot;, &quot;N&quot;, &quot;S&quot;, &quot;R&quot;, &quot;H&quot;, &quot;D&quot;, &quot;L&quot;, &quot;U&quot;,&quot;C&quot;, &quot;M&quot;, &quot;F&quot;, &quot;Y&quot;, &quot;W&quot;, &quot;G&quot;, &quot;P&quot;, &quot;B&quot;, &quot;V&quot;,&quot;K&quot;, &quot;X&quot;, &quot;Q&quot;, &quot;J&quot;, &quot;Z&quot;),Frequency = c(12.02, 9.1, 8.12, 7.68, 7.31, 6.95, 6.28, 6.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/a-quick-tidytuesday-on-passwords/" class="button">Read More...</a></li>
+        </ul>
+    </article>
+    
+    <article>
+        <header>
+            
+            <span class="date">December 19, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/simple-point-maps-in-r/">Simple Point Maps in R</a></h2>
+        </header>
+        
+        
+        <p>Mapping Points in RMy goal is a streamlined and self-contained freeware map maker with points denoting addresses. It is a three step process that involves:
+Get a map.
+Geocode the addresses into latitude and longitude.
+Combine the the two with a first map layer and a second layer on top that contains the points.From there, it is pretty easy to get fancy using ggplotly to put relevant text hovers into place.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/simple-point-maps-in-r/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -195,39 +230,6 @@ tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatasc
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">December 9, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/uscensus-mapping/">US Census Mapping</a></h2>
-        </header>
-        
-        
-        <p>Searching and Mapping the CensusSearching for the Asian Population via the CensusTo use tidycensus, there are limitations imposed by the available tables. There is ACS – a survey of about 3 million people – and the two main decennial census files [SF1] and [SF2]. I will search SF1 for the Asian population.
-library(tidycensus); library(kableExtra)library(tidyverse); library(stringr)v10 &lt;- load_variables(2010, &quot;sf1&quot;, cache = TRUE)v10 %&gt;% filter(str_detect(concept, &quot;ASIAN&quot;)) %&gt;% filter(str_detect(label, &quot;Female&quot;)) %&gt;% kable() %&gt;% scroll_box(width = &quot;100%&quot;)namelabelconceptP012D026Total!</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/uscensus-mapping/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">November 16, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/the-generation-squeeze/">The Generation Squeeze</a></h2>
-        </header>
-        
-        
-        <p>Hashtag OKBoomerThe generational banter that has followed the use of #OKBoomer reminded me of an interesting feature of US population data. I believe it to be true that Generation X has never and will never be the largest generation of Americans. There are tons of Millenials and Baby Boomers alike, though the rate of decline in the latter means that the former are about to surpass them. Or perhaps they have.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/the-generation-squeeze/" class="button">Read More...</a></li>
         </ul>
     </article>
     
