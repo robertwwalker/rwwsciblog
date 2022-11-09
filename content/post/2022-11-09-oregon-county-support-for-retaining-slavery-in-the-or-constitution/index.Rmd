@@ -85,11 +85,32 @@ Here is the map.
 My.Map
 ```
 
+## A Regression
+
+I want to estimate a simple regression on some of these data; how much of the variance in No votes for removing slavery from the Oregon Constitution can be explained by support for Christine Drazan.
+
 ```{r}
 Oregon.County.Results %>% 
   filter((ContestID==100002574 & CandidateName=="No") | CandidateName=="Christine Drazan") %>% 
   select(County, CandidatePercentage, CandidateName) %>%
   pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% 
   lm(`No` ~ `Christine Drazan`, data=.) %>% summary
+```
+
+
+Whoa!  Almost 96% using the current totals as of 10AM on the day after the election.
+
+```{r, message=FALSE, warning=FALSE}
+library(plotly)
+Oregon.County.Results %>% 
+  filter((ContestID==100002574 & CandidateName=="No") | CandidateName=="Christine Drazan") %>% 
+  select(County, CandidatePercentage, CandidateName) %>%
+  pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% 
+  ggplot() + 
+  aes(x=`Christine Drazan`, y=No, label=County) + 
+  geom_point() + 
+  geom_smooth(method="lm") +
+  labs(y="No to Removing Slavery") -> pgg
+ggplotly(pgg)
 ```
 
