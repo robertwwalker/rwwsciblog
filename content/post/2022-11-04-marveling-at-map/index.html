@@ -9,85 +9,51 @@ categories:
 tags: []
 ---
 
-**I want to learn about map and begin to replace my use of apply for everything.** 
 
 
-
-Goal: import a directory full of csv files.
-
-Method.  First, load `purrr` and the `tidyverse` and then create a tibble for the *filenames* because we are creating the example.  `map` wants to output a list so I have to unlist it into the tibble.
-
-
-```r
-library(tidyverse)
+<p><strong>I want to learn about map and begin to replace my use of apply for everything.</strong></p>
+<p>Goal: import a directory full of csv files.</p>
+<p>Method. First, load <code>purrr</code> and the <code>tidyverse</code> and then create a tibble for the <em>filenames</em> because we are creating the example. <code>map</code> wants to output a list so I have to unlist it into the tibble.</p>
+<pre class="r"><code>library(tidyverse)
 library(purrr)
 # Create a set of filenames
-fnames <- tibble(
+fnames &lt;- tibble(
   filenames=unlist(
   map(c(1:5), 
-      ~paste0("file",.x,".csv", sep="")
+      ~paste0(&quot;file&quot;,.x,&quot;.csv&quot;, sep=&quot;&quot;)
       )))
-fnames
-```
-
-```
-## # A tibble: 5 × 1
+fnames</code></pre>
+<pre><code>## # A tibble: 5 × 1
 ##   filenames
-##   <chr>    
+##   &lt;chr&gt;    
 ## 1 file1.csv
 ## 2 file2.csv
 ## 3 file3.csv
 ## 4 file4.csv
-## 5 file5.csv
-```
-
-## Create the files
-
-Now I need to create some files in a given directory.  I have created a directory called *fakedata*.
-
-```
-dir.create("fakedata")
-```
-
-Now I want to write the data to the directory to conclude the reproducible example.  In this case, there are five csv files.
-
-```
-walk(fnames$filenames, 
-     ~ write.csv(data.frame(x1=rnorm(10),x2=rnorm(10)),       file = paste0("./fakedata/",.x, sep="")))
-```
-
-That seems to work.
-
-![Photo of success](img/Screen Shot 2022-11-04 at 12.58.16 PM.png)
-
-
-## Loading the files
-
-Though I already know the names of the files, in most cases, I would need to collect them.  In this particular case, `dir()` will come in very handy.
-
-
-```r
-dir("fakedata")
-```
-
-```
-## [1] "file1.csv" "file2.csv" "file3.csv" "file4.csv" "file5.csv"
-```
-
-```r
-file.names <- dir("fakedata")
-```
-
-Now let's take those and load the files.  We will combine `read.csv` with `map` to get a list containing all of the files.
-
-
-```r
-read.files <- file.names %>% map(., ~ read.csv(paste0("fakedata/",.x, sep="")))
-read.files
-```
-
-```
-## [[1]]
+## 5 file5.csv</code></pre>
+<div id="create-the-files" class="section level2">
+<h2>Create the files</h2>
+<p>Now I need to create some files in a given directory. I have created a directory called <em>fakedata</em>.</p>
+<pre><code>dir.create(&quot;fakedata&quot;)</code></pre>
+<p>Now I want to write the data to the directory to conclude the reproducible example. In this case, there are five csv files.</p>
+<pre><code>walk(fnames$filenames, 
+     ~ write.csv(data.frame(x1=rnorm(10),x2=rnorm(10)),       file = paste0(&quot;./fakedata/&quot;,.x, sep=&quot;&quot;)))</code></pre>
+<p>That seems to work.</p>
+<div class="figure">
+<img src="img/Screen%20Shot%202022-11-04%20at%2012.58.16%20PM.png" alt="" />
+<p class="caption">Photo of success</p>
+</div>
+</div>
+<div id="loading-the-files" class="section level2">
+<h2>Loading the files</h2>
+<p>Though I already know the names of the files, in most cases, I would need to collect them. In this particular case, <code>dir()</code> will come in very handy.</p>
+<pre class="r"><code>dir(&quot;fakedata&quot;)</code></pre>
+<pre><code>## [1] &quot;file1.csv&quot; &quot;file2.csv&quot; &quot;file3.csv&quot; &quot;file4.csv&quot; &quot;file5.csv&quot;</code></pre>
+<pre class="r"><code>file.names &lt;- dir(&quot;fakedata&quot;)</code></pre>
+<p>Now let’s take those and load the files. We will combine <code>read.csv</code> with <code>map</code> to get a list containing all of the files.</p>
+<pre class="r"><code>read.files &lt;- file.names %&gt;% map(., ~ read.csv(paste0(&quot;fakedata/&quot;,.x, sep=&quot;&quot;)))
+read.files</code></pre>
+<pre><code>## [[1]]
 ##     X          x1          x2
 ## 1   1 -1.38001285 -1.22636540
 ## 2   2  0.18200309 -0.47330201
@@ -150,20 +116,12 @@ read.files
 ## 7   7  0.44966760  0.45751493
 ## 8   8 -0.42755728  0.89952539
 ## 9   9 -0.06584558  0.09520603
-## 10 10 -0.50046918 -0.16258746
-```
-
-Let me stick the filenames on the list elements.  This allows any individual one to be addressed in a relatively intuitive way.  I show an example by calculating the mean of x1 in the third dataset.
-
-
-```r
-clean.files <- read.files
-names(clean.files) <- file.names
-clean.files
-```
-
-```
-## $file1.csv
+## 10 10 -0.50046918 -0.16258746</code></pre>
+<p>Let me stick the filenames on the list elements. This allows any individual one to be addressed in a relatively intuitive way. I show an example by calculating the mean of x1 in the third dataset.</p>
+<pre class="r"><code>clean.files &lt;- read.files
+names(clean.files) &lt;- file.names
+clean.files</code></pre>
+<pre><code>## $file1.csv
 ##     X          x1          x2
 ## 1   1 -1.38001285 -1.22636540
 ## 2   2  0.18200309 -0.47330201
@@ -226,36 +184,16 @@ clean.files
 ## 7   7  0.44966760  0.45751493
 ## 8   8 -0.42755728  0.89952539
 ## 9   9 -0.06584558  0.09520603
-## 10 10 -0.50046918 -0.16258746
-```
-
-```r
-clean.files$file3.csv %>% summarise(mean(x1))
-```
-
-```
-##    mean(x1)
-## 1 0.6216417
-```
-
-```r
-mean(read.files[[3]]$x1)
-```
-
-```
-## [1] 0.6216417
-```
-
-If every spreadsheet happened to be the same, as these are, then we could also stack them.  There is a danger to the renaming because of the way it works with unlist.  Sticking with the original file, they are straightforward to stack using `map_dfr()`
-
-
-```r
-stacked.files <- file.names %>% map_dfr(., ~ read.csv(paste0("fakedata/",.x, sep="")))
-stacked.files
-```
-
-```
-##     X          x1          x2
+## 10 10 -0.50046918 -0.16258746</code></pre>
+<pre class="r"><code>clean.files$file3.csv %&gt;% summarise(mean(x1))</code></pre>
+<pre><code>##    mean(x1)
+## 1 0.6216417</code></pre>
+<pre class="r"><code>mean(read.files[[3]]$x1)</code></pre>
+<pre><code>## [1] 0.6216417</code></pre>
+<p>If every spreadsheet happened to be the same, as these are, then we could also stack them. There is a danger to the renaming because of the way it works with unlist. Sticking with the original file, they are straightforward to stack using <code>map_dfr()</code></p>
+<pre class="r"><code>stacked.files &lt;- file.names %&gt;% map_dfr(., ~ read.csv(paste0(&quot;fakedata/&quot;,.x, sep=&quot;&quot;)))
+stacked.files</code></pre>
+<pre><code>##     X          x1          x2
 ## 1   1 -1.38001285 -1.22636540
 ## 2   2  0.18200309 -0.47330201
 ## 3   3  0.38672920  0.32228012
@@ -305,6 +243,5 @@ stacked.files
 ## 47  7  0.44966760  0.45751493
 ## 48  8 -0.42755728  0.89952539
 ## 49  9 -0.06584558  0.09520603
-## 50 10 -0.50046918 -0.16258746
-```
-
+## 50 10 -0.50046918 -0.16258746</code></pre>
+</div>

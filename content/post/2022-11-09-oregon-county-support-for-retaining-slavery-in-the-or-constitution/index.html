@@ -1,0 +1,104 @@
+---
+title: 'Oregon County Support for Retaining Slavery in the OR Constitution'
+author: 'RWW'
+date: '2022-11-09'
+slug: slavery-removal
+categories:
+  - R
+  - tidyverse
+tags:
+  - tidyverse
+---
+
+
+
+<p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?</p>
+<pre class="r"><code>library(magick)
+Img &lt;- image_read(&quot;./img/SShot.png&quot;)
+image_ggplot(Img)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<p>This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.</p>
+<p>First, to import the various files. I am going to use an import then export trick to make this easier. First, let me use the directory to create the county names.</p>
+<pre class="r"><code>library(magrittr); library(tidyverse); library(ggthemes)
+filenames &lt;- dir(&quot;./data/&quot;) %&gt;% data.frame(File.Names = .)
+filenames %&lt;&gt;% mutate(County.Names = str_remove(File.Names, &quot;.csv&quot;))
+filenames$County.Names</code></pre>
+<pre><code>##  [1] &quot;Baker&quot;      &quot;Benton&quot;     &quot;Clackamas&quot;  &quot;Clatsop&quot;    &quot;Columbia&quot;  
+##  [6] &quot;Coos&quot;       &quot;Crook&quot;      &quot;Curry&quot;      &quot;Deschutes&quot;  &quot;Douglas&quot;   
+## [11] &quot;Gilliam&quot;    &quot;Grant&quot;      &quot;Harney&quot;     &quot;Hood River&quot; &quot;Jackson&quot;   
+## [16] &quot;Jefferson&quot;  &quot;Josephine&quot;  &quot;Klamath&quot;    &quot;Lake&quot;       &quot;Lane&quot;      
+## [21] &quot;Lincoln&quot;    &quot;Linn&quot;       &quot;Malheur&quot;    &quot;Marion&quot;     &quot;Morrow&quot;    
+## [26] &quot;Multnomah&quot;  &quot;Polk&quot;       &quot;Sherman&quot;    &quot;Tillamook&quot;  &quot;Umatilla&quot;  
+## [31] &quot;Union&quot;      &quot;Wallowa&quot;    &quot;Wasco&quot;      &quot;Washington&quot; &quot;Wheeler&quot;   
+## [36] &quot;Yamhill&quot;</code></pre>
+<p>With that I can pull in each file, add the county name to it, and save it back.</p>
+<pre class="r"><code>c(1:36) %&gt;% walk(., ~ {read_csv(paste0(&quot;./data/&quot;,filenames$File.Names[.x], sep=&quot;&quot;)) %&gt;% mutate(County = filenames$County.Names[.x]) %&gt;% write.csv(., file=paste0(&quot;./data/&quot;,filenames$File.Names[.x], sep=&quot;&quot;), row.names=FALSE)})</code></pre>
+<p>Now to use these to create the data.</p>
+<pre class="r"><code>Oregon.County.Results &lt;- c(1:36) %&gt;% map_dfr(., ~ read_csv(paste0(&quot;./data/&quot;,filenames$File.Names[.x], sep=&quot;&quot;)))</code></pre>
+<p>What does it look like?</p>
+<pre class="r"><code>head(Oregon.County.Results)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##   ContestID ContestName  Nomin…¹ Party…² AreaT…³ AreaNum Offic…⁴ Ballo…⁵ Candi…⁶
+##       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;     &lt;dbl&gt;
+## 1 100051746 US Senator   &lt;NA&gt;    NA      NA      Federal       1 NA       9.90e3
+## 2 100051746 US Senator   Democr… NA      NA      Federal       1 NA       3.00e8
+## 3 100051746 US Senator   Pacifi… NA      NA      Federal       1 NA       1.00e8
+## 4 100051746 US Senator   Progre… NA      NA      Federal       1 NA       1.00e8
+## 5 100051746 US Senator   Republ… NA      NA      Federal       1 NA       1.00e8
+## 6 100051748 US Represen… &lt;NA&gt;    NA      NA      US Rep…       2 NA       9.90e3
+## # … with 7 more variables: CandidateName &lt;chr&gt;, CurrentDateTime &lt;chr&gt;,
+## #   VoteFor &lt;dbl&gt;, CandidateVotes &lt;dbl&gt;, CandidatePercentage &lt;dbl&gt;,
+## #   PrecinctsReporting &lt;chr&gt;, County &lt;chr&gt;, and abbreviated variable names
+## #   ¹​NominatingParty, ²​PartyCode, ³​AreaType, ⁴​OfficeSeqNo, ⁵​BallotOrder,
+## #   ⁶​CandidateID</code></pre>
+<div id="peeling-the-results-of-interest" class="section level2">
+<h2>Peeling the results of interest</h2>
+<pre class="r"><code>Slavery.Res &lt;- Oregon.County.Results %&gt;%
+  filter(ContestID==100002574 &amp; CandidateName==&quot;No&quot;) %&gt;%
+  select(County, CandidatePercentage)
+library(tigris); library(rgdal); library(htmltools); library(viridis); library(sf); library(ggrepel)
+counties.t &lt;- counties(state = &quot;41&quot;, resolution = &quot;500k&quot;, class=&quot;sf&quot;)
+Map.Me &lt;- left_join(counties.t,Slavery.Res, by=c(&quot;NAME&quot; = &quot;County&quot;))</code></pre>
+<p>Now to map it.</p>
+<pre class="r"><code>My.Map &lt;- Map.Me %&gt;% 
+  ggplot(., aes(geometry=geometry, fill=CandidatePercentage, label=NAME, group=NAME)) + 
+  geom_sf() +
+  geom_label_repel(stat = &quot;sf_coordinates&quot;,
+    min.segment.length = 0,
+    colour = &quot;white&quot;,
+    segment.colour = &quot;white&quot;,
+    size = 1,
+    box.padding = unit(0.05, &quot;lines&quot;)) +
+  scale_fill_continuous_tableau(&quot;Red&quot;) + 
+  theme_minimal() + 
+  labs(title=&quot;Remove Slavery Measure from Oregon Constitution&quot;, 
+       x=&quot;&quot;, 
+       y=&quot;&quot;, 
+       fill=&quot;Percentage No&#39;s&quot;)</code></pre>
+<p>Here is the map.</p>
+<pre class="r"><code>My.Map</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>Oregon.County.Results %&gt;% 
+  filter((ContestID==100002574 &amp; CandidateName==&quot;No&quot;) | CandidateName==&quot;Christine Drazan&quot;) %&gt;% 
+  select(County, CandidatePercentage, CandidateName) %&gt;%
+  pivot_wider(., names_from=&quot;CandidateName&quot;, values_from=&quot;CandidatePercentage&quot;) %&gt;% 
+  lm(`No` ~ `Christine Drazan`, data=.) %&gt;% summary</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = No ~ `Christine Drazan`, data = .)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.035606 -0.021541 -0.004657  0.011947  0.077704 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         0.08282    0.01961   4.223  0.00017 ***
+## `Christine Drazan`  0.87778    0.03288  26.693  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.03013 on 34 degrees of freedom
+## Multiple R-squared:  0.9545, Adjusted R-squared:  0.9531 
+## F-statistic: 712.5 on 1 and 34 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
