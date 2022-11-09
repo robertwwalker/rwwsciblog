@@ -18,8 +18,7 @@
       
       <guid>https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/</guid>
       <description>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
-![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
-This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+library(imager) Img &amp;lt;- load.image(&amp;#34;./img/Screen Shot 2022-11-09 at 10.14.15 AM.png&amp;#34;) plot(Img) This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
 First, to import the various files. I am going to use an import then export trick to make this easier.</description>
     </item>
     

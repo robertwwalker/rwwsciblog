@@ -1,6 +1,6 @@
 ---
-title: "Oregon County Support for Retaining Slavery in the OR Constitution"
-author: "RWW"
+title: 'Oregon County Support for Retaining Slavery in the OR Constitution'
+author: 'RWW'
 date: '2022-11-09'
 slug: []
 categories:
@@ -12,7 +12,12 @@ tags:
 
 In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files.  At present, that is what I can find to build this.  What does the interface look like?
 
-![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+```{r, message=FALSE, warning=FALSE}
+library(imager)
+Img <- load.image("./img/SShot.png")
+plot(Img)
+```
+
 
 This is terrible, there is a javascript button to download each separately.  Nevertheless, here we go.
 
@@ -45,7 +50,9 @@ head(Oregon.County.Results)
 ## Peeling the results of interest
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
-Slavery.Res <- Oregon.County.Results %>% filter(ContestID==100002574 & CandidateName=="No") %>% select(County, CandidatePercentage)
+Slavery.Res <- Oregon.County.Results %>%
+  filter(ContestID==100002574 & CandidateName=="No") %>%
+  select(County, CandidatePercentage)
 library(tigris); library(rgdal); library(htmltools); library(viridis); library(sf); library(ggrepel)
 counties.t <- counties(state = "41", resolution = "500k", class="sf")
 Map.Me <- left_join(counties.t,Slavery.Res, by=c("NAME" = "County"))
@@ -62,11 +69,26 @@ My.Map <- Map.Me %>%
     colour = "white",
     segment.colour = "white",
     size = 1,
-    box.padding = unit(0.05, "lines"))  + scale_fill_continuous_tableau("Red") + theme_minimal() + labs(title="Remove Slavery Measure from Oregon Constitution", x="", y="", fill="Percentage No's")
+    box.padding = unit(0.05, "lines")) +
+  scale_fill_continuous_tableau("Red") + 
+  theme_minimal() + 
+  labs(title="Remove Slavery Measure from Oregon Constitution", 
+       x="", 
+       y="", 
+       fill="Percentage No's")
+```
+
+Here is the map.
+
+```{r, warning=FALSE, message=FALSE}
 My.Map
 ```
 
 ```{r}
-Oregon.County.Results %>% filter((ContestID==100002574 & CandidateName=="No") | CandidateName=="Christine Drazan") %>% select(County, CandidatePercentage, CandidateName) %>% pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% lm(`No` ~ `Christine Drazan`, data=.) %>% summary
+Oregon.County.Results %>% 
+  filter((ContestID==100002574 & CandidateName=="No") | CandidateName=="Christine Drazan") %>% 
+  select(County, CandidatePercentage, CandidateName) %>%
+  pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% 
+  lm(`No` ~ `Christine Drazan`, data=.) %>% summary
 ```
 
