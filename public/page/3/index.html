@@ -104,19 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 4, 2022</span>
+        <span class="date">November 9, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/">Oregon County Support for Retaining Slavery in the OR Constitution</a></h2>
         
-        <p>I want to learn about map and begin to replace my use of apply for everything.
-Goal: import a directory full of csv files.
-Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
-library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
+        <p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
+![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+First, to import the various files. I am going to use an import then export trick to make this easier.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -127,6 +127,23 @@ library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibbl
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">January 26, 2022</span>
+            
+            <h2><a href="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/">Trademarks from the Oregon Secretary of State</a></h2>
+        </header>
+        
+        
+        <p>Oregon’s Open Data Portal The Oregon Open Data Portal has a bunch of easily accessible public use data. One of the first listings today was trademarks issued by the Oregon Secretary of State. Let’s grab that data.
+OTM &lt;- read.socrata(&#39;https://data.oregon.gov/resource/ny3n-dx3v.json&#39;) head(OTM) ## registration_number registration_date ## 1 102 1968-03-15 ## 2 103 1968-03-15 ## 3 272 1970-10-26 ## 4 3606 1935-02-01 ## 5 3957 1936-04-21 ## 6 4020 1936-08-29 ## trademark_description ## 1 &quot;SR&quot; MONOGRAM ## 2 &quot;SUNRIVER&quot; ## 3 G.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/2022-01-26-trademarks-from-the-oregon-secretary-of-state/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -212,24 +229,6 @@ library(kableExtra)location &lt;- &#39;https://sos.</p>
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/2021-03-04-tidytuesday-on-superbowl-commercials/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">February 22, 2021</span>
-            
-            <h2><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/">tt: Employment and Earnings</a></h2>
-        </header>
-        
-        
-        <p>As a continuation of the #DuBoisChallenge, this week’s tidyTuesday presents employment by industry, sex, race, and occupation. There is also some scraped data from the self-service tool that generates weekly and hourly earnings data from the CPS. Let’s see what we have.
-library(tidyverse)library(fpp3)library(magrittr)employed &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/employed.csv&#39;)earn &lt;- readr::read_csv(&#39;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-23/earn.csv&#39;)employed %&lt;&gt;% as_tsibble(index=year, key=c(industry,major_occupation,minor_occupation,race_gender))Let me try to plot something.
-employed %&gt;% filter(race_gender==&quot;TOTAL&quot;) %&gt;% autoplot(employ_n) + guides(color=FALSE)To be continued….</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/2021-02-22-tt-employment-and-earnings/" class="button">Read More...</a></li>
         </ul>
     </article>
     

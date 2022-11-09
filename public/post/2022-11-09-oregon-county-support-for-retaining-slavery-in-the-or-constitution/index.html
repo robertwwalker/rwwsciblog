@@ -1,0 +1,282 @@
+<!DOCTYPE HTML>
+
+<html lang='en'>
+	<head>
+		<title>Oregon County Support for Retaining Slavery in the OR Constitution &middot; rww-science: the blog</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		
+		
+		
+		<link rel="stylesheet" href="/assets/css/main.min.css">
+		
+		
+		
+		<noscript><link rel="stylesheet" href='/assets/css/noscript.css' /></noscript>
+	</head>
+
+	<body lang='en' class="is-preload">
+
+		
+			<div id="wrapper">
+
+                
+<header id="header">
+    <a href='/' class="logo">rww-science: the blog</a>
+</header>
+
+                
+
+<nav id="nav">
+    <ul class="links">
+        <li class="active"><a href='/'>rww-science: the blog</a></li>
+        
+        <li><a href='/#footer'>Contact</a></li>
+        
+        
+    </ul>
+    
+    <ul class="icons">
+        
+        <li><a href="https://twitter.com/PieRatio" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
+        
+        
+        <li><a href="https://facebook.com" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+        
+        
+        <li><a href="https://instagram.com" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
+        
+        
+        <li><a href="https://www.linkedin.com" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
+        
+        
+        <li><a href="https://github.com/robertwwalker" class="icon fa-github"><span class="label">GitHub</span></a></li>
+        
+        
+        <li><a href="https://youtube.com/" class="icon fa-youtube"><span class="label">Youtube</span></a></li>
+        
+        
+        <li><a href="https://plus.google.com/" class="icon fa-google-plus"><span class="label">Google Plus</span></a></li>
+        
+        
+        <li><a href="https://last.fm/" class="icon fa-lastfm"><span class="label">Last.fm</span></a></li>
+        
+        
+        <li><a href="https://flickr.com/" class="icon fa-flickr"><span class="label">Flickr</span></a></li>
+        
+    </ul>
+    
+</nav>
+
+
+				
+					<div id="main">
+
+						
+                        <section class="post">
+                            <header class="major">
+                                
+                                <span class="date">November 9, 2022</span>
+                                
+                                <h1>Oregon County Support for Retaining Slavery in the OR Constitution</h1>
+                                <p></p>
+                            </header>
+                            
+                            <p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files.  At present, that is what I can find to build this.  What does the interface look like?</p>
+<p>![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)</p>
+<p>This is terrible, there is a javascript button to download each separately.  Nevertheless, here we go.</p>
+<p>First, to import the various files.  I am going to use an import then export trick to make this easier.  First, let me use the directory to create the county names.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">library</span>(magrittr); <span style="color:#a6e22e">library</span>(tidyverse); <span style="color:#a6e22e">library</span>(ggthemes)
+filenames <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">dir</span>(<span style="color:#e6db74">&#34;./data/&#34;</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">data.frame</span>(File.Names <span style="color:#f92672">=</span> .)
+filenames <span style="color:#f92672">%&lt;&gt;%</span> <span style="color:#a6e22e">mutate</span>(County.Names <span style="color:#f92672">=</span> <span style="color:#a6e22e">str_remove</span>(File.Names, <span style="color:#e6db74">&#34;.csv&#34;</span>))
+filenames<span style="color:#f92672">$</span>County.Names
+</code></pre></div><pre><code>##  [1] &quot;Baker&quot;      &quot;Benton&quot;     &quot;Clackamas&quot;  &quot;Clatsop&quot;    &quot;Columbia&quot;  
+##  [6] &quot;Coos&quot;       &quot;Crook&quot;      &quot;Curry&quot;      &quot;Deschutes&quot;  &quot;Douglas&quot;   
+## [11] &quot;Gilliam&quot;    &quot;Grant&quot;      &quot;Harney&quot;     &quot;Hood River&quot; &quot;Jackson&quot;   
+## [16] &quot;Jefferson&quot;  &quot;Josephine&quot;  &quot;Klamath&quot;    &quot;Lake&quot;       &quot;Lane&quot;      
+## [21] &quot;Lincoln&quot;    &quot;Linn&quot;       &quot;Malheur&quot;    &quot;Marion&quot;     &quot;Morrow&quot;    
+## [26] &quot;Multnomah&quot;  &quot;Polk&quot;       &quot;Sherman&quot;    &quot;Tillamook&quot;  &quot;Umatilla&quot;  
+## [31] &quot;Union&quot;      &quot;Wallowa&quot;    &quot;Wasco&quot;      &quot;Washington&quot; &quot;Wheeler&quot;   
+## [36] &quot;Yamhill&quot;
+</code></pre><p>With that I can pull in each file, add the county name to it, and save it back.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">36</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">walk</span>(., <span style="color:#f92672">~</span> {<span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">paste0</span>(<span style="color:#e6db74">&#34;./data/&#34;</span>,filenames<span style="color:#f92672">$</span>File.Names[.x], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">mutate</span>(County <span style="color:#f92672">=</span> filenames<span style="color:#f92672">$</span>County.Names[.x]) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">write.csv</span>(., file<span style="color:#f92672">=</span><span style="color:#a6e22e">paste0</span>(<span style="color:#e6db74">&#34;./data/&#34;</span>,filenames<span style="color:#f92672">$</span>File.Names[.x], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>), row.names<span style="color:#f92672">=</span><span style="color:#66d9ef">FALSE</span>)})
+</code></pre></div><p>Now to use these to create the data.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">Oregon.County.Results <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">c</span>(<span style="color:#ae81ff">1</span><span style="color:#f92672">:</span><span style="color:#ae81ff">36</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">map_dfr</span>(., <span style="color:#f92672">~</span> <span style="color:#a6e22e">read_csv</span>(<span style="color:#a6e22e">paste0</span>(<span style="color:#e6db74">&#34;./data/&#34;</span>,filenames<span style="color:#f92672">$</span>File.Names[.x], sep<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>)))
+</code></pre></div><p>What does it look like?</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r"><span style="color:#a6e22e">head</span>(Oregon.County.Results)
+</code></pre></div><pre><code>## # A tibble: 6 × 16
+##   ContestID ContestName  Nomin…¹ Party…² AreaT…³ AreaNum Offic…⁴ Ballo…⁵ Candi…⁶
+##       &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;   &lt;lgl&gt;   &lt;lgl&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;lgl&gt;     &lt;dbl&gt;
+## 1 100051746 US Senator   &lt;NA&gt;    NA      NA      Federal       1 NA       9.90e3
+## 2 100051746 US Senator   Democr… NA      NA      Federal       1 NA       3.00e8
+## 3 100051746 US Senator   Pacifi… NA      NA      Federal       1 NA       1.00e8
+## 4 100051746 US Senator   Progre… NA      NA      Federal       1 NA       1.00e8
+## 5 100051746 US Senator   Republ… NA      NA      Federal       1 NA       1.00e8
+## 6 100051748 US Represen… &lt;NA&gt;    NA      NA      US Rep…       2 NA       9.90e3
+## # … with 7 more variables: CandidateName &lt;chr&gt;, CurrentDateTime &lt;chr&gt;,
+## #   VoteFor &lt;dbl&gt;, CandidateVotes &lt;dbl&gt;, CandidatePercentage &lt;dbl&gt;,
+## #   PrecinctsReporting &lt;chr&gt;, County &lt;chr&gt;, and abbreviated variable names
+## #   ¹​NominatingParty, ²​PartyCode, ³​AreaType, ⁴​OfficeSeqNo, ⁵​BallotOrder,
+## #   ⁶​CandidateID
+</code></pre><h2 id="peeling-the-results-of-interest">Peeling the results of interest</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">Slavery.Res <span style="color:#f92672">&lt;-</span> Oregon.County.Results <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">filter</span>(ContestID<span style="color:#f92672">==</span><span style="color:#ae81ff">100002574</span> <span style="color:#f92672">&amp;</span> CandidateName<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;No&#34;</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">select</span>(County, CandidatePercentage)
+<span style="color:#a6e22e">library</span>(tigris); <span style="color:#a6e22e">library</span>(rgdal); <span style="color:#a6e22e">library</span>(htmltools); <span style="color:#a6e22e">library</span>(viridis); <span style="color:#a6e22e">library</span>(sf); <span style="color:#a6e22e">library</span>(ggrepel)
+counties.t <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">counties</span>(state <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;41&#34;</span>, resolution <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;500k&#34;</span>, class<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;sf&#34;</span>)
+Map.Me <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">left_join</span>(counties.t,Slavery.Res, by<span style="color:#f92672">=</span><span style="color:#a6e22e">c</span>(<span style="color:#e6db74">&#34;NAME&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;County&#34;</span>))
+</code></pre></div><p>Now to map it.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">My.Map <span style="color:#f92672">&lt;-</span> Map.Me <span style="color:#f92672">%&gt;%</span> 
+  <span style="color:#a6e22e">ggplot</span>(., <span style="color:#a6e22e">aes</span>(geometry<span style="color:#f92672">=</span>geometry, fill<span style="color:#f92672">=</span>CandidatePercentage, label<span style="color:#f92672">=</span>NAME, group<span style="color:#f92672">=</span>NAME)) <span style="color:#f92672">+</span> 
+  <span style="color:#a6e22e">geom_sf</span>() <span style="color:#f92672">+</span>
+  <span style="color:#a6e22e">geom_label_repel</span>(stat <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;sf_coordinates&#34;</span>,
+    min.segment.length <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>,
+    colour <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span>,
+    segment.colour <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;white&#34;</span>,
+    size <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>,
+    box.padding <span style="color:#f92672">=</span> <span style="color:#a6e22e">unit</span>(<span style="color:#ae81ff">0.05</span>, <span style="color:#e6db74">&#34;lines&#34;</span>))  <span style="color:#f92672">+</span> <span style="color:#a6e22e">scale_fill_continuous_tableau</span>(<span style="color:#e6db74">&#34;Red&#34;</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">theme_minimal</span>() <span style="color:#f92672">+</span> <span style="color:#a6e22e">labs</span>(title<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Remove Slavery Measure from Oregon Constitution&#34;</span>, x<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, y<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span>, fill<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Percentage No&#39;s&#34;</span>)
+My.Map
+</code></pre></div><p><!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-r" data-lang="r">Oregon.County.Results <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">filter</span>((ContestID<span style="color:#f92672">==</span><span style="color:#ae81ff">100002574</span> <span style="color:#f92672">&amp;</span> CandidateName<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;No&#34;</span>) <span style="color:#f92672">|</span> CandidateName<span style="color:#f92672">==</span><span style="color:#e6db74">&#34;Christine Drazan&#34;</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">select</span>(County, CandidatePercentage, CandidateName) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">pivot_wider</span>(., names_from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CandidateName&#34;</span>, values_from<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;CandidatePercentage&#34;</span>) <span style="color:#f92672">%&gt;%</span> <span style="color:#a6e22e">lm</span>(`No` <span style="color:#f92672">~</span> `Christine Drazan`, data<span style="color:#f92672">=</span>.) <span style="color:#f92672">%&gt;%</span> summary
+</code></pre></div><pre><code>## 
+## Call:
+## lm(formula = No ~ `Christine Drazan`, data = .)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.035606 -0.021541 -0.004657  0.011947  0.077704 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         0.08282    0.01961   4.223  0.00017 ***
+## `Christine Drazan`  0.87778    0.03288  26.693  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.03013 on 34 degrees of freedom
+## Multiple R-squared:  0.9545,	Adjusted R-squared:  0.9531 
+## F-statistic: 712.5 on 1 and 34 DF,  p-value: &lt; 2.2e-16
+</code></pre>
+
+                            
+                            
+                            
+                            
+                            
+                        </section>
+
+					</div>
+
+                    
+
+<footer id="footer">
+    
+    <section>
+      <form method="post" action="post-action">
+        <div class="fields">
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" />
+          </div>
+          <div class="field">
+            <label for="message">Message</label>
+            <textarea name="message" id="message" rows="3"></textarea>
+          </div>
+        </div>
+        <ul class="actions">
+          <li><input type="submit" value='Send A Message' /></li>
+        </ul>
+      </form>
+    </section>
+    
+    <section class="split contact">
+        
+        <section class="alt">
+            <h3>Address</h3>
+            <p>
+                
+                     900 State St
+                
+                     <br/>  Salem, OR 97301
+                
+            </p>
+        </section>
+        
+        
+        <section>
+            <h3>Phone</h3>
+            <p><a href="tel:%28503%29%20375-6475">(503) 375-6475</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Email</h3>
+            <p><a href="mailto:rwalker@willamette.edu">rwalker@willamette.edu</a></p>
+        </section>
+        
+        
+        <section>
+            <h3>Social</h3>
+            <ul class="icons alt">
+                
+                <li><a href="https://twitter.com/PieRatio" class="icon alt fa-twitter"><span class="label">Twitter</span></a></li>
+                
+                
+                <li><a href="https://facebook.com" class="icon alt fa-facebook"><span class="label">Facebook</span></a></li>
+                
+                
+                <li><a href="https://instagram.com" class="icon alt fa-instagram"><span class="label">Instagram</span></a></li>
+                
+                
+                <li><a href="https://www.linkedin.com" class="icon alt fa-linkedin"><span class="label">LinkedIn</span></a></li>
+                
+                
+                <li><a href="https://github.com/robertwwalker" class="icon alt fa-github"><span class="label">GitHub</span></a></li>
+                
+                
+                <li><a href="https://youtube.com/" class="icon alt fa-youtube"><span class="label">Youtube</span></a></li>
+                
+                
+                <li><a href="https://plus.google.com/" class="icon alt fa-google-plus"><span class="label">Google Plus</span></a></li>
+                
+                
+                <li><a href="https://last.fm/" class="icon alt fa-lastfm"><span class="label">Last.fm</span></a></li>
+                
+                
+                <li><a href="https://flickr.com/" class="icon alt fa-flickr"><span class="label">Flickr</span></a></li>
+                
+            </ul>
+        </section>
+        
+    </section>
+    <script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+</footer>
+
+                    
+<div id="copyright">
+    <ul><li>&copy; rww-science: the blog</li><li>Design: <a href="https://html5up.net">HTML5 UP</a></li><li>Hugo Port: <a href="https://curtistimson.co.uk">curttimson</a></li></ul>
+</div>
+
+
+            </div>
+            
+            
+
+
+
+
+
+
+
+
+
+
+<script src='/assets/js/bundle.js'></script>
+
+
+	</body>
+</html>

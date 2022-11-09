@@ -104,19 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 4, 2022</span>
+        <span class="date">November 9, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/">Oregon County Support for Retaining Slavery in the OR Constitution</a></h2>
         
-        <p>I want to learn about map and begin to replace my use of apply for everything.
-Goal: import a directory full of csv files.
-Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
-library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
+        <p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
+![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+First, to import the various files. I am going to use an import then export trick to make this easier.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -127,6 +127,24 @@ library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibbl
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">December 9, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/">Philadelphia Parking Tickets: a tidyTuesday</a></h2>
+        </header>
+        
+        
+        <p>Philadelphia MapUse ggmap for the base layer.
+library(ggmap); library(osmdata); library(tidyverse)PHI &lt;- get_map(getbb(&quot;Philadelphia, PA&quot;), maptype = &quot;stamen&quot;, zoom=12)Get the Tickets DataTidyTuesday covers 1.26 million parking tickets in Philadelphia.
+tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-03/tickets.csv&quot;)## Parsed with column specification:## cols(## violation_desc = col_character(),## issue_datetime = col_datetime(format = &quot;&quot;),## fine = col_double(),## issuing_agency = col_character(),## lat = col_double(),## lon = col_double(),## zip_code = col_double()## )Two Lines of Code Leftlibrary(lubridate); library(ggthemes)tickets &lt;- tickets %&gt;% mutate(Day = wday(issue_datetime, label=TRUE)) # use lubridate to extract the day of the month.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -222,24 +240,6 @@ Fariss DataIs neat and complete.</p>
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/fariss-human-rights-data-with-animation/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">October 10, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/generative-art/">Generative aRt</a></h2>
-        </header>
-        
-        
-        <p>mathartA cool package for math generated art that I just discovered. Here is the install code for it
-install.packages(c(&quot;devtools&quot;, &quot;mapproj&quot;, &quot;tidyverse&quot;, &quot;ggforce&quot;, &quot;Rcpp&quot;))devtools::install_github(&quot;marcusvolz/mathart&quot;)devtools::install_github(&quot;marcusvolz/ggart&quot;)devtools::install_github(&quot;gsimchoni/kandinsky&quot;)Load some librarieslibrary(mathart)library(ggart)library(ggforce)library(Rcpp)library(tidyverse)Generate some Art?This is quite fun to do.
-set.seed(12341)terminals &lt;- data.frame(x = runif(10, 0, 10000), y = runif(10, 0, 10000))df &lt;- 1:10000 %&gt;%map_df(~weiszfeld(terminals, c(points$x[.], points$y[.])), .id = &quot;id&quot;)p &lt;- ggplot() +geom_point(aes(x, y), points, size = 1, alpha = 0.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/generative-art/" class="button">Read More...</a></li>
         </ul>
     </article>
     

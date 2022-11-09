@@ -104,19 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 4, 2022</span>
+        <span class="date">November 9, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/">Oregon County Support for Retaining Slavery in the OR Constitution</a></h2>
         
-        <p>I want to learn about map and begin to replace my use of apply for everything.
-Goal: import a directory full of csv files.
-Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
-library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
+        <p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
+![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+First, to import the various files. I am going to use an import then export trick to make this easier.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -127,6 +127,24 @@ library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibbl
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">October 10, 2019</span>
+            
+            <h2><a href="https://rww-science.website/post/generative-art/">Generative aRt</a></h2>
+        </header>
+        
+        
+        <p>mathartA cool package for math generated art that I just discovered. Here is the install code for it
+install.packages(c(&quot;devtools&quot;, &quot;mapproj&quot;, &quot;tidyverse&quot;, &quot;ggforce&quot;, &quot;Rcpp&quot;))devtools::install_github(&quot;marcusvolz/mathart&quot;)devtools::install_github(&quot;marcusvolz/ggart&quot;)devtools::install_github(&quot;gsimchoni/kandinsky&quot;)Load some librarieslibrary(mathart)library(ggart)library(ggforce)library(Rcpp)library(tidyverse)Generate some Art?This is quite fun to do.
+set.seed(12341)terminals &lt;- data.frame(x = runif(10, 0, 10000), y = runif(10, 0, 10000))df &lt;- 1:10000 %&gt;%map_df(~weiszfeld(terminals, c(points$x[.], points$y[.])), .id = &quot;id&quot;)p &lt;- ggplot() +geom_point(aes(x, y), points, size = 1, alpha = 0.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/generative-art/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -209,22 +227,6 @@ The nflscrapR package is designed to make data on NFL games more easily availabl
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/nflscrapr-is-amazing/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">April 14, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/visualisation-with-archigos-leaders-of-the-world/">Visualisation with Archigos: Leaders of the World</a></h2>
-        </header>
-        
-        
-        <p>ArchigosIs an amazing collaboration that produced a comprehensive dataset of world leaders going pretty far back; see Archigos on the web. For thinking about leadership, it is quite natural. In this post, I want to do some reshaping into country year and leader year datasets and explore the basic confines of Archigos. I also want to use gganimate for a few things. So what do we know?</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/visualisation-with-archigos-leaders-of-the-world/" class="button">Read More...</a></li>
         </ul>
     </article>
     

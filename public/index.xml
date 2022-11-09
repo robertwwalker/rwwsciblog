@@ -6,10 +6,22 @@
     <description>Recent content on rww-science: the blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 04 Nov 2022 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 09 Nov 2022 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://rww-science.website/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Oregon County Support for Retaining Slavery in the OR Constitution</title>
+      <link>https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/</link>
+      <pubDate>Wed, 09 Nov 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/</guid>
+      <description>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
+![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+First, to import the various files. I am going to use an import then export trick to make this easier.</description>
+    </item>
     
     <item>
       <title>Marveling at map()</title>

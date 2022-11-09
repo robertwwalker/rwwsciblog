@@ -104,19 +104,19 @@
 <article class="post featured">
     <header class="major">
         
-        <span class="date">November 4, 2022</span>
+        <span class="date">November 9, 2022</span>
         
-        <h2><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/">Marveling at map()</a></h2>
+        <h2><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/">Oregon County Support for Retaining Slavery in the OR Constitution</a></h2>
         
-        <p>I want to learn about map and begin to replace my use of apply for everything.
-Goal: import a directory full of csv files.
-Method. First, load purrr and the tidyverse and then create a tibble for the filenames because we are creating the example. map wants to output a list so I have to unlist it into the tibble.
-library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibble( filenames=unlist( map(c(1:5), ~paste0(&#34;file&#34;,.</p>
+        <p>In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files. At present, that is what I can find to build this. What does the interface look like?
+![OR Elections Interface](img/Screen Shot 2022-11-09 at 10.14.15 AM.png)
+This is terrible, there is a javascript button to download each separately. Nevertheless, here we go.
+First, to import the various files. I am going to use an import then export trick to make this easier.</p>
         
     </header>
     
     <ul class="actions">
-        <li><a href="https://rww-science.website/post/2022-11-04-marveling-at-map/" class="button big">Read More...</a></li>
+        <li><a href="https://rww-science.website/post/2022-11-09-oregon-county-support-for-retaining-slavery-in-the-or-constitution/" class="button big">Read More...</a></li>
     </ul>
 </article>
 
@@ -127,6 +127,25 @@ library(tidyverse) library(purrr) # Create a set of filenames fnames &lt;- tibbl
 							
 
 <section class="posts">
+    
+    <article>
+        <header>
+            
+            <span class="date">January 31, 2020</span>
+            
+            <h2><a href="https://rww-science.website/post/updating-hugo-and-academic/">Updating Hugo and Academic</a></h2>
+        </header>
+        
+        <a href="https://rww-science.website/post/updating-hugo-and-academic/" class="image fit"><img src="" alt="" /></a>
+        
+        
+        <p>Updating Hugo:It’s Changed Alot…Many key features of hugo have been in a state of flux since I began this blogdown a few years ago. It was time to update hugo and the academic theme that I have built around and customized. A number of things broke.
+The config.toml and the likeIn my original website, there was only one configuation file. Now it has split into four parts; for blogdown, config.</p>
+        
+        <ul class="actions">
+            <li><a href="https://rww-science.website/post/updating-hugo-and-academic/" class="button">Read More...</a></li>
+        </ul>
+    </article>
     
     <article>
         <header>
@@ -212,24 +231,6 @@ library(tidyverse)library(leaflet)library(stringr)library(sf)library(here)l
         
         <ul class="actions">
             <li><a href="https://rww-science.website/post/trying-out-leaflet/" class="button">Read More...</a></li>
-        </ul>
-    </article>
-    
-    <article>
-        <header>
-            
-            <span class="date">December 9, 2019</span>
-            
-            <h2><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/">Philadelphia Parking Tickets: a tidyTuesday</a></h2>
-        </header>
-        
-        
-        <p>Philadelphia MapUse ggmap for the base layer.
-library(ggmap); library(osmdata); library(tidyverse)PHI &lt;- get_map(getbb(&quot;Philadelphia, PA&quot;), maptype = &quot;stamen&quot;, zoom=12)Get the Tickets DataTidyTuesday covers 1.26 million parking tickets in Philadelphia.
-tickets &lt;- readr::read_csv(&quot;https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2019/2019-12-03/tickets.csv&quot;)## Parsed with column specification:## cols(## violation_desc = col_character(),## issue_datetime = col_datetime(format = &quot;&quot;),## fine = col_double(),## issuing_agency = col_character(),## lat = col_double(),## lon = col_double(),## zip_code = col_double()## )Two Lines of Code Leftlibrary(lubridate); library(ggthemes)tickets &lt;- tickets %&gt;% mutate(Day = wday(issue_datetime, label=TRUE)) # use lubridate to extract the day of the month.</p>
-        
-        <ul class="actions">
-            <li><a href="https://rww-science.website/post/philadelphia-parking-tickets-a-tidytuesday/" class="button">Read More...</a></li>
         </ul>
     </article>
     
