@@ -100,6 +100,22 @@ Oregon.County.Results %>%
 
 Whoa!  Almost 96% using the current totals as of 10AM on the day after the election.
 
+```{r}
+library(emoGG)
+Oregon.County.Results %>% 
+  filter((ContestID==100002574 & CandidateName=="No") | CandidateName=="Christine Drazan") %>% 
+  select(County, CandidatePercentage, CandidateName) %>%
+  pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% 
+  ggplot() + 
+  aes(x=`Christine Drazan`, y=No) + 
+  geom_emoji(emoji = "1f921") + 
+  geom_smooth(method="lm") +
+  theme_minimal() +
+  labs(y="No to Removing Slavery")
+```
+
+
+
 ```{r, message=FALSE, warning=FALSE}
 library(plotly)
 Oregon.County.Results %>% 
@@ -109,8 +125,14 @@ Oregon.County.Results %>%
   ggplot() + 
   aes(x=`Christine Drazan`, y=No, label=County) + 
   geom_point() + 
-  geom_smooth(method="lm") +
-  labs(y="No to Removing Slavery") -> pgg
+  geom_smooth(method="lm") + theme_minimal() +
+  labs(y="Proportion No Votes on Slavery Removal", x="Drazan Vote Proportion", title="Removing Slavery for Convicts from Oregon's Constitution and Drazan Vote", subtitle="By Oregon County, Correlation: 0.977") -> pgg
+pgg
+```
+
+As a plotly
+
+```{r}
 ggplotly(pgg)
 ```
 
