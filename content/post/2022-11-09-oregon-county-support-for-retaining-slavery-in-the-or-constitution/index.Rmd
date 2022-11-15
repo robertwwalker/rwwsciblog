@@ -10,6 +10,7 @@ tags:
   - tidyverse
 ---
 
+Last update: November 15. 2022
 
 In preparation for the dumpster fire that is Oregon election reporting, I previously posed on importing a directory of .csv files.  At present, that is what I can find to build this.  What does the interface look like?
 
@@ -108,7 +109,7 @@ Oregon.County.Results %>%
   pivot_wider(., names_from="CandidateName", values_from="CandidatePercentage") %>% 
   ggplot() + 
   aes(x=`Christine Drazan`, y=No) + 
-  geom_emoji(emoji = "1f921") + 
+  geom_point(color="purple") + 
   geom_smooth(method="lm") +
   theme_minimal() +
   labs(y="No to Removing Slavery")
@@ -126,7 +127,7 @@ Oregon.County.Results %>%
   aes(x=`Christine Drazan`, y=No, label=County) + 
   geom_point() + 
   geom_smooth(method="lm") + theme_minimal() +
-  labs(y="Proportion No Votes on Slavery Removal", x="Drazan Vote Proportion", title="Removing Slavery for Convicts from Oregon's Constitution and Drazan Vote", subtitle="By Oregon County, Correlation: 0.977") -> pgg
+  labs(y="Proportion No Votes on Slavery Removal", x="Drazan Vote Proportion", title="Removing Slavery for Convicts from Oregon's Constitution and Drazan Vote", subtitle="By Oregon County, Correlation: 0.9775") -> pgg
 pgg
 ```
 
