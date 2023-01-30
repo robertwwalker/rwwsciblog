@@ -2,11 +2,8 @@
 title: 'Oregon County Support for Retaining Slavery in the OR Constitution'
 author: 'RWW'
 date: '2022-11-09'
-slug: slavery-removal
 categories:
   - R
-  - tidyverse
-tags:
   - tidyverse
 ---
 
